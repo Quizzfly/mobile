@@ -123,7 +123,7 @@ final Map<String, String> enUs = {
   "msg_statistics_math": "Statistics Math Quiz",
   "msg_today_is_a_new_day":
       "Today is a new day. It's your day. You shape it. \nSign in to start managing your project",
-  "msg_welcome_back": "Welcome Back 👋",
+  "msg_welcome_back": "Welcome Back",
 
 //Network error
   "msg_newtwork_err": "Network Error",

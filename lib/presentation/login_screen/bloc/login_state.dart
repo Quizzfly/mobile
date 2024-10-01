@@ -15,7 +15,7 @@ class LoginState extends Equatable {
   @override
   List<Object?> get props =>
       [emailController, passwordController, loginModelObj];
-  LoginState copywith({
+  LoginState copyWith({
     TextEditingController? emailController,
     TextEditingController? passwordController,
     LoginModel? loginModelobj,

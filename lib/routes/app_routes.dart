@@ -14,4 +14,28 @@ class AppRoutes {
         // appNavigationScreen: AppNavigationScreen.builder,
         initialRoute: LoginScreen.builder
       };
+
+  // Custom method to handle slide transition navigation for specific routes
+  static void navigateToRegisterScreen(BuildContext context) {
+    Navigator.push(
+      context,
+      PageRouteBuilder(
+        transitionDuration: const Duration(milliseconds: 400), // Set duration to 400ms
+        pageBuilder: (context, animation, secondaryAnimation) => RegisterScreen.builder(context),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          const begin = Offset(1.0, 0.0); // Slide from right to left
+          const end = Offset.zero;
+          const curve = Curves.easeInOut;
+
+          var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+          var offsetAnimation = animation.drive(tween);
+
+          return SlideTransition(
+            position: offsetAnimation,
+            child: child,
+          );
+        },
+      ),
+    );
+  }
 }

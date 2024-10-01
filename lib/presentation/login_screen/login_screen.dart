@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quizzfly_application_flutter/presentation/register_screen/register_screen.dart';
 import '../../core/app_export.dart';
 import '../../core/utils/validation_functions.dart';
 import '../../domain/googleauth/google_auth_helper.dart';
@@ -111,8 +112,11 @@ class LoginScreen extends StatelessWidget {
             text: TextSpan(
               children: [
                 TextSpan(
-                  text: "lbl welcome_back".tr,
+                  text: "msg_welcome_back".tr,
                   style: CustomTextStyles.headlineSmallSFProRoundedGray90003,
+                ),
+                WidgetSpan(
+                  child: SizedBox(width: 10), // Add a SizedBox to simulate padding
                 ),
                 TextSpan(
                   text: "lbl".tr,
@@ -128,7 +132,7 @@ class LoginScreen extends StatelessWidget {
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             style:
-              CustomTextStyles.bodyMediumSFProDisplayErrorContainer.copywith(
+              CustomTextStyles.bodyMediumSFProDisplayErrorContainer.copyWith(
               height: 1.60,
             ),
           )
@@ -276,20 +280,25 @@ class LoginScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          RichText(
-            text: TextSpan(
-              children: [
-                TextSpan(
-                  text: "msg_don_t_you_have_an2".tr,
-                  style: CustomTextStyles.bodyLargeErrorContainer,
-                ),
-                TextSpan(
-                  text: "lbl_sign_up".tr,
-                  style: CustomTextStyles.bodyLargePrimary,
-                )
-              ],
+          InkWell(
+            onTap: () {
+              AppRoutes.navigateToRegisterScreen(context);
+            },
+            child: RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: "msg_don_t_you_have_an2".tr,
+                    style: CustomTextStyles.bodyLargeErrorContainer,
+                  ),
+                  TextSpan(
+                    text: "lbl_sign_up".tr,
+                    style: CustomTextStyles.bodyLargePrimary,
+                  ),
+                ],
+              ),
+              textAlign: TextAlign.left,
             ),
-            textAlign: TextAlign.left,
           ),
           SizedBox(height: 54.h),
           Padding(

@@ -65,7 +65,7 @@ class RegisterScreen extends StatelessWidget {
                     buttonTextStyle: theme.textTheme.bodyLarge!,
                   ),
                   SizedBox(height: 40.h),
-                  _buildAlternativeSigninSection(context),
+                  _buildAlternativeSignInSection(context),
                   SizedBox(height: 22.h),
                   CustomElevatedButton(
                     height: 40.h,
@@ -107,8 +107,12 @@ class RegisterScreen extends StatelessWidget {
             text: TextSpan(
               children: [
                 TextSpan(
-                  text: "lbl_welcome_back".tr,
+                  text: "msg_welcome_back".tr,
                   style: CustomTextStyles.headlineSmallSFProRoundedGray90003,
+                ),
+                WidgetSpan(
+                  child:
+                      SizedBox(width: 10), // Add a SizedBox to simulate padding
                 ),
                 TextSpan(
                   text: "lbl".tr,
@@ -189,7 +193,7 @@ class RegisterScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "lbl email".tr,
+                  "lbl_email".tr,
                   style: CustomTextStyles.bodyMediumRobotoGray90003,
                 )
               ],
@@ -272,7 +276,7 @@ class RegisterScreen extends StatelessWidget {
   }
 
   /// Section Widget
-  Widget _buildAlternativeSigninSection(BuildContext context) {
+  Widget _buildAlternativeSignInSection(BuildContext context) {
     return SizedBox(
       width: double.maxFinite,
       child: Row(
@@ -324,6 +328,10 @@ class RegisterScreen extends StatelessWidget {
                 TextSpan(
                   text: "msg_don_t_you_have_an2".tr,
                   style: CustomTextStyles.bodyLargeErrorContainer,
+                ),
+                WidgetSpan(
+                  child:
+                      SizedBox(width: 10), // Add a SizedBox to simulate padding
                 ),
                 TextSpan(
                   text: "lbl_sign_up".tr,

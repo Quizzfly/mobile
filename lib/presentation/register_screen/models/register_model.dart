@@ -4,7 +4,7 @@ import 'package:equatable/equatable.dart';
 class RegisterModel extends Equatable {
   RegisterModel();
 
-  RegisterModel copywith() {
+  RegisterModel copyWith() {
   return RegisterModel();
   }
   

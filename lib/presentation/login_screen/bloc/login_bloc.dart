@@ -15,7 +15,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     Emitter<LoginState> emit,
   ) async {
     emit(
-      state.copywith(
+      state.copyWith(
         emailController: TextEditingController(),
         passwordController: TextEditingController(),
       ),
