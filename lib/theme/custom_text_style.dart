@@ -1,0 +1,197 @@
+import 'package:flutter/material.dart';
+import '../core/app_export.dart';
+
+extension on TextStyle {
+  TextStyle get roboto {
+    return copyWith(
+      fontFamily: 'Roboto',
+    );
+  }
+
+  TextStyle get rubik {
+    return copyWith(
+      fontFamily: 'Rubik',
+    );
+  }
+
+  TextStyle get sFProDisplay {
+    return copyWith(
+      fontFamily: 'SF Pro Display',
+    );
+  }
+
+  TextStyle get graphik {
+    return copyWith(
+      fontFamily: 'Graphik',
+    );
+  }
+
+  TextStyle get sFProRounded {
+    return copyWith(
+      fontFamily: 'SF Pro Rounded',
+    );
+  }
+}
+
+/// A collection of pre-defined text styles for customizing text appearance,
+/// categorized by different font families and weights.
+/// Additionally, this class includes extensions on [TextStyle] to easily apply specific
+class CustomTextStyles {
+  // Body text style
+  static get bodyLargeBluegray900 => theme.textTheme.bodyLarge!.copyWith(
+        color: appTheme.blueGray900,
+      );
+  static get bodyLargeErrorContainer => theme.textTheme.bodyLarge!.copyWith(
+        color: theme.colorScheme.errorContainer,
+      );
+  static get bodyLargeErrorContainer_1 => theme.textTheme.bodyLarge!.copyWith(
+        color: theme.colorScheme.errorContainer,
+      );
+  static get bodyLargePrimary => theme.textTheme.bodyLarge!.copyWith(
+        color: theme.colorScheme.primary,
+      );
+  static get bodyLargeRubikDeeppurple200 =>
+      theme.textTheme.bodyLarge!.rubik.copyWith(
+        color: appTheme.deepPurple200,
+      );
+  static get bodyLargeRubikGray300 => theme.textTheme.bodyLarge!.rubik.copyWith(
+        color: appTheme.gray300,
+      );
+  static get bodyMediumGraphik => theme.textTheme.bodyMedium!.graphik;
+  static get bodyMediumGraphikwhiteA700 =>
+      theme.textTheme.bodyMedium!.graphik.copyWith(
+        color: appTheme.whiteA700,
+      );
+  static get bodyMediumOnPrimary => theme.textTheme.bodyMedium!.copyWith(
+        color: theme.colorScheme.onPrimary.withOpacity(1),
+      );
+  static get bodyMediumOnPrimary_1 => theme.textTheme.bodyMedium!.copyWith(
+        color: theme.colorScheme.onPrimary,
+      );
+  static get bodyMediumRobotoBluegray300 =>
+      theme.textTheme.bodyMedium!.roboto.copyWith(
+        color: appTheme.blueGray300,
+      );
+  static get bodyMediumRobotoBluegray30001 =>
+      theme.textTheme.bodyMedium!.roboto.copyWith(
+        color: appTheme.blueGray30001,
+      );
+  static get bodyMediumRobotoBluegray800 =>
+      theme.textTheme.bodyMedium!.roboto.copyWith(
+        color: appTheme.blueGray800,
+      );
+  static get bodyMediumRobotoGray90003 =>
+      theme.textTheme.bodyMedium!.roboto.copyWith(
+        color: appTheme.gray90003,
+      );
+  static get bodyMediumRobotoPrimary =>
+      theme.textTheme.bodyMedium!.roboto.copyWith(
+        color: theme.colorScheme.primary,
+      );
+  static get bodyMediumSFProDisplayErrorContainer =>
+      theme.textTheme.bodyMedium!.sFProDisplay.copyWith(
+        color: theme.colorScheme.errorContainer,
+        fontSize: 15.fSize,
+      );
+  static get bodyMediumWhiteA700 => theme.textTheme.bodyMedium!.copyWith(
+        color: appTheme.whiteA700,
+      );
+  static get bodySmallWhiteA700 => theme.textTheme.bodySmall!.copyWith(
+        color: appTheme.whiteA700.withOpacity(0.7),
+      );
+// Graphik text style
+  static get graphikwhiteA700 => TextStyle(
+        color: appTheme.whiteA700,
+        fontSize: 100.fSize,
+        fontWeight: FontWeight.w600,
+      ).graphik;
+  static get graphikwhiteA700SemiBold => TextStyle(
+        color: appTheme.whiteA700,
+        fontSize: 80.fSize,
+        fontWeight: FontWeight.w600,
+      ).graphik;
+// Headline text style
+  static get headlineLargeOnPrimary => theme.textTheme.headlineLarge!.copyWith(
+        color: theme.colorScheme.onPrimary.withOpacity(1),
+      );
+  static get headlineLargeOnPrimary_1 =>
+      theme.textTheme.headlineLarge!.copyWith(
+        color: theme.colorScheme.onPrimary.withOpacity(1),
+      );
+  static get headlineSmallRobotoGray90003 =>
+      theme.textTheme.headlineSmall!.roboto.copyWith(
+        color: appTheme.gray90003,
+        fontWeight: FontWeight.w400,
+      );
+  static get headlineSmallRubik => theme.textTheme.headlineSmall!.rubik;
+  static get headlineSmallRubikOnPrimary =>
+      theme.textTheme.headlineSmall!.rubik.copyWith(
+        color: theme.colorScheme.onPrimary.withOpacity(1),
+      );
+  static get headlineSmallSFProRoundedGray90003 =>
+      theme.textTheme.headlineSmall!.sFProRounded.copyWith(
+        color: appTheme.gray90003,
+        fontWeight: FontWeight.w600,
+      );
+  static get headlineSmallSFProRoundedGray90003Regular =>
+      theme.textTheme.headlineSmall!.sFProRounded.copyWith(
+        color: appTheme.gray90003,
+        fontWeight: FontWeight.w400,
+      );
+// Label text style
+  static get labelLargeGray300 => theme.textTheme.labelLarge!.copyWith(
+        color: appTheme.gray300,
+      );
+  static get labelLargeOnPrimary => theme.textTheme.labelLarge!.copyWith(
+        color: theme.colorScheme.onPrimary.withOpacity(1),
+      );
+  static get labelLargeRed100 => theme.textTheme.labelLarge!.copyWith(
+        color: appTheme.red100,
+      );
+  static get labelLargeWhiteA700 => theme.textTheme.labelLarge!.copyWith(
+        color: appTheme.whiteA700.withOpacity(0.5),
+      );
+  static get labelLargeWhiteA700_1 => theme.textTheme.labelLarge!.copyWith(
+        color: appTheme.whiteA700,
+      );
+// Title text style
+  static get titleLargePrimary => theme.textTheme.titleLarge!.copyWith(
+        color: theme.colorScheme.primary,
+      );
+  static get titleLargeWhiteA700 => theme.textTheme.titleLarge!.copyWith(
+        color: appTheme.whiteA700,
+      );
+  static get titleMediumGraphik => theme.textTheme.titleMedium!.graphik;
+  static get titleMediumPink900 => theme.textTheme.titleMedium!.copyWith(
+        color: appTheme.pink900,
+        fontSize: 18.fSize,
+      );
+  static get titleMediumPrimaryContainer =>
+      theme.textTheme.titleMedium!.copyWith(
+        color: theme.colorScheme.primaryContainer,
+      );
+  static get titleMediumWhiteA700 => theme.textTheme.titleMedium!.copyWith(
+        color: appTheme.whiteA700,
+      );
+  static get titleMediumwhiteA70018 => theme.textTheme.titleMedium!.copyWith(
+        color: appTheme.whiteA700,
+        fontSize: 18.fSize,
+      );
+  static get titleMediumWhiteA700Bold => theme.textTheme.titleMedium!.copyWith(
+        color: appTheme.whiteA700,
+        fontWeight: FontWeight.w700,
+      );
+  static get titleSmallPink900 => theme.textTheme.titleSmall!.copyWith(
+        color: appTheme.pink900.withOpacity(0.5),
+      );
+  static get titleSmallPrimary => theme.textTheme.titleSmall!.copyWith(
+        color: theme.colorScheme.primary,
+      );
+  static get titleSmallPrimaryBold => theme.textTheme.titleSmall!.copyWith(
+        color: theme.colorScheme.primary,
+        fontWeight: FontWeight.w700,
+      );
+  static get titleSmallwhiteA700 => theme.textTheme.titleSmall!.copyWith(
+        color: appTheme.whiteA700.withOpacity(0.8),
+      );
+}
