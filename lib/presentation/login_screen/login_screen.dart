@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:quizzfly_application_flutter/presentation/register_screen/register_screen.dart';
 import '../../core/app_export.dart';
 import '../../core/utils/validation_functions.dart';
 import '../../domain/googleauth/google_auth_helper.dart';
@@ -28,7 +27,7 @@ class LoginScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-           backgroundColor: appTheme.whiteA700,
+        backgroundColor: appTheme.whiteA700,
         body: SizedBox(
           width: double.maxFinite,
           child: SingleChildScrollView(
@@ -78,7 +77,7 @@ class LoginScreen extends StatelessWidget {
                     leftIcon: Container(
                       margin: EdgeInsets.only(right: 16.h),
                       child: CustomImageView(
-                    imagePath: ImageConstant.imageGoogle,
+                        imagePath: ImageConstant.imageGoogle,
                         height: 24.h,
                         width: 24.h,
                         fit: BoxFit.contain,
@@ -116,11 +115,13 @@ class LoginScreen extends StatelessWidget {
                   style: CustomTextStyles.headlineSmallSFProRoundedGray90003,
                 ),
                 WidgetSpan(
-                  child: SizedBox(width: 10), // Add a SizedBox to simulate padding
+                  child:
+                      SizedBox(width: 10), // Add a SizedBox to simulate padding
                 ),
                 TextSpan(
                   text: "lbl".tr,
-                  style: CustomTextStyles.headlineSmallSFProRoundedGray90003Regular,
+                  style: CustomTextStyles
+                      .headlineSmallSFProRoundedGray90003Regular,
                 )
               ],
             ),
@@ -132,7 +133,7 @@ class LoginScreen extends StatelessWidget {
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
             style:
-              CustomTextStyles.bodyMediumSFProDisplayErrorContainer.copyWith(
+                CustomTextStyles.bodyMediumSFProDisplayErrorContainer.copyWith(
               height: 1.60,
             ),
           )
@@ -143,92 +144,106 @@ class LoginScreen extends StatelessWidget {
 
   /// Section Widget
   Widget _buildEmailInputSection(BuildContext context) {
+    final _formKey = GlobalKey<FormState>();
     return SizedBox(
-      width: double.maxFinite,
-      child: Column(
-        children: [
-          SizedBox(
-            width: double.maxFinite,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "lbl_email".tr,
-                  style: CustomTextStyles.bodyMediumRobotoGray90003,
-                )
-              ],
-            ),
-          ),
-          SizedBox(height: 4.h),
-          BlocSelector<LoginBloc, LoginState, TextEditingController?>(
-            selector: (state) => state.emailController,
-            builder: (context, emailController) {
-              return CustomTextFormField(
-                controller: emailController,
-                hintText: "msg_example_email_com".tr,
-                textInputType: TextInputType.emailAddress,
-                contentPadding: EdgeInsets.symmetric(
-                  horizontal: 14.h,
-                  vertical: 12.h,
+        width: double.maxFinite,
+        child: Form(
+          key: _formKey,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          child: Column(
+            children: [
+              SizedBox(
+                width: double.maxFinite,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "lbl_email".tr,
+                      style: CustomTextStyles.bodyMediumRobotoGray90003,
+                    )
+                  ],
                 ),
-                validator: (value) {
-                  if (value == null ||
-                      (!isValidEmail(value, isRequired: true))) {
-                    return "err_msg_please_enter_valid_email";
-                  }
-                  return null;
+              ),
+              SizedBox(height: 4.h),
+              BlocSelector<LoginBloc, LoginState, TextEditingController?>(
+                selector: (state) => state.emailController,
+                builder: (context, emailController) {
+                  return CustomTextFormField(
+                    controller: emailController,
+                    hintText: "msg_example_email_com".tr,
+                    textInputType: TextInputType.emailAddress,
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: 14.h,
+                      vertical: 12.h,
+                    ),
+                    validator: (value) {
+                      if (value == null ||
+                          (!isValidEmail(value, isRequired: true))) {
+                        return "err_msg_please_enter_valid_email".tr;
+                      }
+                      return null;
+                    },
+                  );
                 },
-              );
-            },
-          )
-        ],
-      ),
-    );
+              )
+            ],
+          ),
+        )
+      );
   }
 
   /// Section Widget
   Widget _buildPasswordInputSection(BuildContext context) {
+    final _formKey = GlobalKey<FormState>();
     return SizedBox(
       width: double.maxFinite,
-      child: Column(
-        children: [
-          SizedBox(
-            width: double.maxFinite,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "lbl_password".tr,
+      child: Form(
+        key: _formKey,
+        autovalidateMode:
+            AutovalidateMode.onUserInteraction, // Enable auto-validation
+        child: Column(
+          children: [
+            SizedBox(
+              width: double.maxFinite,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "lbl_password".tr,
                     style: CustomTextStyles.bodyMediumRobotoGray90003,
-                )
-              ],
+                  ),
+                ],
+              ),
             ),
-          ),
-          SizedBox(height: 4.h),
-          BlocSelector<LoginBloc, LoginState, TextEditingController?>(
-            selector: (state) => state.passwordController,
-            builder: (context, passwordController) {
-              return CustomTextFormField(
-                controller: passwordController,
-                hintText: "msg_at_least_8_characters".tr,
-                textInputAction: TextInputAction.done,
-                textInputType: TextInputType.visiblePassword,
-                obscureText: true,
-                contentPadding: EdgeInsets.symmetric(
-                  horizontal: 14.h,
-                  vertical: 12.h,
-                ),
-                validator: (value) {
-                  if (value == null ||
-                      (!isValidPassword(value, isRequired: true))) {
-                    return "err_msg_please_enter_valid_password";
-                  }
-                  return null;
-                },
-              );
-            },
-          )
-        ],
+            SizedBox(height: 4.h),
+            BlocSelector<LoginBloc, LoginState, TextEditingController?>(
+              selector: (state) => state.passwordController,
+              builder: (context, passwordController) {
+                return CustomTextFormField(
+                  controller: passwordController,
+                  hintText: "msg_at_least_8_characters".tr,
+                  textInputAction: TextInputAction.done,
+                  textInputType: TextInputType.visiblePassword,
+                  obscureText: true,
+                  contentPadding: EdgeInsets.symmetric(
+                    horizontal: 14.h,
+                    vertical: 12.h,
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "err_msg_please_enter_valid_password"
+                          .tr; // Validate null
+                    } else if (value.length < 8) {
+                      return "msg_at_least_8_characters"
+                          .tr; // Validate length < 8
+                    }
+                    return null; // Return null if validation passes
+                  },
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -246,7 +261,7 @@ class LoginScreen extends StatelessWidget {
               padding: EdgeInsets.only(top: 8.h),
               child: Divider(
                 color: appTheme.blueGray100,
-                  ),
+              ),
             ),
           ),
           SizedBox(width: 16.h),
@@ -262,8 +277,8 @@ class LoginScreen extends StatelessWidget {
             child: Padding(
               padding: EdgeInsets.only(top: 8.h),
               child: Divider(
-                    color: appTheme.blueGray100,
-                  ),
+                color: appTheme.blueGray100,
+              ),
             ),
           )
         ],

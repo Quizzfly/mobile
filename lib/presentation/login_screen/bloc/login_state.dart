@@ -18,12 +18,12 @@ class LoginState extends Equatable {
   LoginState copyWith({
     TextEditingController? emailController,
     TextEditingController? passwordController,
-    LoginModel? loginModelobj,
+    LoginModel? loginModelObj,
   }) {
     return LoginState(
       emailController: emailController ?? this.emailController,
       passwordController: passwordController ?? this.passwordController,
-      loginModelObj: loginModelobj ?? this.loginModelObj,
+      loginModelObj: loginModelObj ?? this.loginModelObj,
     );
   }
 }

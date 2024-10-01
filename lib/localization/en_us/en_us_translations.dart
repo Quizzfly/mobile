@@ -124,6 +124,9 @@ final Map<String, String> enUs = {
   "msg_today_is_a_new_day":
       "Today is a new day. It's your day. You shape it. \nSign in to start managing your project",
   "msg_welcome_back": "Welcome Back",
+  "err_msg_please_enter_valid_password": "Please enter valid password",
+  "err_msg_please_enter_valid_email" : "Please enter valid email",
+  "err_msg_please_enter_valid_name" : "Please enter valid name",
 
 //Network error
   "msg_newtwork_err": "Network Error",

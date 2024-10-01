@@ -140,137 +140,153 @@ class RegisterScreen extends StatelessWidget {
 
   /// Section Widget
   Widget _buildNameInputSection(BuildContext context) {
+    final _formKey = GlobalKey<FormState>();
     return SizedBox(
       width: double.maxFinite,
-      child: Column(
-        children: [
-          SizedBox(
-            width: double.maxFinite,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "lbl_name".tr,
-                  style: CustomTextStyles.bodyMediumRobotoGray90003,
-                )
-              ],
+      child: Form(
+        key: _formKey,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        child: Column(
+          children: [
+            SizedBox(
+              width: double.maxFinite,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "lbl_name".tr,
+                    style: CustomTextStyles.bodyMediumRobotoGray90003,
+                  )
+                ],
+              ),
             ),
-          ),
-          SizedBox(height: 4.h),
-          BlocSelector<RegisterBloc, RegisterState, TextEditingController?>(
-            selector: (state) => state.nameController,
-            builder: (context, nameController) {
-              return CustomTextFormField(
-                controller: nameController,
-                hintText: "lbl_enter_your_name".tr,
-                contentPadding: EdgeInsets.symmetric(
-                  horizontal: 14.h,
-                  vertical: 12.h,
-                ),
-                validator: (value) {
-                  if (!isText(value)) {
-                    return "err_msg_please_enter_valid_text";
-                  }
-                  return null;
-                },
-              );
-            },
-          )
-        ],
+            SizedBox(height: 4.h),
+            BlocSelector<RegisterBloc, RegisterState, TextEditingController?>(
+              selector: (state) => state.nameController,
+              builder: (context, nameController) {
+                return CustomTextFormField(
+                  controller: nameController,
+                  hintText: "lbl_enter_your_name".tr,
+                  contentPadding: EdgeInsets.symmetric(
+                    horizontal: 14.h,
+                    vertical: 12.h,
+                  ),
+                  validator: (value) {
+                    if (value == null || !isText(value, isRequired: true)) {
+                      return "err_msg_please_enter_valid_name".tr;
+                    }
+                    return null;
+                  },
+                );
+              },
+            )
+          ],
+        ),
       ),
     );
   }
 
   /// Section Widget
   Widget _buildEmailInputSection(BuildContext context) {
+    final _formKey = GlobalKey<FormState>();
     return SizedBox(
-      width: double.maxFinite,
-      child: Column(
-        children: [
-          SizedBox(
-            width: double.maxFinite,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "lbl_email".tr,
-                  style: CustomTextStyles.bodyMediumRobotoGray90003,
-                )
-              ],
-            ),
-          ),
-          SizedBox(height: 4.h),
-          BlocSelector<RegisterBloc, RegisterState, TextEditingController?>(
-            selector: (state) => state.emailController,
-            builder: (context, emailcontroller) {
-              return CustomTextFormField(
-                controller: emailcontroller,
-                hintText: "msg_example_email_com".tr,
-                textInputType: TextInputType.emailAddress,
-                contentPadding: EdgeInsets.symmetric(
-                  horizontal: 14.h,
-                  vertical: 12.h,
+        width: double.maxFinite,
+        child: Form(
+          key: _formKey,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          child: Column(
+            children: [
+              SizedBox(
+                width: double.maxFinite,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "lbl_email".tr,
+                      style: CustomTextStyles.bodyMediumRobotoGray90003,
+                    )
+                  ],
                 ),
-                validator: (value) {
-                  if (value == null ||
-                      (!isValidEmail(value, isRequired: true))) {
-                  } else {
-                    return "err_msg_please_enter_valid_email";
-                  }
-                  return null;
+              ),
+              SizedBox(height: 4.h),
+              BlocSelector<RegisterBloc, RegisterState, TextEditingController?>(
+                selector: (state) => state.emailController,
+                builder: (context, emailController) {
+                  return CustomTextFormField(
+                    controller: emailController,
+                    hintText: "msg_example_email_com".tr,
+                    textInputType: TextInputType.emailAddress,
+                    contentPadding: EdgeInsets.symmetric(
+                      horizontal: 14.h,
+                      vertical: 12.h,
+                    ),
+                    validator: (value) {
+                      if (value == null ||
+                          (!isValidEmail(value, isRequired: true))) {
+                        return "err_msg_please_enter_valid_email".tr;
+                      }
+                      return null;
+                    },
+                  );
                 },
-              );
-            },
-          )
-        ],
-      ),
-    );
+              )
+            ],
+          ),
+        ));
   }
 
   /// Section Widget
   Widget _buildPasswordInputSection(BuildContext context) {
+    final _formKey = GlobalKey<FormState>();
     return SizedBox(
       width: double.maxFinite,
-      child: Column(
-        children: [
-          SizedBox(
-            width: double.maxFinite,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "lbl_password".tr,
-                  style: CustomTextStyles.bodyMediumRobotoGray90003,
-                )
-              ],
+      child: Form(
+        key: _formKey,
+        autovalidateMode:
+            AutovalidateMode.onUserInteraction, // Enable auto-validation
+        child: Column(
+          children: [
+            SizedBox(
+              width: double.maxFinite,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "lbl_password".tr,
+                    style: CustomTextStyles.bodyMediumRobotoGray90003,
+                  ),
+                ],
+              ),
             ),
-          ),
-          SizedBox(height: 4.h),
-          BlocSelector<RegisterBloc, RegisterState, TextEditingController?>(
-            selector: (state) => state.passwordController,
-            builder: (context, passwordController) {
-              return CustomTextFormField(
-                controller: passwordController,
-                hintText: "msg_at_least_8_characters".tr,
-                textInputAction: TextInputAction.done,
-                textInputType: TextInputType.visiblePassword,
-                obscureText: true,
-                contentPadding: EdgeInsets.symmetric(
-                  horizontal: 14.h,
-                  vertical: 12.h,
-                ),
-                validator: (value) {
-                  if (value == null ||
-                      (!isValidEmail(value, isRequired: true))) {
-                  } else {
-                    return "err_msg_please_enter_valid_password";
-                  }
-                  return null;
-                },
-              );
-            },
-          )
-        ],
+            SizedBox(height: 4.h),
+            BlocSelector<RegisterBloc, RegisterState, TextEditingController?>(
+              selector: (state) => state.passwordController,
+              builder: (context, passwordController) {
+                return CustomTextFormField(
+                  controller: passwordController,
+                  hintText: "msg_at_least_8_characters".tr,
+                  textInputAction: TextInputAction.done,
+                  textInputType: TextInputType.visiblePassword,
+                  obscureText: true,
+                  contentPadding: EdgeInsets.symmetric(
+                    horizontal: 14.h,
+                    vertical: 12.h,
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "err_msg_please_enter_valid_password"
+                          .tr; // Validate null
+                    } else if (value.length < 8) {
+                      return "msg_at_least_8_characters"
+                          .tr; // Validate length < 8
+                    }
+                    return null; // Return null if validation passes
+                  },
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

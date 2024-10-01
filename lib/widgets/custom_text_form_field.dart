@@ -2,36 +2,36 @@ import 'package:flutter/material.dart';
 import '../core/app_export.dart';
 
 class CustomTextFormField extends StatelessWidget {
-  CustomTextFormField(
-      {Key? key,
-      this.alignment,
-      this.width,
-      this.boxDecoration,
-      this.scrollPadding,
-      this.controller,
-      this.focusNode,
-      this.autofocus = false,
-      this.textstyle,
-      this.obscureText = false,
-      this.readonly = false,
-      this.onTap,
-      this.textInputAction = TextInputAction.next,
-      this.textInputType = TextInputType.text,
-      this.maxLines,
-      this.hintText,
-      this.hintStyle,
-      this.prefix,
-      this.prefixConstraints,
-      this.suffix,
-      this.suffixConstraints,
-      this.contentPadding,
-      this.borderDecoration,
-      this.fillcolor,
-      this.filled = true,
-      this.validator})
-      : super(
-          key: key,
-        );
+  CustomTextFormField({
+    Key? key,
+    this.alignment,
+    this.width,
+    this.boxDecoration,
+    this.scrollPadding,
+    this.controller,
+    this.focusNode,
+    this.autofocus = false,
+    this.textstyle,
+    this.obscureText = false,
+    this.readonly = false,
+    this.onTap,
+    this.onChanged, 
+    this.textInputAction = TextInputAction.next,
+    this.textInputType = TextInputType.text,
+    this.maxLines,
+    this.hintText,
+    this.hintStyle,
+    this.prefix,
+    this.prefixConstraints,
+    this.suffix,
+    this.suffixConstraints,
+    this.contentPadding,
+    this.borderDecoration,
+    this.fillcolor,
+    this.filled = true,
+    this.validator,
+  }) : super(key: key);
+
   final Alignment? alignment;
   final double? width;
   final BoxDecoration? boxDecoration;
@@ -43,6 +43,7 @@ class CustomTextFormField extends StatelessWidget {
   final bool? obscureText;
   final bool? readonly;
   final VoidCallback? onTap;
+  final Function(String)? onChanged; // Khai báo kiểu Function cho onChanged
   final TextInputAction? textInputAction;
   final TextInputType? textInputType;
   final int? maxLines;
@@ -57,12 +58,14 @@ class CustomTextFormField extends StatelessWidget {
   final Color? fillcolor;
   final bool? filled;
   final FormFieldValidator<String>? validator;
+
   @override
   Widget build(BuildContext context) {
     return alignment != null
         ? Align(
             alignment: alignment ?? Alignment.center,
-            child: textFormFieldWidget(context))
+            child: textFormFieldWidget(context),
+          )
         : textFormFieldWidget(context);
   }
 
@@ -70,8 +73,7 @@ class CustomTextFormField extends StatelessWidget {
         width: width ?? double.maxFinite,
         decoration: boxDecoration,
         child: TextFormField(
-          scrollPadding:
-              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          scrollPadding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
           controller: controller,
           focusNode: focusNode,
           onTapOutside: (event) {
@@ -88,6 +90,7 @@ class CustomTextFormField extends StatelessWidget {
           onTap: () {
             onTap?.call();
           },
+          onChanged: onChanged, // Sử dụng onChanged ở đây
           textInputAction: textInputAction,
           keyboardType: textInputType,
           maxLines: maxLines ?? 1,
@@ -95,6 +98,7 @@ class CustomTextFormField extends StatelessWidget {
           validator: validator,
         ),
       );
+
   InputDecoration get decoration => InputDecoration(
         hintText: hintText ?? "",
         hintStyle: hintStyle ?? CustomTextStyles.bodyMediumRobotoBluegray30001,
