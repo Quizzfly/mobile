@@ -57,9 +57,14 @@ class LoginScreen extends StatelessWidget {
                   SizedBox(height: 12.h),
                   _buildPasswordInputSection(context),
                   SizedBox(height: 14.h),
-                  Text(
-                    "msg_forgot_password".tr,
-                    style: CustomTextStyles.bodyMediumRobotoPrimary,
+                  InkWell(
+                    onTap: () {
+                      AppRoutes.navigateToForgotPasswordScreen(context);
+                    },
+                    child: Text(
+                      "msg_forgot_password".tr,
+                      style: CustomTextStyles.bodyMediumRobotoPrimary,
+                    ),
                   ),
                   SizedBox(height: 12.h),
                   CustomElevatedButton(
@@ -188,8 +193,7 @@ class LoginScreen extends StatelessWidget {
               )
             ],
           ),
-        )
-      );
+        ));
   }
 
   /// Section Widget
@@ -305,6 +309,10 @@ class LoginScreen extends StatelessWidget {
                   TextSpan(
                     text: "msg_don_t_you_have_an2".tr,
                     style: CustomTextStyles.bodyLargeErrorContainer,
+                  ),
+                  WidgetSpan(
+                    child: SizedBox(
+                        width: 10), // Add a SizedBox to simulate padding
                   ),
                   TextSpan(
                     text: "lbl_sign_up".tr,

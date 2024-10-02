@@ -1,6 +1,7 @@
 # quizzfly_application_flutter
 
 ### Table of contents
+```
 -[System requirements] (#system-requirements)
 -[Figma design guidelines for better UI accuracy] (#figma-design-guideline-for-better-accuracy)
 -[Check the UI of the entire app] (#app-navigations)
@@ -9,6 +10,7 @@
 -[How you can improve code readability?] (#how-you-can-improve-the-readability-of-code)
 -[Libraries and tools used] (#libraries-and-tools-used)
 -[Support] (#support)
+```
 
 ### System requirements
 Dart SDK Version 3.3.2 or greater.
@@ -24,6 +26,7 @@ Check the UI of all the app screens from a single place by setting up the 'initi
 ### Application structure
 After successful build, your application structure should look like this:
 
+```
 |- android                  - It contains files required to run the application on an Android platform.
 |- assets                   - It contains all images and fonts of your application.
 |- ios                      - It contains files required to run the application on an ios platform.
@@ -38,13 +41,13 @@ After successful build, your application structure should look like this:
     |- widgets/             - It contains all custom widget classes
     |- data                 - It contains all data-related operations, particularly managing API interactions and local data handling.
     |- main.dart            - Starting point of the application
-    
+```
 ### How to format your code?
 
 - if your code is not formatted then run following command in your terminal to format code
-
+```
   dart format .
-
+```
 ### How you can improve code readability?
 Resolve the errors and warnings that are shown in the application.
 

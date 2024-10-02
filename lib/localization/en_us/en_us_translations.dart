@@ -75,9 +75,14 @@ final Map<String, String> enUs = {
 // Register Screen
   "lbl_enter_your_name": "Enter your name",
   "lbl_name": "Name",
+  "lbl_register_account":"Register Account",
 
 // Login Screen
   "lbl_sign_in": "Sign in", "msg_forgot_password": "Forgot Password?",
+
+//Forgot Password Screen
+  "title_forgot_password":"Forgot Password",
+  "lbl_enter_your_email_get_reset":"Enter your email to get reset password",
 
 // Common String
   "lbl": "👋",
@@ -108,6 +113,7 @@ final Map<String, String> enUs = {
   "lbl_points": "POINTS",
   "lbl_see_all": "See all",
   "lbl_sign_up": "Sign up",
+  "lbl_submit": "Submit",
   "lbl_skylar_geidt": "Skylar Geidt",
   "lbl _stats": "Stats",
   "lbl_weekly": "Weekly",

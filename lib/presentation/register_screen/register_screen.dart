@@ -107,7 +107,7 @@ class RegisterScreen extends StatelessWidget {
             text: TextSpan(
               children: [
                 TextSpan(
-                  text: "msg_welcome_back".tr,
+                  text: "lbl_register_account".tr,
                   style: CustomTextStyles.headlineSmallSFProRoundedGray90003,
                 ),
                 WidgetSpan(
