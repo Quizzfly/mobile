@@ -57,9 +57,14 @@ class LoginScreen extends StatelessWidget {
                   SizedBox(height: 12.h),
                   _buildPasswordInputSection(context),
                   SizedBox(height: 14.h),
-                  Text(
-                    "msg_forgot_password".tr,
-                    style: CustomTextStyles.bodyMediumRobotoPrimary,
+                  InkWell(
+                    onTap: () {
+                      AppRoutes.navigateToForgotPasswordScreen(context);
+                    },
+                    child: Text(
+                      "msg_forgot_password".tr,
+                      style: CustomTextStyles.bodyMediumRobotoPrimary,
+                    ),
                   ),
                   SizedBox(height: 12.h),
                   CustomElevatedButton(
@@ -188,63 +193,76 @@ class LoginScreen extends StatelessWidget {
               )
             ],
           ),
-        )
-      );
+        ));
   }
 
-  /// Section Widget
+  //Section widget
   Widget _buildPasswordInputSection(BuildContext context) {
     final _formKey = GlobalKey<FormState>();
-    return SizedBox(
-      width: double.maxFinite,
-      child: Form(
-        key: _formKey,
-        autovalidateMode:
-            AutovalidateMode.onUserInteraction, // Enable auto-validation
-        child: Column(
-          children: [
-            SizedBox(
-              width: double.maxFinite,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "lbl_password".tr,
-                    style: CustomTextStyles.bodyMediumRobotoGray90003,
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 4.h),
-            BlocSelector<LoginBloc, LoginState, TextEditingController?>(
-              selector: (state) => state.passwordController,
-              builder: (context, passwordController) {
-                return CustomTextFormField(
-                  controller: passwordController,
-                  hintText: "msg_at_least_8_characters".tr,
-                  textInputAction: TextInputAction.done,
-                  textInputType: TextInputType.visiblePassword,
-                  obscureText: true,
-                  contentPadding: EdgeInsets.symmetric(
-                    horizontal: 14.h,
-                    vertical: 12.h,
-                  ),
-                  validator: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "err_msg_please_enter_valid_password"
-                          .tr; // Validate null
-                    } else if (value.length < 8) {
-                      return "msg_at_least_8_characters"
-                          .tr; // Validate length < 8
-                    }
-                    return null; // Return null if validation passes
+    bool _obscureText = true; // Variable to track password visibility
+
+    return StatefulBuilder(
+      builder: (context, setState) {
+        return SizedBox(
+          width: double.maxFinite,
+          child: Form(
+            key: _formKey,
+            autovalidateMode:
+                AutovalidateMode.onUserInteraction, // Enable auto-validation
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "lbl_password".tr,
+                  style: CustomTextStyles.bodyMediumRobotoGray90003,
+                ),
+                SizedBox(height: 4.h),
+                BlocSelector<LoginBloc, LoginState,
+                    TextEditingController?>(
+                  selector: (state) => state.passwordController,
+                  builder: (context, passwordController) {
+                    return CustomTextFormField(
+                      controller: passwordController,
+                      hintText: "msg_at_least_8_characters".tr,
+                      textInputAction: TextInputAction.done,
+                      textInputType: TextInputType.visiblePassword,
+                      obscureText:
+                          _obscureText, // Use the boolean to toggle visibility
+                      contentPadding: EdgeInsets.symmetric(
+                        horizontal: 14.h,
+                        vertical: 12.h,
+                      ),
+                      suffix: IconButton(
+                        icon: Icon(
+                          _obscureText
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                        ),
+                        onPressed: () {
+                          // Toggle password visibility
+                          setState(() {
+                            _obscureText = !_obscureText;
+                          });
+                        },
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "err_msg_please_enter_valid_password"
+                              .tr; // Validate null
+                        } else if (value.length < 8) {
+                          return "msg_at_least_8_characters"
+                              .tr; // Validate length < 8
+                        }
+                        return null; // Return null if validation passes
+                      },
+                    );
                   },
-                );
-              },
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 
@@ -305,6 +323,10 @@ class LoginScreen extends StatelessWidget {
                   TextSpan(
                     text: "msg_don_t_you_have_an2".tr,
                     style: CustomTextStyles.bodyLargeErrorContainer,
+                  ),
+                  WidgetSpan(
+                    child: SizedBox(
+                        width: 10), // Add a SizedBox to simulate padding
                   ),
                   TextSpan(
                     text: "lbl_sign_up".tr,

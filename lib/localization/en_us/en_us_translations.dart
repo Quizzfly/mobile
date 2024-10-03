@@ -75,9 +75,21 @@ final Map<String, String> enUs = {
 // Register Screen
   "lbl_enter_your_name": "Enter your name",
   "lbl_name": "Name",
+  "lbl_register_account": "Register Account",
 
 // Login Screen
   "lbl_sign_in": "Sign in", "msg_forgot_password": "Forgot Password?",
+
+//Forgot Password Screen
+  "title_forgot_password": "Forgot Password",
+  "lbl_enter_your_email_get_reset": "Enter your email to get reset password",
+
+//Reset password
+  "title_reset_password": "Reset Password",
+  "lbl_enter_your_password_reset": "Enter your new password to reset password",
+  "err_msg_passwords_do_not_match": "Password do not match",
+  "lbl_new_password": "New Password",
+  "lbl_confirm_password": "Confirm Password",
 
 // Common String
   "lbl": "👋",
@@ -108,6 +120,7 @@ final Map<String, String> enUs = {
   "lbl_points": "POINTS",
   "lbl_see_all": "See all",
   "lbl_sign_up": "Sign up",
+  "lbl_submit": "Submit",
   "lbl_skylar_geidt": "Skylar Geidt",
   "lbl _stats": "Stats",
   "lbl_weekly": "Weekly",
@@ -125,8 +138,8 @@ final Map<String, String> enUs = {
       "Today is a new day. It's your day. You shape it. \nSign in to start managing your project",
   "msg_welcome_back": "Welcome Back",
   "err_msg_please_enter_valid_password": "Please enter valid password",
-  "err_msg_please_enter_valid_email" : "Please enter valid email",
-  "err_msg_please_enter_valid_name" : "Please enter valid name",
+  "err_msg_please_enter_valid_email": "Please enter valid email",
+  "err_msg_please_enter_valid_name": "Please enter valid name",
 
 //Network error
   "msg_newtwork_err": "Network Error",
