@@ -47,7 +47,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                     width: double.maxFinite,
                     radius: BorderRadius.circular(
                       20.h,
-                    ),
+                    ),  
                   ),
                   SizedBox(height: 20.h),
                   _buildWelcomeSection(context),

@@ -43,7 +43,7 @@ class CustomTextFormField extends StatelessWidget {
   final bool? obscureText;
   final bool? readonly;
   final VoidCallback? onTap;
-  final Function(String)? onChanged; // Khai báo kiểu Function cho onChanged
+  final Function(String)? onChanged; 
   final TextInputAction? textInputAction;
   final TextInputType? textInputType;
   final int? maxLines;
@@ -90,7 +90,7 @@ class CustomTextFormField extends StatelessWidget {
           onTap: () {
             onTap?.call();
           },
-          onChanged: onChanged, // Sử dụng onChanged ở đây
+          onChanged: onChanged, 
           textInputAction: textInputAction,
           keyboardType: textInputType,
           maxLines: maxLines ?? 1,
