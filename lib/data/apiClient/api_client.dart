@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import '../../core/app_export.dart';
 import '../models/login/post_login_resp.dart';
+import '../models/register/post_register_resp.dart';
 import 'network_interceptor.dart';
 
 // ignore_for_file: must_be_immutable
@@ -62,6 +63,40 @@ class ApiClient {
       } else {
         throw response.data != null
             ? PostLoginResp.fromJson(response.data)
+            : 'Something Went Wrong!';
+      }
+    } catch (error, stackTrace) {
+      ProgressDialogUtils.hideProgressDialog();
+      Logger.log(
+        error,
+        stackTrace: stackTrace,
+      );
+      rethrow;
+    }
+  }
+
+  /// Sends a POST request to the server's '{{baseUrl}}/api/v1/auth/register' endpoint
+  /// with the provided headers and request data
+  /// Returns a [PostRegisterResp] object representing the response.
+  /// Throws an error if the request fails or an exception occurs.
+  Future<PostRegisterResp> register({
+    Map<String, String> headers = const {},
+    Map requestData = const {},
+  }) async {
+    ProgressDialogUtils.showProgressDialog();
+    try {
+      await isNetworkConnected();
+      var response = await _dio.post(
+        '$url/api/v1/auth/register',
+        data: requestData,
+        options: Options(headers: headers),
+      );
+      ProgressDialogUtils.hideProgressDialog();
+      if (isSuccessCall(response)) {
+        return PostRegisterResp.fromJson(response.data);
+      } else {
+        throw response.data != null
+            ? PostRegisterResp.fromJson(response.data)
             : 'Something Went Wrong!';
       }
     } catch (error, stackTrace) {

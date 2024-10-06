@@ -196,7 +196,6 @@ class LoginScreen extends StatelessWidget {
   }
 
   //Section widget
-  //Section widget
   Widget _buildPasswordInputSection(BuildContext context) {
     bool _obscureText = true; // Variable to track password visibility
     return StatefulBuilder(
