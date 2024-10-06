@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import '../../core/app_export.dart';
 import '../models/login/post_login_resp.dart';
+import '../models/register/post_register_resp.dart';
 import 'network_interceptor.dart';
 
 // ignore_for_file: must_be_immutable
@@ -9,14 +10,14 @@ class ApiClient {
     return _apiClient;
   }
   ApiClient._internal();
-  var url = "fafa";
+  var url = "http://103.161.96.76:3000";
   static final ApiClient _apiClient = ApiClient._internal();
   final _dio =
       Dio(BaseOptions(connectTimeout: const Duration(seconds: 60), headers: {
     "Accept": "application/json",
     "Content-Type": "application/json",
     "Authorization":
-        "Bearer ey3hbGc1OiJTUzTiNilsInR5cCI6IkpXVC39.eyJpZCI6IjVZYTNMOTIONTNJODViVzEyNjU4ZjNiZSIsInVzZXJuYW1lIjoi5nVkZ2VfQ3JvbmluliwiaFeljoxNjcxNjk3MTcxfQ.hbZLXSsS6Mdj1ndhA[4rm Swe4iwYvKY1VP50515QRM"
+        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk1N2JiZWIwLTMyM2ItNGNhZi1iNDI0LTBlNWUxMzliMThjOSIsInJvbGUiOiIiLCJzZXNzaW9uSWQiOiJmZGE1Zjk3ZC02ODVhLTQ5ZDktYTJjMi1kOWFlNTFlZGQ2Y2EiLCJpYXQiOjE3MjI3NzE0MjIsImV4cCI6MTcyMjg1NzgyMn0.WjRnyeic_rxsZCSLvp1MfzpE5Bi8CYG6qeeA5OXFdbQ"
   }))
         ..interceptors.add(NetworkInterceptor());
 
@@ -62,6 +63,40 @@ class ApiClient {
       } else {
         throw response.data != null
             ? PostLoginResp.fromJson(response.data)
+            : 'Something Went Wrong!';
+      }
+    } catch (error, stackTrace) {
+      ProgressDialogUtils.hideProgressDialog();
+      Logger.log(
+        error,
+        stackTrace: stackTrace,
+      );
+      rethrow;
+    }
+  }
+
+  /// Sends a POST request to the server's '{{baseUrl}}/api/v1/auth/register' endpoint
+  /// with the provided headers and request data
+  /// Returns a [PostRegisterResp] object representing the response.
+  /// Throws an error if the request fails or an exception occurs.
+  Future<PostRegisterResp> register({
+    Map<String, String> headers = const {},
+    Map requestData = const {},
+  }) async {
+    ProgressDialogUtils.showProgressDialog();
+    try {
+      await isNetworkConnected();
+      var response = await _dio.post(
+        '$url/api/v1/auth/register',
+        data: requestData,
+        options: Options(headers: headers),
+      );
+      ProgressDialogUtils.hideProgressDialog();
+      if (isSuccessCall(response)) {
+        return PostRegisterResp.fromJson(response.data);
+      } else {
+        throw response.data != null
+            ? PostRegisterResp.fromJson(response.data)
             : 'Something Went Wrong!';
       }
     } catch (error, stackTrace) {

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore_for_file: must_be_immutable
@@ -28,6 +30,30 @@ class PrefUtils {
       return _sharedPreferences!.getString('themeData')!;
     } catch (e) {
       return 'primary';
+    }
+  }
+
+  Future<void> setAccessToken(String value) {
+    return _sharedPreferences!.setString('accessToken', value);
+  }
+
+  String getAccessToken() {
+    try {
+      return _sharedPreferences!.getString('accessToken') ?? '';
+    } catch (e) {
+      return '';
+    }
+  }
+
+  Future<void> setRefreshToken(String value) {
+    return _sharedPreferences!.setString('refreshToken', value);
+  }
+
+  String getRefreshToken() {
+    try {
+      return _sharedPreferences!.getString('refreshToken') ?? '';
+    } catch (e) {
+      return '';
     }
   }
 }
