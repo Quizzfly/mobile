@@ -196,6 +196,7 @@ class LoginScreen extends StatelessWidget {
   }
 
   //Section widget
+  //Section widget
   Widget _buildPasswordInputSection(BuildContext context) {
     bool _obscureText = true; // Variable to track password visibility
     return StatefulBuilder(
@@ -312,6 +313,10 @@ class LoginScreen extends StatelessWidget {
                   TextSpan(
                     text: "msg_don_t_you_have_an2".tr,
                     style: CustomTextStyles.bodyLargeErrorContainer,
+                  ),
+                  WidgetSpan(
+                    child: SizedBox(
+                        width: 10), // Add a SizedBox to simulate padding
                   ),
                   WidgetSpan(
                     child: SizedBox(
