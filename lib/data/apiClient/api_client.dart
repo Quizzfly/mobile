@@ -9,14 +9,14 @@ class ApiClient {
     return _apiClient;
   }
   ApiClient._internal();
-  var url = "fafa";
+  var url = "http://103.161.96.76:3000";
   static final ApiClient _apiClient = ApiClient._internal();
   final _dio =
       Dio(BaseOptions(connectTimeout: const Duration(seconds: 60), headers: {
     "Accept": "application/json",
     "Content-Type": "application/json",
     "Authorization":
-        "Bearer ey3hbGc1OiJTUzTiNilsInR5cCI6IkpXVC39.eyJpZCI6IjVZYTNMOTIONTNJODViVzEyNjU4ZjNiZSIsInVzZXJuYW1lIjoi5nVkZ2VfQ3JvbmluliwiaFeljoxNjcxNjk3MTcxfQ.hbZLXSsS6Mdj1ndhA[4rm Swe4iwYvKY1VP50515QRM"
+        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk1N2JiZWIwLTMyM2ItNGNhZi1iNDI0LTBlNWUxMzliMThjOSIsInJvbGUiOiIiLCJzZXNzaW9uSWQiOiJmZGE1Zjk3ZC02ODVhLTQ5ZDktYTJjMi1kOWFlNTFlZGQ2Y2EiLCJpYXQiOjE3MjI3NzE0MjIsImV4cCI6MTcyMjg1NzgyMn0.WjRnyeic_rxsZCSLvp1MfzpE5Bi8CYG6qeeA5OXFdbQ"
   }))
         ..interceptors.add(NetworkInterceptor());
 
