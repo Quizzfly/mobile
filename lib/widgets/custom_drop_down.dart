@@ -114,7 +114,7 @@ class CustomDropDown extends StatelessWidget {
                 ))
             .copyWith(
           borderSide: BorderSide(
-            color: theme.colorScheme.onPrimary,
+            color: theme.colorScheme.primary,
             width: 1,
           ),
         ),

@@ -98,8 +98,16 @@ class CustomTextStyles {
       theme.textTheme.bodyMedium!.roboto.copyWith(
         color: appTheme.blueGray800,
       );
+  static get bodyMediumRobotoFontGray90003 =>
+      theme.textTheme.bodyMedium!.roboto.copyWith(
+        color: appTheme.gray90003,
+        fontWeight: FontWeight.w600,
+      );
   static get bodyMediumRobotoGray90003 =>
       theme.textTheme.bodyMedium!.roboto.copyWith(
+        color: appTheme.gray90003,
+      );
+  static get bodySmallGray90001 => theme.textTheme.bodySmall!.copyWith(
         color: appTheme.gray90003,
       );
   static get bodyMediumRobotoPrimary =>
@@ -213,10 +221,12 @@ class CustomTextStyles {
         color: appTheme.whiteA700.withOpacity(0.8),
       );
   //Title text
-  static get titleSmallOnErrorContainer => theme.textTheme.titleSmall!.roboto.copyWith(
+  static get titleSmallOnErrorContainer =>
+      theme.textTheme.titleSmall!.roboto.copyWith(
         color: appTheme.whiteA700,
       );
-  static get titleSmallRobotoSansBlack900 => theme.textTheme.titleSmall!.roboto.copyWith(
+  static get titleSmallRobotoSansBlack900 =>
+      theme.textTheme.titleSmall!.roboto.copyWith(
         color: appTheme.black900,
       );
 }

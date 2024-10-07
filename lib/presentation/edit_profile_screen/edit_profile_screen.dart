@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
 import '../../core/app_export.dart';
@@ -48,7 +49,13 @@ class EditProfileScreen extends StatelessWidget {
                         children: [
                           TextSpan(
                             text: "lbl_delete_account".tr,
-                            style: CustomTextStyles.bodyMediumErrorContainer,
+                            style: CustomTextStyles.bodyMediumErrorContainer
+                                .copyWith(
+                              decoration: TextDecoration.underline,
+                              decorationColor: CustomTextStyles
+                                  .bodyMediumErrorContainer.color,
+                            ),
+                            recognizer: TapGestureRecognizer()..onTap = () {},
                           ),
                           TextSpan(
                             text: "\n\n",
@@ -57,7 +64,7 @@ class EditProfileScreen extends StatelessWidget {
                           TextSpan(
                             text: "msg_if_you_delete_your".tr,
                             style: CustomTextStyles.bodyMediumRobotoGray90003,
-                          )
+                          ),
                         ],
                       ),
                       textAlign: TextAlign.left,
@@ -184,7 +191,7 @@ class EditProfileScreen extends StatelessWidget {
               children: [
                 Text(
                   "msg_user_information".tr,
-                  style: CustomTextStyles.bodyMediumRobotoGray90003,
+                  style: CustomTextStyles.bodyMediumRobotoFontGray90003,
                 ),
                 _buildSaveButton(context),
               ],
@@ -345,7 +352,7 @@ class EditProfileScreen extends StatelessWidget {
               padding: EdgeInsets.only(left: 24.h),
               child: Text(
                 "lbl_account_detail".tr,
-                style: CustomTextStyles.bodyMediumRobotoGray90003,
+                style: CustomTextStyles.bodyMediumRobotoFontGray90003,
               ),
             ),
           ),
@@ -400,10 +407,10 @@ class EditProfileScreen extends StatelessWidget {
                               ),
                             ),
                             iconSize: 16.h,
-                            hintText: "lbl_monthly".tr,
+                            hintText: "lbl_language".tr,
                             items: editProfileModelObj?.dropdownItemList ?? [],
                             contentPadding: EdgeInsets.symmetric(
-                              horizontal: 28.h,
+                              horizontal: 10.h,
                               vertical: 12.h,
                             ),
                           );
@@ -446,10 +453,10 @@ class EditProfileScreen extends StatelessWidget {
                               ),
                             ),
                             iconSize: 16.h,
-                            hintText: "lbl_monthly".tr,
+                            hintText: "lbl_account_type".tr,
                             items: editProfileModelObj?.dropdownItemList1 ?? [],
                             contentPadding: EdgeInsets.symmetric(
-                              horizontal: 28.h,
+                              horizontal: 10.h,
                               vertical: 12.h,
                             ),
                           );
@@ -483,10 +490,10 @@ class EditProfileScreen extends StatelessWidget {
                               ),
                             ),
                             iconSize: 16.h,
-                            hintText: "lbl_monthly".tr,
+                            hintText: "msg_type_of_workplace".tr,
                             items: editProfileModelObj?.dropdownItemList2 ?? [],
                             contentPadding: EdgeInsets.symmetric(
-                              horizontal: 28.h,
+                              horizontal: 10.h,
                               vertical: 12.h,
                             ),
                           );

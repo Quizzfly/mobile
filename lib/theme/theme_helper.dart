@@ -213,7 +213,7 @@ class LightCodeColors {
   Color get gray5002 => Color(0XFFF7FBFF);
   Color get gray5003 => Color(0XFFF2FCFB);
   Color get gray900 => Color(0XFF001833);
-  Color get gray90001 => Color(0XFF2B1B17);
+  Color get gray90001 => Color(0XFF101113);
   Color get gray90002 => Color(0XFF24272D);
   Color get gray90003 => Color(0XFF0B1420);
 // Green

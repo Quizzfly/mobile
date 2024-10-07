@@ -92,16 +92,33 @@ final Map<String, String> enUs = {
 
 //Edit profile screen
   "msg_user_information": "User Information",
-  "lbl_add_picture" : "Add picture",
-  "lbl_username" : "User Name",
-  "lbl_account_detail" : "Account Detail",
-  "lbl_organization" : "Organization",
+  "lbl_add_picture": "Add picture",
+  "lbl_username": "User Name",
+  "lbl_account_detail": "Account Detail",
+  "lbl_organization": "Organization",
   "lbl_language": "Language",
   "lbl_monthly": "Monthly",
   "lbl_account_type": "Account type",
-  "msg_type_of_workplace" : "Type of workplace",
-  "lbl_delete_account" : "Delete account",
-  "msg_if_you_delete_your": "If you delete your account, you'll lose access to all the quizzfly you created",
+  "msg_type_of_workplace": "Type of workplace",
+  "lbl_delete_account": "Delete account",
+  "msg_if_you_delete_your":
+      "If you delete your account, you'll lose access to all the quizzfly you created",
+
+//Privacy screen
+  "lbl_notification": "Notification",
+  "msg_email_me_when_someone": "Email me when someone:",
+  "msg_favourites_your": "Favourites your quizzfly",
+  "msg_features_your_quizzfly": "Features your quizzfly to other users",
+  "msg_i_have_read_and4":
+      "I have read and agree with the quizzfly? Terms and conditions and privacy policy and agree to quizzfly! collecting and processing my personal data as described in the privacy policy",
+  "msg_i_want_to_receive":
+      "I want to receive marketing messages with recommendations and other relevant information from quizzfly!",
+  "msg_i_want_to_receive2":
+      "I want to receive relevant information, exclusive invitations and special offers by quizzfly from third party companies. Quizzfly will never share my personal information with other companies.",
+  "msg_privacy_and_marketing": "Privacy and marketing",
+  "msg_shares_a_quizzfly": "Shares a quizzfly with you",
+  "msg_shares_your_quizzfly": "Shares your quizzfly with other users",
+
 // Common String
   "lbl": "👋",
   "lbl_1": "1",
