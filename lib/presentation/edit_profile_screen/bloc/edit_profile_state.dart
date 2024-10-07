@@ -3,16 +3,17 @@ part of 'edit_profile_bloc.dart';
 /// Represents the state of EditProfile in the application.
 // ignore_for_file: must_be_immutable
 class EditProfileState extends Equatable {
-  EditProfileState(
-      {this.usernameInputController,
-      this.nameInputController,
-      this.emailInputController,
-      this.organizationInputController,
-      this.selectedDropDownValue,
-      this.selectedDropDownValue1,
-      this.selectedDropDownValue2,
-      this.editProfileModelObj,
-      this.isSaveButtonEnabled = false});
+  EditProfileState({
+    this.usernameInputController,
+    this.nameInputController,
+    this.emailInputController,
+    this.organizationInputController,
+    this.selectedDropDownValue,
+    this.selectedDropDownValue1,
+    this.selectedDropDownValue2,
+    this.editProfileModelObj,
+    this.isSaveButtonEnabled = false,
+  });
   TextEditingController? usernameInputController;
   TextEditingController? nameInputController;
   TextEditingController? emailInputController;
@@ -22,7 +23,6 @@ class EditProfileState extends Equatable {
   SelectionPopupModel? selectedDropDownValue2;
   EditProfileModel? editProfileModelObj;
   bool? isSaveButtonEnabled;
-
 
   @override
   List<Object?> get props => [
@@ -34,7 +34,7 @@ class EditProfileState extends Equatable {
         selectedDropDownValue1,
         selectedDropDownValue2,
         editProfileModelObj,
-        isSaveButtonEnabled
+        isSaveButtonEnabled,
       ];
   EditProfileState copyWith({
     TextEditingController? usernameInputController,
@@ -46,7 +46,6 @@ class EditProfileState extends Equatable {
     SelectionPopupModel? selectedDropDownValue2,
     EditProfileModel? editProfileModelObj,
     bool? isSaveButtonEnabled,
-
   }) {
     return EditProfileState(
       usernameInputController:

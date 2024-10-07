@@ -149,6 +149,11 @@ class CustomTextStyles {
         color: appTheme.gray90003,
         fontWeight: FontWeight.w400,
       );
+  static get headlineSmallRobotoBlueGray10001 =>
+      theme.textTheme.headlineSmall!.roboto.copyWith(
+        color: appTheme.blueGray10001,
+        fontWeight: FontWeight.w800,
+      );
   static get headlineSmallRubik => theme.textTheme.headlineSmall!.rubik;
   static get headlineSmallRubikOnPrimary =>
       theme.textTheme.headlineSmall!.rubik.copyWith(

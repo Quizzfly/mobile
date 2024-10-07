@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quizzfly_application_flutter/presentation/profile_setting_screen/profile_setting_screen.dart';
 import '../presentation/edit_profile_screen/edit_profile_screen.dart';
 import '../presentation/forgot_password_screen/forgot_password_screen.dart';
 // import '../presentation/app_navigation_screen/app_navigation_screen.dart';
@@ -16,6 +17,8 @@ class AppRoutes {
   static const String resetPassWordScreen = '/reset_password_screen';
   static const String editProfileScreen = '/edit_profile_screen';
   static const String privacyScreen = '/privacy_screen';
+    static const String profileSettingScreen = '/profile_setting_screen';
+
   static Map<String, WidgetBuilder> get routes => {
         loginScreen: LoginScreen.builder,
         registerScreen: RegisterScreen.builder,
@@ -58,7 +61,7 @@ class AppRoutes {
         transitionDuration:
             const Duration(milliseconds: 400), // Set duration to 400ms
         pageBuilder: (context, animation, secondaryAnimation) =>
-            PrivacyScreen.builder(context),
+            ProfileSettingScreen.builder(context),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           const begin = Offset(1.0, 0.0); // Slide from right to left
           const end = Offset.zero;
