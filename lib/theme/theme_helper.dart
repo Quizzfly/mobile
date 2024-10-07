@@ -1,4 +1,6 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import '../core/app_export.dart';
 
 LightCodeColors get appTheme => ThemeHelper().themeColor();
@@ -163,6 +165,8 @@ class ColorSchemes {
 
 /// Class containing custom Colors for a lightCode theme.
 class LightCodeColors {
+//Black
+  Color get black900 => Color(0XFF000000);
 // Amber
   Color get amber300 => Color(0XFFFFD54B);
   Color get amberA200 => Color(0XFFFFC83D);
@@ -180,6 +184,7 @@ class LightCodeColors {
   Color get blueGray400 => Color(0XFF858494);
   Color get blueGray500 => Color(0XFF726E96);
   Color get blueGray800 => Color(0XFF294956);
+  Color get blueGray50 => Color(0XFFE9EEF4);
   Color get blueGray900 => Color(0XFF112830);
 // Cyan
   Color get cyan200 => Color(0XFF83E6D0);

@@ -14,6 +14,18 @@ extension on TextStyle {
     );
   }
 
+  TextStyle get inter {
+    return copyWith(
+      fontFamily: 'Inter',
+    );
+  }
+
+  TextStyle get plusJakartaSans {
+    return copyWith(
+      fontFamily: 'Plus Jakarta Sans',
+    );
+  }
+
   TextStyle get sFProDisplay {
     return copyWith(
       fontFamily: 'SF Pro Display',
@@ -46,6 +58,12 @@ class CustomTextStyles {
       );
   static get bodyLargeErrorContainer_1 => theme.textTheme.bodyLarge!.copyWith(
         color: theme.colorScheme.errorContainer,
+      );
+  static get bodyMediumErrorContainer => theme.textTheme.bodyMedium!.copyWith(
+        color: appTheme.red700,
+      );
+  static get bodyMediumBlack900_1 => theme.textTheme.bodyMedium!.copyWith(
+        color: appTheme.black900,
       );
   static get bodyLargePrimary => theme.textTheme.bodyLarge!.copyWith(
         color: theme.colorScheme.primary,
@@ -191,7 +209,14 @@ class CustomTextStyles {
         color: theme.colorScheme.primary,
         fontWeight: FontWeight.w700,
       );
-  static get titleSmallwhiteA700 => theme.textTheme.titleSmall!.copyWith(
+  static get titleSmallWhiteA700 => theme.textTheme.titleSmall!.copyWith(
         color: appTheme.whiteA700.withOpacity(0.8),
+      );
+  //Title text
+  static get titleSmallOnErrorContainer => theme.textTheme.titleSmall!.roboto.copyWith(
+        color: appTheme.whiteA700,
+      );
+  static get titleSmallRobotoSansBlack900 => theme.textTheme.titleSmall!.roboto.copyWith(
+        color: appTheme.black900,
       );
 }
