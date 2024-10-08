@@ -7,6 +7,7 @@ import '../../widgets/app_bar/appbar_title.dart';
 import '../../widgets/app_bar/custom_app_bar.dart';
 // import '../billing_page/billing_page.dart';
 // import '../change_password_page/change_password_page.dart';
+import '../change_password_screen/change_password_screen.dart';
 import "../privacy_screen/privacy_screen.dart";
 
 class ProfileSettingScreen extends StatefulWidget {
@@ -30,12 +31,12 @@ class ProfileSettingScreen extends StatefulWidget {
 // ignore_for_file: must_be_immutable
 class ProfileSettingScreenState extends State<ProfileSettingScreen>
     with TickerProviderStateMixin {
-  late TabController tabviewController;
+  late TabController tabViewController;
   int tabIndex = 0;
   @override
   void initState() {
     super.initState();
-    tabviewController = TabController(length: 4, vsync: this);
+    tabViewController = TabController(length: 4, vsync: this);
   }
 
   @override
@@ -44,9 +45,6 @@ class ProfileSettingScreenState extends State<ProfileSettingScreen>
       child: Scaffold(
         body: Container(
           width: double.maxFinite,
-          decoration: BoxDecoration(
-            color: theme.colorScheme.onErrorContainer,
-          ),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
@@ -54,11 +52,11 @@ class ProfileSettingScreenState extends State<ProfileSettingScreen>
               Expanded(
                 child: Container(
                   child: TabBarView(
-                    controller: tabviewController,
+                    controller: tabViewController,
                     children: [
                       EditProfileScreen.builder(context),
                       PrivacyScreen.builder(context),
-                      // ChangePasswordPage.builder(context),
+                      ChangePasswordScreen.builder(context),
                       // BillingPage.builder(context)
                     ],
                   ),
@@ -110,7 +108,7 @@ class ProfileSettingScreenState extends State<ProfileSettingScreen>
                 SizedBox(
                   width: double.maxFinite,
                   child: TabBar(
-                    controller: tabviewController,
+                    controller: tabViewController,
                     isScrollable: true,
                     tabAlignment: TabAlignment.start,
                     labelColor: appTheme.blueGray900,
@@ -147,11 +145,10 @@ class ProfileSettingScreenState extends State<ProfileSettingScreen>
                                 ),
                           child: Padding(
                             padding: EdgeInsets.symmetric(
-                              horizontal: 6.h,
                               vertical: 12.h,
                             ),
                             child: Text(
-                              "lbl_edit2".tr,
+                              "lbl_top_bar_edit".tr,
                             ),
                           ),
                         ),
@@ -177,11 +174,10 @@ class ProfileSettingScreenState extends State<ProfileSettingScreen>
                                 ),
                           child: Padding(
                             padding: EdgeInsets.symmetric(
-                              horizontal: 6.h,
                               vertical: 12.h,
                             ),
                             child: Text(
-                              "lbl_privacy".tr,
+                              "lbl_top_bar_privacy".tr,
                             ),
                           ),
                         ),
@@ -207,11 +203,10 @@ class ProfileSettingScreenState extends State<ProfileSettingScreen>
                                 ),
                           child: Padding(
                             padding: EdgeInsets.symmetric(
-                              horizontal: 6.h,
                               vertical: 12.h,
                             ),
                             child: Text(
-                              "lbl_change_pasword".tr,
+                              "lbl_top_bar_change_password".tr,
                             ),
                           ),
                         ),
@@ -237,7 +232,6 @@ class ProfileSettingScreenState extends State<ProfileSettingScreen>
                                 ),
                           child: Padding(
                             padding: EdgeInsets.symmetric(
-                              horizontal: 6.h,
                               vertical: 12.h,
                             ),
                             child: Text(
@@ -247,7 +241,6 @@ class ProfileSettingScreenState extends State<ProfileSettingScreen>
                         ),
                       )
                     ],
-                    indicatorColor: Colors.transparent,
                     onTap: (index) {
                       tabIndex = index;
                       setState(() {});

@@ -119,6 +119,19 @@ final Map<String, String> enUs = {
   "msg_shares_a_quizzfly": "Shares a quizzfly with you",
   "msg_shares_your_quizzfly": "Shares your quizzfly with other users",
 
+//Profile Setting Screen
+  "msg_profile_settings": "Profile Settings",
+  "lbl_top_bar_edit": "Edit",
+  "lbl_top_bar_privacy": "Privacy",
+  "lbl_top_bar_change_password": "Change password",
+  "lbl_billing": "Billing",
+
+//Change Password Screen
+  "lbl_change_password2": "Change password",
+  "lbl_old_password": "Old password",
+  "lbl_new_password2": "New password",
+  "msg_confirm_password": "Confirm new password",
+  
 // Common String
   "lbl": "👋",
   "lbl_1": "1",

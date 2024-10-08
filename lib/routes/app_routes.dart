@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quizzfly_application_flutter/presentation/change_password_screen/change_password_screen.dart';
 import 'package:quizzfly_application_flutter/presentation/profile_setting_screen/profile_setting_screen.dart';
 import '../presentation/edit_profile_screen/edit_profile_screen.dart';
 import '../presentation/forgot_password_screen/forgot_password_screen.dart';
@@ -18,13 +19,16 @@ class AppRoutes {
   static const String editProfileScreen = '/edit_profile_screen';
   static const String privacyScreen = '/privacy_screen';
     static const String profileSettingScreen = '/profile_setting_screen';
+        static const String changePasswordScreen = '/change_password_screen';
+
 
   static Map<String, WidgetBuilder> get routes => {
         loginScreen: LoginScreen.builder,
         registerScreen: RegisterScreen.builder,
         forgotPasswordScreen: ForgotPasswordScreen.builder,
         // appNavigationScreen: AppNavigationScreen.builder,
-        initialRoute: LoginScreen.builder
+        initialRoute: LoginScreen.builder,
+        changePasswordScreen : ChangePasswordScreen.builder,
       };
 
   // Custom method to handle slide transition navigation for specific routes

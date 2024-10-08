@@ -19,10 +19,7 @@ class AppbarTitle extends StatelessWidget {
         },
         child: Text(
           text,
-          style: CustomTextStyles.headlineSmallRobotoBlueGray10001
-              .copyWith(
-            color: appTheme.blueGray10001,
-          ),
+          style: CustomTextStyles.headlineSmallSFProRoundedGray90003
         ),
       ),
     );
