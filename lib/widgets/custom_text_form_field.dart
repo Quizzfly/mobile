@@ -1,6 +1,30 @@
 import 'package:flutter/material.dart';
 import '../core/app_export.dart';
 
+extension TextFormFieldStyleHelper on CustomTextFormField {
+  static OutlineInputBorder get outlineBlueGrayTL81 => OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8.h),
+        borderSide: BorderSide(
+          color: appTheme.blueGray10002,
+          width: 1,
+        ),
+      );
+  static OutlineInputBorder get outlineBlueGrayTL82 => OutlineInputBorder(
+        borderRadius: BorderRadius.circular(8.h),
+        borderSide: BorderSide(
+          color: appTheme.blueGray10002,
+          width: 1,
+        ),
+      );
+  static OutlineInputBorder get outlineBlack => OutlineInputBorder(
+        borderRadius: BorderRadius.circular(5.h),
+        borderSide: BorderSide(
+          color: appTheme.black900.withOpacity(0.1),
+          width: 1,
+        ),
+      );
+}
+
 class CustomTextFormField extends StatelessWidget {
   CustomTextFormField({
     Key? key,
@@ -15,7 +39,7 @@ class CustomTextFormField extends StatelessWidget {
     this.obscureText = false,
     this.readonly = false,
     this.onTap,
-    this.onChanged, 
+    this.onChanged,
     this.textInputAction = TextInputAction.next,
     this.textInputType = TextInputType.text,
     this.maxLines,
@@ -43,7 +67,7 @@ class CustomTextFormField extends StatelessWidget {
   final bool? obscureText;
   final bool? readonly;
   final VoidCallback? onTap;
-  final Function(String)? onChanged; 
+  final Function(String)? onChanged;
   final TextInputAction? textInputAction;
   final TextInputType? textInputType;
   final int? maxLines;
@@ -73,7 +97,8 @@ class CustomTextFormField extends StatelessWidget {
         width: width ?? double.maxFinite,
         decoration: boxDecoration,
         child: TextFormField(
-          scrollPadding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          scrollPadding:
+              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
           controller: controller,
           focusNode: focusNode,
           onTapOutside: (event) {
@@ -90,7 +115,7 @@ class CustomTextFormField extends StatelessWidget {
           onTap: () {
             onTap?.call();
           },
-          onChanged: onChanged, 
+          onChanged: onChanged,
           textInputAction: textInputAction,
           keyboardType: textInputType,
           maxLines: maxLines ?? 1,

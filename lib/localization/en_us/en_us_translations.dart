@@ -43,7 +43,6 @@ final Map<String, String> enUs = {
   "lbl 75": "75%",
   "lbl_8_10": "8/10\n",
   "lbl_math": "Math",
-  "lbl_monthly": "Monthly",
   "lbl_quiz_created": "Quiz Created",
   "lbl_quiz_played": "quiz played",
   "lbl_quiz_won": "Quiz Won",
@@ -91,6 +90,48 @@ final Map<String, String> enUs = {
   "lbl_new_password": "New Password",
   "lbl_confirm_password": "Confirm Password",
 
+//Edit profile screen
+  "msg_user_information": "User Information",
+  "lbl_add_picture": "Add picture",
+  "lbl_username": "User Name",
+  "lbl_account_detail": "Account Detail",
+  "lbl_organization": "Organization",
+  "lbl_language": "Language",
+  "lbl_monthly": "Monthly",
+  "lbl_account_type": "Account type",
+  "msg_type_of_workplace": "Type of workplace",
+  "lbl_delete_account": "Delete account",
+  "msg_if_you_delete_your":
+      "If you delete your account, you'll lose access to all the quizzfly you created",
+
+//Privacy screen
+  "lbl_notification": "Notification",
+  "msg_email_me_when_someone": "Email me when someone:",
+  "msg_favourites_your": "Favourites your quizzfly",
+  "msg_features_your_quizzfly": "Features your quizzfly to other users",
+  "msg_i_have_read_and4":
+      "I have read and agree with the quizzfly? Terms and conditions and privacy policy and agree to quizzfly! collecting and processing my personal data as described in the privacy policy",
+  "msg_i_want_to_receive":
+      "I want to receive marketing messages with recommendations and other relevant information from quizzfly!",
+  "msg_i_want_to_receive2":
+      "I want to receive relevant information, exclusive invitations and special offers by quizzfly from third party companies. Quizzfly will never share my personal information with other companies.",
+  "msg_privacy_and_marketing": "Privacy and marketing",
+  "msg_shares_a_quizzfly": "Shares a quizzfly with you",
+  "msg_shares_your_quizzfly": "Shares your quizzfly with other users",
+
+//Profile Setting Screen
+  "msg_profile_settings": "Profile Settings",
+  "lbl_top_bar_edit": "Edit",
+  "lbl_top_bar_privacy": "Privacy",
+  "lbl_top_bar_change_password": "Change password",
+  "lbl_billing": "Billing",
+
+//Change Password Screen
+  "lbl_change_password2": "Change password",
+  "lbl_old_password": "Old password",
+  "lbl_new_password2": "New password",
+  "msg_confirm_password": "Confirm new password",
+  
 // Common String
   "lbl": "👋",
   "lbl_1": "1",
@@ -111,6 +152,7 @@ final Map<String, String> enUs = {
   "lbl_davis_curtis": "Davis Curtis",
   "lbl_details": "Details",
   "lbl_email": "Email",
+  "lbl_save": "Save",
   "lbl_google": "Google",
   "lbl_leaderboard": "Leaderboard",
   "lbl_local_rank": "LOCAL RANK",

@@ -1,26 +1,32 @@
 class PostLoginResp {
+  String? status;
   String? userId;
   String? accessToken;
   String? refreshToken;
   double? tokenExpires;
   PostLoginResp(
-      {this.userId, this.accessToken, this.refreshToken, this.tokenExpires});
+      {this.status,
+      this.userId,
+      this.accessToken,
+      this.refreshToken,
+      this.tokenExpires});
   PostLoginResp.fromJson(Map<String, dynamic> json) {
-    userId = json['userId'];
-    accessToken = json['accessToken'];
-    refreshToken = json['refreshToken'];
-    tokenExpires = json['tokenExpires'];
+    status = json['status'];
+    userId = json['data']['userId'];
+    accessToken = json['data']['accessToken'];
+    refreshToken = json['data']['refreshToken'];
+    tokenExpires = json['data']['tokenExpires'];
   }
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     if (userId != null) {}
-    data['userId'] = userId;
+    data['data']['userId'] = userId;
     if (accessToken != null) {}
-    data['accessToken'] = accessToken;
+    data['data']['accessToken'] = accessToken;
     if (refreshToken != null) {}
-    data['refreshToken'] = refreshToken;
+    data['data']['refreshToken'] = refreshToken;
     if (tokenExpires != null) {}
-    data['tokenExpires'] = tokenExpires;
+    data['data']['tokenExpires'] = tokenExpires;
     return data;
   }
 }
