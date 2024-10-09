@@ -18,9 +18,8 @@ class AppRoutes {
   static const String resetPassWordScreen = '/reset_password_screen';
   static const String editProfileScreen = '/edit_profile_screen';
   static const String privacyScreen = '/privacy_screen';
-    static const String profileSettingScreen = '/profile_setting_screen';
-        static const String changePasswordScreen = '/change_password_screen';
-
+  static const String profileSettingScreen = '/profile_setting_screen';
+  static const String changePasswordScreen = '/change_password_screen';
 
   static Map<String, WidgetBuilder> get routes => {
         loginScreen: LoginScreen.builder,
@@ -28,7 +27,8 @@ class AppRoutes {
         forgotPasswordScreen: ForgotPasswordScreen.builder,
         // appNavigationScreen: AppNavigationScreen.builder,
         initialRoute: LoginScreen.builder,
-        changePasswordScreen : ChangePasswordScreen.builder,
+        changePasswordScreen: ChangePasswordScreen.builder,
+        profileSettingScreen : ProfileSettingScreen.builder,
       };
 
   // Custom method to handle slide transition navigation for specific routes
