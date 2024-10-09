@@ -34,10 +34,15 @@ class Data {
   Map<String, dynamic> toJson() {
     final data = <String, dynamic>{};
     if (userId != null) {}
+    data['data']['userId'] = userId;
     data['user_id'] = userId;
     if (accessToken != null) {}
+    data['data']['accessToken'] = accessToken;
     data['access_token'] = accessToken;
     if (refreshToken != null) {}
+    data['data']['refreshToken'] = refreshToken;
+    if (tokenExpires != null) {}
+    data['data']['tokenExpires'] = tokenExpires;
     data['refresh_token'] = refreshToken;
     if (tokenExpires != null) {
       data['token_expires'] = tokenExpires;
