@@ -1,10 +1,10 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:equatable/equatable.dart';
 import '../../../core/app_export.dart';
 import '../../../data/models/my_user/get_my_user_resp.dart';
 import '../../../data/models/selectionPopupModel/selection_popup_model.dart';
+import '../../../data/models/update_profile/patch_update_profile_req.dart';
 import '../../../data/repository/repository.dart';
 import '../models/edit_profile_model.dart';
 part 'edit_profile_event.dart';
@@ -16,6 +16,8 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
     on<EditProfileInitialEvent>(_onInitialize);
     on<TextFieldChangedEvent>(_onTextFieldChanged);
     on<CreateLGetUserEvent>(_callGetMyUser);
+    on<ImagePickedEvent>(_onImagePicked);
+    on<UpdateProfileEvent>(_onUpdateProfile);
   }
 
   final _repository = Repository();
@@ -37,43 +39,6 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
       )
     ];
   }
-
-  List<SelectionPopupModel> fillDropdownItemList1() {
-    return [
-      SelectionPopupModel(
-        id: 1,
-        title: "Item One",
-        isSelected: true,
-      ),
-      SelectionPopupModel(
-        id: 2,
-        title: "Item Two",
-      ),
-      SelectionPopupModel(
-        id: 3,
-        title: "Item Three",
-      )
-    ];
-  }
-
-  List<SelectionPopupModel> fillDropdownItemList2() {
-    return [
-      SelectionPopupModel(
-        id: 1,
-        title: "Item One",
-        isSelected: true,
-      ),
-      SelectionPopupModel(
-        id: 2,
-        title: "Item Two",
-      ),
-      SelectionPopupModel(
-        id: 3,
-        title: "Item Three",
-      )
-    ];
-  }
-
   // In your EditProfileBloc
 
   void _onInitialize(
@@ -135,8 +100,41 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
       nameInputController:
           TextEditingController(text: resp.data?.userInfo?.name ?? ''),
       emailInputController: TextEditingController(text: resp.data?.email ?? ''),
+      imageFile: resp.data?.userInfo?.avatar,
     ));
   }
 
   void _onGetMyUserError() {}
+
+  void _onImagePicked(
+    ImagePickedEvent event,
+    Emitter<EditProfileState> emit,
+  ) {
+    emit(state.copyWith(
+      imageFile: event.imageFile,
+      isSaveButtonEnabled: true,
+    ));
+  }
+
+  FutureOr<void> _onUpdateProfile(
+    UpdateProfileEvent event,
+    Emitter<EditProfileState> emit,
+  ) async {
+    final req = PatchUpdateProfileReq(
+      name: state.nameInputController?.text,
+      avatar: state.imageFile,
+    );
+    String accessToken = await PrefUtils().getAccessToken();
+    await _repository.updateProfile(
+      requestData: req,
+      headers: {'Authorization': 'Bearer $accessToken'},
+    ).then((value) async {
+      getMyUserResp = value;
+      _onGetMyUserSuccess(value, emit);
+      event.onSuccess?.call();
+    }).onError((error, stackTrace) {
+      _onGetMyUserError();
+      event.onError?.call();
+    });
+  }
 }

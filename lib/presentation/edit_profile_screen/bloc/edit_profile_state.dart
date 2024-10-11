@@ -13,6 +13,7 @@ class EditProfileState extends Equatable {
     this.selectedDropDownValue2,
     this.editProfileModelObj,
     this.isSaveButtonEnabled = false,
+    this.imageFile,
   });
   TextEditingController? usernameInputController;
   TextEditingController? nameInputController;
@@ -23,6 +24,7 @@ class EditProfileState extends Equatable {
   SelectionPopupModel? selectedDropDownValue2;
   EditProfileModel? editProfileModelObj;
   bool? isSaveButtonEnabled;
+  dynamic imageFile;
 
   @override
   List<Object?> get props => [
@@ -35,6 +37,7 @@ class EditProfileState extends Equatable {
         selectedDropDownValue2,
         editProfileModelObj,
         isSaveButtonEnabled,
+        imageFile,
       ];
   EditProfileState copyWith({
     TextEditingController? usernameInputController,
@@ -46,6 +49,7 @@ class EditProfileState extends Equatable {
     SelectionPopupModel? selectedDropDownValue2,
     EditProfileModel? editProfileModelObj,
     bool? isSaveButtonEnabled,
+    dynamic imageFile,
   }) {
     return EditProfileState(
       usernameInputController:
@@ -62,6 +66,7 @@ class EditProfileState extends Equatable {
           selectedDropDownValue2 ?? this.selectedDropDownValue2,
       editProfileModelObj: editProfileModelObj ?? this.editProfileModelObj,
       isSaveButtonEnabled: isSaveButtonEnabled ?? this.isSaveButtonEnabled,
+      imageFile: imageFile ?? this.imageFile,
     );
   }
 }

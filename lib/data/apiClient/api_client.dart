@@ -3,6 +3,7 @@ import '../../core/app_export.dart';
 import '../models/login/post_login_resp.dart';
 import '../models/register/post_register_resp.dart';
 import '../models/my_user/get_my_user_resp.dart';
+import '../models/update_profile/patch_update_profile_req.dart';
 import 'network_interceptor.dart';
 
 // ignore_for_file: must_be_immutable
@@ -118,6 +119,32 @@ class ApiClient {
       await isNetworkConnected();
       var response = await _dio.get(
         '$url/api/v1/users/me',
+        options: Options(headers: headers),
+      );
+      ProgressDialogUtils.hideProgressDialog();
+      if (isSuccessCall(response)) {
+        return GetMyUserResp.fromJson(response.data);
+      } else {
+        throw response.data != null
+            ? GetMyUserResp.fromJson(response.data)
+            : 'Something Went Wrong!';
+      }
+    } catch (error, stackTrace) {
+      ProgressDialogUtils.hideProgressDialog();
+      Logger.log(error, stackTrace: stackTrace);
+      rethrow;
+    }
+  }
+  Future<GetMyUserResp> updateProfile({
+    required PatchUpdateProfileReq requestData,
+    Map<String, String> headers = const {},
+  }) async {
+    ProgressDialogUtils.showProgressDialog();
+    try {
+      await isNetworkConnected();
+      var response = await _dio.patch(
+        '$url/api/v1/users/profile/me',
+        data: requestData.toJson(),
         options: Options(headers: headers),
       );
       ProgressDialogUtils.hideProgressDialog();

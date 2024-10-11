@@ -5,16 +5,11 @@ import '../../presentation/edit_profile_screen/edit_profile_screen.dart';
 import '../../core/app_export.dart';
 import '../../widgets/app_bar/appbar_title.dart';
 import '../../widgets/app_bar/custom_app_bar.dart';
-// import '../billing_page/billing_page.dart';
-// import '../change_password_page/change_password_page.dart';
 import '../change_password_screen/change_password_screen.dart';
 import "../privacy_screen/privacy_screen.dart";
 
 class ProfileSettingScreen extends StatefulWidget {
-  const ProfileSettingScreen({Key? key})
-      : super(
-          key: key,
-        );
+  const ProfileSettingScreen({Key? key}) : super(key: key);
   @override
   ProfileSettingScreenState createState() => ProfileSettingScreenState();
   static Widget builder(BuildContext context) {
@@ -28,7 +23,6 @@ class ProfileSettingScreen extends StatefulWidget {
   }
 }
 
-// ignore_for_file: must_be_immutable
 class ProfileSettingScreenState extends State<ProfileSettingScreen>
     with TickerProviderStateMixin {
   late TabController tabViewController;
@@ -69,7 +63,6 @@ class ProfileSettingScreenState extends State<ProfileSettingScreen>
     );
   }
 
-  /// Section Widget
   Widget _buildProfileStack(BuildContext context) {
     return SizedBox(
       height: 112.h,
@@ -79,15 +72,15 @@ class ProfileSettingScreenState extends State<ProfileSettingScreen>
         children: [
           Align(
             alignment: Alignment.centerLeft,
-            child: Container(
+            child: Container(   
               height: 112.h,
               width: double.maxFinite,
               decoration: BoxDecoration(
-                color: appTheme.gray50,
+                color: appTheme.whiteA700,
                 border: Border(
                   bottom: BorderSide(
                     color: appTheme.indigo50,
-                    width: 1.h,
+                    width: 4.h,
                   ),
                 ),
               ),
@@ -123,130 +116,35 @@ class ProfileSettingScreenState extends State<ProfileSettingScreen>
                       fontFamily: 'Roboto',
                       fontWeight: FontWeight.w400,
                     ),
+                    indicator: UnderlineTabIndicator(
+                      borderSide: BorderSide(
+                        color: theme.colorScheme.primary,
+                        width: 4.h,
+                      ),
+                    ),
+                    indicatorSize: TabBarIndicatorSize.tab,
                     tabs: [
-                      Tab(
-                        child: Container(
-                          alignment: Alignment.center,
-                          decoration: tabIndex == 0
-                              ? BoxDecoration(
-                                  border: Border(
-                                  bottom: BorderSide(
-                                    color: theme.colorScheme.primary,
-                                    width: 2.h,
-                                  ),
-                                ))
-                              : BoxDecoration(
-                                  border: Border(
-                                    bottom: BorderSide(
-                                      color: appTheme.blueGray100,
-                                      width: 2.h,
-                                    ),
-                                  ),
-                                ),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                              vertical: 12.h,
-                            ),
-                            child: Text(
-                              "lbl_top_bar_edit".tr,
-                            ),
-                          ),
-                        ),
+                      Padding(
+                        padding: const EdgeInsets.only(left : 6.0,right: 6.0),
+                        child: Tab(text: "lbl_top_bar_edit".tr),
                       ),
-                      Tab(
-                        child: Container(
-                          alignment: Alignment.center,
-                          decoration: tabIndex == 1
-                              ? BoxDecoration(
-                                  border: Border(
-                                  bottom: BorderSide(
-                                    color: theme.colorScheme.primary,
-                                    width: 2.h,
-                                  ),
-                                ))
-                              : BoxDecoration(
-                                  border: Border(
-                                    bottom: BorderSide(
-                                      color: appTheme.blueGray100,
-                                      width: 2.h,
-                                    ),
-                                  ),
-                                ),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                              vertical: 12.h,
-                            ),
-                            child: Text(
-                              "lbl_top_bar_privacy".tr,
-                            ),
-                          ),
-                        ),
+                      Padding(
+                        padding: const EdgeInsets.only(left : 6.0,right: 6.0),
+                        child: Tab(text: "lbl_top_bar_privacy".tr),
                       ),
-                      Tab(
-                        child: Container(
-                          alignment: Alignment.center,
-                          decoration: tabIndex == 2
-                              ? BoxDecoration(
-                                  border: Border(
-                                  bottom: BorderSide(
-                                    color: theme.colorScheme.primary,
-                                    width: 2.h,
-                                  ),
-                                ))
-                              : BoxDecoration(
-                                  border: Border(
-                                    bottom: BorderSide(
-                                      color: appTheme.blueGray100,
-                                      width: 2.h,
-                                    ),
-                                  ),
-                                ),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                              vertical: 12.h,
-                            ),
-                            child: Text(
-                              "lbl_top_bar_change_password".tr,
-                            ),
-                          ),
-                        ),
+                      Padding(
+                        padding: const EdgeInsets.only(left : 6.0,right: 6.0),
+                        child: Tab(text: "lbl_top_bar_change_password".tr),
                       ),
-                      Tab(
-                        child: Container(
-                          alignment: Alignment.center,
-                          decoration: tabIndex == 3
-                              ? BoxDecoration(
-                                  border: Border(
-                                  bottom: BorderSide(
-                                    color: theme.colorScheme.primary,
-                                    width: 2.h,
-                                  ),
-                                ))
-                              : BoxDecoration(
-                                  border: Border(
-                                    bottom: BorderSide(
-                                      color: appTheme.blueGray100,
-                                      width: 2.h,
-                                    ),
-                                  ),
-                                ),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                              vertical: 12.h,
-                            ),
-                            child: Text(
-                              "lbl_billing".tr,
-                            ),
-                          ),
-                        ),
-                      )
+                      Tab(text: "lbl_billing".tr),
                     ],
-                    onTap: (index) {
-                      tabIndex = index;
-                      setState(() {});
-                    },
                   ),
-                )
+                ),
+                Container(
+                  width: double.infinity,
+                  height: 1.h,
+                  color: appTheme.indigo50,
+                ),
               ],
             ),
           )
@@ -255,3 +153,4 @@ class ProfileSettingScreenState extends State<ProfileSettingScreen>
     );
   }
 }
+

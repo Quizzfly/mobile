@@ -69,8 +69,8 @@ class Data {
 class UserInfo {
   String? id;
   String? username;
-  dynamic name;
-  dynamic avatar;
+  String? name;
+  String? avatar;
   String? createdAt;
   String? updatedAt;
   UserInfo(
