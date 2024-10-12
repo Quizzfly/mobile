@@ -57,6 +57,10 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
         nameInputController: TextEditingController(),
         emailInputController: TextEditingController(),
       ));
+      emit(state.copyWith(
+          editProfileModelObj: state.editProfileModelObj?.copyWith(
+        dropdownItemList: fillDropdownItemList(),
+      )));
     } catch (e) {
       print('Error initializing profile data: $e');
     }

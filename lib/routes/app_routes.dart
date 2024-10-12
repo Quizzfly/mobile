@@ -1,17 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:quizzfly_application_flutter/presentation/change_password_screen/change_password_screen.dart';
-import 'package:quizzfly_application_flutter/presentation/profile_setting_screen/profile_setting_screen.dart';
-import '../presentation/edit_profile_screen/edit_profile_screen.dart';
-import 'package:quizzfly_application_flutter/presentation/change_password_screen/change_password_screen.dart';
-import 'package:quizzfly_application_flutter/presentation/profile_setting_screen/profile_setting_screen.dart';
-import '../presentation/edit_profile_screen/edit_profile_screen.dart';
+import '../presentation/change_password_screen/change_password_screen.dart';
+import '../presentation/profile_setting_screen/profile_setting_screen.dart';
+import '../core/app_export.dart';
 import '../presentation/forgot_password_screen/forgot_password_screen.dart';
 // import '../presentation/app_navigation_screen/app_navigation_screen.dart';
 import '../presentation/login_screen/login_screen.dart';
-import '../presentation/privacy_screen/privacy_screen.dart';
-import '../presentation/privacy_screen/privacy_screen.dart';
 import '../presentation/register_screen/register_screen.dart';
-import '../presentation/reset_password_screen/reset_password_screen.dart';
 
 class AppRoutes {
   static const String loginScreen = '/login_screen';
@@ -30,10 +24,43 @@ class AppRoutes {
         registerScreen: RegisterScreen.builder,
         forgotPasswordScreen: ForgotPasswordScreen.builder,
         // appNavigationScreen: AppNavigationScreen.builder,
-        initialRoute: LoginScreen.builder,
         changePasswordScreen: ChangePasswordScreen.builder,
-        profileSettingScreen : ProfileSettingScreen.builder,
+        profileSettingScreen: ProfileSettingScreen.builder,
       };
+      
+  static Widget initialRouteWidget(BuildContext context) {
+    return FutureBuilder(
+      future: PrefUtils().init(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          final accessToken = PrefUtils().getAccessToken();
+          if (accessToken.isEmpty) {
+            return LoginScreen.builder(context);
+          } else {
+            return ProfileSettingScreen.builder(context);
+          }
+        }
+        // You might want to show a loading indicator here
+        return const CircularProgressIndicator();
+      },
+    );
+  }
+
+  static Route<dynamic> generateRoute(RouteSettings settings) {
+    switch (settings.name) {
+      case initialRoute:
+        return MaterialPageRoute(
+          builder: (context) => initialRouteWidget(context),
+        );
+      // Add cases for other routes if needed
+      default:
+        return MaterialPageRoute(
+          builder: (_) => const Scaffold(
+            body: Center(child: Text('Route not found!')),
+          ),
+        );
+    }
+  }
 
   // Custom method to handle slide transition navigation for specific routes
   static void navigateToRegisterScreen(BuildContext context) {
