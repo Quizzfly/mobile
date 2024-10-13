@@ -1,7 +1,12 @@
+import 'dart:io';
+
+import 'package:quizzfly_application_flutter/data/models/upload_file/post_upload_file.dart';
+
 import '../apiClient/api_client.dart';
 import '../models/login/post_login_resp.dart';
 import '../models/my_user/get_my_user_resp.dart';
 import '../models/register/post_register_resp.dart';
+import '../models/update_profile/patch_update_profile_req.dart';
 
 /// Repository class for managing API requests.
 ///
@@ -37,6 +42,33 @@ class Repository {
       );
     } catch (e) {
       print('Error fetching user profile: $e');
+      rethrow;
+    }
+  }
+
+  Future<GetMyUserResp> updateProfile({
+    required PatchUpdateProfileReq requestData,
+    Map<String, String> headers = const {},
+  }) async {
+    try {
+      return await _apiClient.updateProfile(
+        requestData: requestData,
+        headers: headers,
+      );
+    } catch (e) {
+      print('Error updating user profile: $e');
+      rethrow;
+    }
+  }
+
+  Future<UploadFileResp> uploadFile({
+    required File file,
+    Map<String, String> headers = const {},
+  }) async {
+    try {
+      return await _apiClient.uploadFile(file: file, headers: headers);
+    } catch (e) {
+      print('Error updating user profile: $e');
       rethrow;
     }
   }

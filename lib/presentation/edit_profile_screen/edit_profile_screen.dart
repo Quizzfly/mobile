@@ -1,11 +1,14 @@
+import 'dart:io';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
+import 'package:image_picker/image_picker.dart';
 import '../../core/app_export.dart';
 import '../../theme/custom_button_style.dart';
 import '../../widgets/custom_drop_down.dart';
 import '../../widgets/custom_elevated_button.dart';
 import '../../widgets/custom_text_form_field.dart';
+import '../profile_setting_screen/profile_setting_screen.dart';
 import 'bloc/edit_profile_bloc.dart';
 import 'models/edit_profile_model.dart';
 
@@ -95,7 +98,9 @@ class EditProfileScreen extends StatelessWidget {
           buttonStyle: isSaveButtonEnabled == true
               ? CustomButtonStyles.fillPrimary
               : CustomButtonStyles.fillBlackGray,
-          onPressed: isSaveButtonEnabled == true ? () {} : null,
+           onPressed: isSaveButtonEnabled == true
+              ? () => _handleSaveButtonPress(context)
+              : null,
         );
       },
     );
@@ -199,45 +204,7 @@ class EditProfileScreen extends StatelessWidget {
             ),
           ),
           SizedBox(height: 12.h),
-          DottedBorder(
-            color: appTheme.black900,
-            padding: EdgeInsets.only(
-              left: 0.5.h,
-              top: 0.5.h,
-              right: 0.5.h,
-              bottom: 0.5.h,
-            ),
-            strokeWidth: 0.5.h,
-            radius: Radius.circular(5),
-            borderType: BorderType.RRect,
-            dashPattern: [1, 1],
-            child: Container(
-              padding: EdgeInsets.symmetric(
-                horizontal: 18.h,
-                vertical: 24.h,
-              ),
-              decoration: BoxDecoration(
-                color: appTheme.gray100,
-                borderRadius: BorderRadiusStyle.roundedBorder5,
-              ),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  CustomImageView(
-                    imagePath: ImageConstant.imagePhoto,
-                    height: 24.h,
-                    width: 30.h,
-                  ),
-                  SizedBox(height: 20.h),
-                  Text(
-                    "lbl_add_picture".tr,
-                    style: CustomTextStyles.titleSmallRobotoSansBlack900,
-                  ),
-                  SizedBox(height: 6.h)
-                ],
-              ),
-            ),
-          ),
+          _buildImagePicker(context),
           SizedBox(height: 12.h),
           Container(
             width: double.maxFinite,
@@ -289,15 +256,6 @@ class EditProfileScreen extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  /// Method to handle input changes and dispatch event to Bloc
-  void _onInputChanged(BuildContext context) {
-    final bloc = context.read<EditProfileBloc>();
-    bloc.add(TextFieldChangedEvent(
-        bloc.state.usernameInputController?.text ?? '',
-        bloc.state.nameInputController?.text ?? '',
-        bloc.state.emailInputController?.text ?? ''));
   }
 
   /// Section Widget
@@ -418,6 +376,109 @@ class EditProfileScreen extends StatelessWidget {
           ),
           SizedBox(height: 10.h),
         ],
+      ),
+    );
+  }
+
+  Widget _buildImagePicker(BuildContext context) {
+    return BlocBuilder<EditProfileBloc, EditProfileState>(
+      builder: (context, state) {
+        return GestureDetector(
+          onTap: () => _pickImage(context),
+          child: DottedBorder(
+            color: appTheme.black900,
+            padding: EdgeInsets.all(0.5.h),
+            strokeWidth: 0.5.h,
+            radius: Radius.circular(5),
+            borderType: BorderType.RRect,
+            dashPattern: [1, 1],
+            child: Container(
+              padding: EdgeInsets.symmetric(
+                horizontal: 18.h,
+                vertical: 24.h,
+              ),
+              decoration: BoxDecoration(
+                color: appTheme.gray100,
+                borderRadius: BorderRadiusStyle.roundedBorder5,
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  if (state.imageFile != null)
+                    _buildImageWidget(state.imageFile)
+                  else
+                    CustomImageView(
+                      imagePath: ImageConstant.imagePhoto,
+                      height: 24.h,
+                      width: 30.h,
+                    ),
+                  SizedBox(height: 20.h),
+                  Text(
+                    state.imageFile != null ? "Change Picture" : "Add Picture",
+                    style: CustomTextStyles.titleSmallRobotoSansBlack900,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildImageWidget(dynamic imageData) {
+    if (imageData is File) {
+      return Image.file(
+        imageData,
+        height: 100.h,
+        width: 100.h,
+        fit: BoxFit.cover,
+      );
+    } else if (imageData is String) {
+      return Image.network(
+        imageData,
+        height: 100.h,
+        width: 100.h,
+        fit: BoxFit.cover,
+      );
+    } else {
+      return CustomImageView(
+        imagePath: ImageConstant.imagePhoto,
+        height: 24.h,
+        width: 30.h,
+      );
+    }
+  }
+
+  void _pickImage(BuildContext context) async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    if (image != null) {
+      // ignore: use_build_context_synchronously
+      context.read<EditProfileBloc>().add(ImagePickedEvent(File(image.path)));
+    }
+  }
+
+  /// Method to handle input changes and dispatch event to Bloc
+  void _onInputChanged(BuildContext context) {
+    final bloc = context.read<EditProfileBloc>();
+    bloc.add(TextFieldChangedEvent(
+        bloc.state.usernameInputController?.text ?? '',
+        bloc.state.nameInputController?.text ?? '',
+        bloc.state.emailInputController?.text ?? '',
+        bloc.state.imageFile ?? ''));
+  }
+  void _handleSaveButtonPress(BuildContext context) {
+    BlocProvider.of<EditProfileBloc>(context).add(
+      UpdateProfileEvent(
+        onSuccess: () {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => ProfileSettingScreen.builder(context)),
+          );
+        },
+        onError: (errorMessage) {
+          },
       ),
     );
   }

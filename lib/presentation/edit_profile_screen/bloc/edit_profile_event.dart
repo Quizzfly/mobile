@@ -19,12 +19,13 @@ class TextFieldChangedEvent extends EditProfileEvent {
   final String username;
   final String name;
   final String email;
-
-  TextFieldChangedEvent(this.username, this.name, this.email);
+  final dynamic imageFile;
+  TextFieldChangedEvent(this.username, this.name, this.email, this.imageFile);
 
   @override
-  List<Object> get props => [username, name, email];
+  List<Object> get props => [username, name, email, imageFile];
 }
+
 // ignore: must_be_immutable
 class CreateLGetUserEvent extends EditProfileEvent {
   CreateLGetUserEvent(
@@ -34,4 +35,23 @@ class CreateLGetUserEvent extends EditProfileEvent {
   @override
   List<Object?> get props =>
       [onCreateLoginEventSuccess, onCreateLoginEventError];
+}
+
+class ImagePickedEvent extends EditProfileEvent {
+  final dynamic imageFile;
+
+  ImagePickedEvent(this.imageFile);
+
+  @override
+  List<Object> get props => [imageFile];
+}
+
+class UpdateProfileEvent extends EditProfileEvent {
+  final Function? onSuccess;
+  final Function? onError;
+
+  UpdateProfileEvent({this.onSuccess, this.onError});
+
+  @override
+  List<Object?> get props => [onSuccess, onError];
 }
