@@ -149,6 +149,7 @@ class CustomTextStyles {
         color: appTheme.gray90003,
         fontWeight: FontWeight.w400,
       );
+
   static get headlineSmallRobotoBlueGray10001 =>
       theme.textTheme.headlineSmall!.roboto.copyWith(
         color: appTheme.blueGray10001,
@@ -211,6 +212,10 @@ class CustomTextStyles {
   static get titleMediumWhiteA700Bold => theme.textTheme.titleMedium!.copyWith(
         color: appTheme.whiteA700,
         fontWeight: FontWeight.w700,
+      );
+  static get bodyMediumInterBluegray800 => theme.textTheme.bodyMedium!.inter.copyWith(
+        color: appTheme.blueGray800, 
+        fontSize: 15.fSize
       );
   static get titleSmallPink900 => theme.textTheme.titleSmall!.copyWith(
         color: appTheme.pink900.withOpacity(0.5),

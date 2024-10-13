@@ -8,4 +8,7 @@ class ImageConstant {
   static String imageArrowDown = "$imagePath/img_arrowDown.svg";
 
   static String imagePhoto = "$imagePath/img_photo.svg";
+
+    static String imageTick = '$imagePath/image_tick.png';
+
 }
