@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import '../../core/app_export.dart';
+import '../models/forgot_password/post_forgot_password_resp.dart';
 import '../models/login/post_login_resp.dart';
 import '../models/register/post_register_resp.dart';
 import '../models/my_user/get_my_user_resp.dart';
@@ -138,6 +139,7 @@ class ApiClient {
       rethrow;
     }
   }
+
   Future<GetMyUserResp> updateProfile({
     required PatchUpdateProfileReq requestData,
     Map<String, String> headers = const {},
@@ -172,18 +174,18 @@ class ApiClient {
     ProgressDialogUtils.showProgressDialog();
     try {
       await isNetworkConnected();
-      
+
       String fileName = file.path.split('/').last;
       FormData formData = FormData.fromMap({
         "file": await MultipartFile.fromFile(file.path, filename: fileName),
       });
 
       var response = await _dio.post(
-        '$url/api/v1/files', 
+        '$url/api/v1/files',
         data: formData,
         options: Options(headers: headers),
       );
-      
+
       ProgressDialogUtils.hideProgressDialog();
       if (isSuccessCall(response)) {
         return UploadFileResp.fromJson(response.data);
@@ -195,6 +197,40 @@ class ApiClient {
     } catch (error, stackTrace) {
       ProgressDialogUtils.hideProgressDialog();
       Logger.log(error, stackTrace: stackTrace);
+      rethrow;
+    }
+  }
+
+  /// Sends a POST request to the server's 'http://103.161.96.76:3000/api/v1/auth/forgot-password' endpoint
+  /// with the provided headers and request data
+  /// Returns a [PostPostAuthForgot PasswordResp] object representing the response.
+  /// Throws an error if the request fails or an exception occurs.
+  Future<PostForgotPasswordResp> postAuthForgotPassword({
+    Map<String, String> headers = const {},
+    Map requestData = const {},
+  }) async {
+    ProgressDialogUtils.showProgressDialog();
+    try {
+      await isNetworkConnected();
+      var response = await _dio.post(
+        '$url/api/v1/auth/forgot-password',
+        data: requestData,
+        options: Options(headers: headers),
+      );
+      ProgressDialogUtils.hideProgressDialog();
+      if (isSuccessCall(response)) {
+        return PostForgotPasswordResp.fromJson(response.data);
+      } else {
+        throw response.data != null
+            ? PostForgotPasswordResp.fromJson(response.data)
+            : 'Something Went Wrong!';
+      }
+    } catch (error, stackTrace) {
+      ProgressDialogUtils.hideProgressDialog();
+      Logger.log(
+        error,
+        stackTrace: stackTrace,
+      );
       rethrow;
     }
   }

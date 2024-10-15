@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../../core/app_export.dart';
 import '../../core/utils/validation_functions.dart';
 import '../../theme/custom_button_style.dart';
@@ -8,7 +9,9 @@ import 'bloc/forgot_password_bloc.dart';
 import 'models/forgot_password_model.dart';
 
 class ForgotPasswordScreen extends StatelessWidget {
-  const ForgotPasswordScreen({Key? key})
+  final _formKey = GlobalKey<FormState>();
+
+  ForgotPasswordScreen({Key? key})
       : super(
           key: key,
         );
@@ -37,31 +40,38 @@ class ForgotPasswordScreen extends StatelessWidget {
                 top: 20.h,
                 right: 24.h,
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  SizedBox(height: 2.h),
-                  CustomImageView(
-                    imagePath: ImageConstant.imageLogo,
-                    height: 180.h,
-                    width: double.maxFinite,
-                    radius: BorderRadius.circular(
-                      20.h,
-                    ),  
-                  ),
-                  SizedBox(height: 20.h),
-                  _buildWelcomeSection(context),
-                  SizedBox(height: 18.h),
-                  _buildEmailInputSection(context),
-                  SizedBox(height: 14.h),
-                  CustomElevatedButton(
-                    height: 44.h,
-                    text: "lbl_submit".tr,
-                    buttonStyle: CustomButtonStyles.fillPrimary,
-                    buttonTextStyle: theme.textTheme.bodyLarge!,
-                  ),
-                  SizedBox(height: 40.h),
-                ],
+              child: Form(
+                key: _formKey, // Use the class-level _formKey here
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    SizedBox(height: 2.h),
+                    CustomImageView(
+                      imagePath: ImageConstant.imageLogo,
+                      height: 180.h,
+                      width: double.maxFinite,
+                      radius: BorderRadius.circular(
+                        20.h,
+                      ),
+                    ),
+                    SizedBox(height: 20.h),
+                    _buildWelcomeSection(context),
+                    SizedBox(height: 18.h),
+                    _buildEmailInputSection(context),
+                    SizedBox(height: 14.h),
+                    CustomElevatedButton(
+                      height: 44.h,
+                      text: "lbl_submit".tr,
+                      buttonStyle: CustomButtonStyles.fillPrimary,
+                      buttonTextStyle: theme.textTheme.bodyLarge!,
+                      onPressed: () {
+                        onTapSubmit(context);
+                      },
+                    ),
+                    SizedBox(height: 40.h),
+                  ],
+                ),
               ),
             ),
           ),
@@ -135,7 +145,8 @@ class ForgotPasswordScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 4.h),
-              BlocSelector<ForgotPasswordBloc, ForgotPasswordState, TextEditingController?>(
+              BlocSelector<ForgotPasswordBloc, ForgotPasswordState,
+                  TextEditingController?>(
                 selector: (state) => state.emailController,
                 builder: (context, emailController) {
                   return CustomTextFormField(
@@ -158,8 +169,35 @@ class ForgotPasswordScreen extends StatelessWidget {
               )
             ],
           ),
-        )
-      );
+        ));
   }
 
+  onTapSubmit(BuildContext context) {
+    if (_formKey.currentState!.validate()) {
+      context.read<ForgotPasswordBloc>().add(
+            CreateForgotPasswordEvent(
+              onCreateForgotPasswordEventSuccess: () {
+                onPostForgotPasswordEventSuccess(context);
+              },
+              onCreateForgotPasswordEventError: () {
+                onPostForgotPasswordEventError(context);
+              },
+            ),
+          );
+    }
+  }
+
+  /// Navigates to the notificationScreen when the action is triggered.
+  void onPostForgotPasswordEventSuccess(BuildContext context) {
+    NavigatorService.pushNamed(
+      AppRoutes.resetPassWordScreen,
+    );
+  }
+
+  /// Displays a toast message using the Fluttertoast library.
+  void onPostForgotPasswordEventError(BuildContext context) {
+    Fluttertoast.showToast(
+      msg: "Email does not exist",
+    );
+  }
 }
