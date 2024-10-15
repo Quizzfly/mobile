@@ -56,4 +56,16 @@ class PrefUtils {
       return '';
     }
   }
+
+  Future<void> setTokenExpires(int value) {
+    return _sharedPreferences!.setInt('tokenExpires', value);
+  }
+
+  int getTokenExpires() {
+    try {
+      return _sharedPreferences!.getInt('tokenExpires') ?? 0;
+    } catch (e) {
+      return 0;
+    }
+  }
 }
