@@ -6,7 +6,6 @@ import '../models/login/post_login_resp.dart';
 import '../models/my_user/get_my_user_resp.dart';
 import '../models/register/post_register_resp.dart';
 import '../models/update_profile/patch_update_profile_req.dart';
-
 /// Repository class for managing API requests.
 ///
 /// This class provides a simplified interface for making the

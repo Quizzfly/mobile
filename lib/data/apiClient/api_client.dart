@@ -7,6 +7,8 @@ import '../models/register/post_register_resp.dart';
 import '../models/my_user/get_my_user_resp.dart';
 import '../models/update_profile/patch_update_profile_req.dart';
 import '../models/upload_file/post_upload_file.dart';
+import '../models/update_profile/patch_update_profile_req.dart';
+import '../models/upload_file/post_upload_file.dart';
 import 'network_interceptor.dart';
 
 // ignore_for_file: must_be_immutable
@@ -139,6 +141,7 @@ class ApiClient {
     }
   }
 
+
   Future<GetMyUserResp> updateProfile({
     required PatchUpdateProfileReq requestData,
     Map<String, String> headers = const {},
@@ -174,6 +177,7 @@ class ApiClient {
     try {
       await isNetworkConnected();
 
+
       String fileName = file.path.split('/').last;
       FormData formData = FormData.fromMap({
         "file": await MultipartFile.fromFile(file.path, filename: fileName),
@@ -184,6 +188,7 @@ class ApiClient {
         data: formData,
         options: Options(headers: headers),
       );
+
 
       ProgressDialogUtils.hideProgressDialog();
       if (isSuccessCall(response)) {

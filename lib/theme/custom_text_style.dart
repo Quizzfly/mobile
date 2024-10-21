@@ -150,6 +150,7 @@ class CustomTextStyles {
         fontWeight: FontWeight.w400,
       );
 
+
   static get headlineSmallRobotoBlueGray10001 =>
       theme.textTheme.headlineSmall!.roboto.copyWith(
         color: appTheme.blueGray10001,
