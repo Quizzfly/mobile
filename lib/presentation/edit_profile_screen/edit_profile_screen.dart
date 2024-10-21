@@ -96,9 +96,9 @@ class EditProfileScreen extends StatelessWidget {
           text: "lbl_save".tr,
           buttonTextStyle: CustomTextStyles.titleSmallOnErrorContainer,
           buttonStyle: isSaveButtonEnabled == true
-              ? CustomButtonStyles.fillPrimary
+              ? CustomButtonStyles.fillPrimaryRadius12
               : CustomButtonStyles.fillBlackGray,
-           onPressed: isSaveButtonEnabled == true
+          onPressed: isSaveButtonEnabled == true
               ? () => _handleSaveButtonPress(context)
               : null,
         );
@@ -116,6 +116,7 @@ class EditProfileScreen extends StatelessWidget {
           controller: usernameInputController,
           hintText: "Enter your username",
           contentPadding: EdgeInsets.all(12.h),
+          readonly: true,
           onChanged: (value) {
             _onInputChanged(context);
           },
@@ -130,6 +131,7 @@ class EditProfileScreen extends StatelessWidget {
       selector: (state) => state.nameInputController,
       builder: (context, nameInputController) {
         return CustomTextFormField(
+          fillcolor: appTheme.whiteA700,
           controller: nameInputController,
           hintText: "Enter your name",
           contentPadding: EdgeInsets.all(12.h),
@@ -150,6 +152,7 @@ class EditProfileScreen extends StatelessWidget {
           controller: emailInputController,
           hintText: "Enter your email",
           contentPadding: EdgeInsets.all(12.h),
+          readonly: true,
           onChanged: (value) {
             _onInputChanged(context);
           },
@@ -468,17 +471,18 @@ class EditProfileScreen extends StatelessWidget {
         bloc.state.emailInputController?.text ?? '',
         bloc.state.imageFile ?? ''));
   }
+
   void _handleSaveButtonPress(BuildContext context) {
     BlocProvider.of<EditProfileBloc>(context).add(
       UpdateProfileEvent(
         onSuccess: () {
           Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => ProfileSettingScreen.builder(context)),
+            MaterialPageRoute(
+                builder: (context) => ProfileSettingScreen.builder(context)),
           );
         },
-        onError: (errorMessage) {
-          },
+        onError: (errorMessage) {},
       ),
     );
   }

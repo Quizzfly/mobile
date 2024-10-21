@@ -37,17 +37,21 @@ class ForgotPasswordBloc
     var postForgotPasswordReq = PostForgotPasswordReq(
       email: state.emailController?.text ?? '',
     );
-    await _repository.postAuthForgotPassword(
-      headers: {},
-      requestData: postForgotPasswordReq.toJson(),
-    ).then((value) async {
-      postForgotPasswordResp = value;
-      onPostForgotPasswordSuccess(value, emit);
-      event.onCreateForgotPasswordEventSuccess?.call();
-    }).onError((error, stackTrace) {
-      onPostForgotPasswordError();
+    try {
+      bool success = await _repository.postAuthForgotPassword(
+        headers: {'Content-Type': 'application/json'},
+        requestData: postForgotPasswordReq.toJson(),
+      );
+      if (success) {
+        // This means we got a 204 response
+        event.onCreateForgotPasswordEventSuccess
+            ?.call(); // This will trigger navigation
+      } else {
+        event.onCreateForgotPasswordEventError?.call();
+      }
+    } catch (error) {
       event.onCreateForgotPasswordEventError?.call();
-    });
+    }
   }
 
   void onPostForgotPasswordSuccess(
