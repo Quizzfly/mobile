@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../core/app_export.dart';
+import '../../theme/custom_button_style.dart';
 import '../../widgets/custom_elevated_button.dart';
 import 'bloc/reset_password_bloc.dart';
 import 'models/reset_password_model.dart';
@@ -14,7 +15,7 @@ class ResetPasswordScreen extends StatelessWidget {
       create: (context) => ResetPasswordBloc(ResetPasswordState(
         resetPasswordModelObj: ResetPasswordModel(),
       ))
-        ..add(ResetPasswordEvent()),
+        ..add(ResetPasswordInitialEvent()),
       child: ResetPasswordScreen(),
     );
   }
@@ -73,6 +74,16 @@ class ResetPasswordScreen extends StatelessWidget {
           SizedBox(height: 22.h),
           CustomElevatedButton(
             text: "lbl_back_to_log_in".tr,
+            height: 44.h,
+            buttonStyle: CustomButtonStyles.fillPrimaryRadius12,
+            buttonTextStyle: theme.textTheme.bodyLarge!,
+            onPressed: () {
+              Navigator.pushNamedAndRemoveUntil(
+                context,
+                AppRoutes.loginScreen,
+                (route) => false,
+              );
+            },
           )
         ],
       ),

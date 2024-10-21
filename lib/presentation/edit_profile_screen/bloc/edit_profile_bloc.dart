@@ -28,17 +28,13 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
     return [
       SelectionPopupModel(
         id: 1,
-        title: "Item One",
+        title: "English",
         isSelected: true,
       ),
       SelectionPopupModel(
         id: 2,
-        title: "Item Two",
+        title: "Tiếng Việt",
       ),
-      SelectionPopupModel(
-        id: 3,
-        title: "Item Three",
-      )
     ];
   }
   // In your EditProfileBloc
@@ -82,7 +78,7 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
     CreateLGetUserEvent event,
     Emitter<EditProfileState> emit,
   ) async {
-    String accessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFhN2M3MzM2LWZhNTYtNDg2YS05OTZlLTE2ZDNlZDliMzE4OSIsInJvbGUiOiJVU0VSIiwic2Vzc2lvbklkIjoiNzNmNzcyMmUtNWJmNS00Yjg1LTk4ODMtN2FlZjU3MWI1NmE2IiwiaWF0IjoxNzI4ODM1OTQ0LCJleHAiOjE3Mjg5MjIzNDR9.K0LUk8i5lJyoM81nnLB5RjHOmfeQbR37CbA8zD0yNJ8";
+    String accessToken = await PrefUtils().getAccessToken();
     // Retrieve access token from SharedPreferences
     await _repository.getMyUser(
       headers: {'Authorization': 'Bearer $accessToken'},
@@ -126,7 +122,7 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
     UpdateProfileEvent event,
     Emitter<EditProfileState> emit,
   ) async {
-    String accessToken = await PrefUtils().getAccessToken();
+    String accessToken =  await PrefUtils().getAccessToken();
     String? avatarUrl;
 
     if (state.imageFile != null && state.imageFile is File) {

@@ -121,7 +121,7 @@ class ChangePasswordScreen extends StatelessWidget {
       width: 66.h,
       text: "lbl_save".tr,
       buttonTextStyle: CustomTextStyles.titleSmallOnErrorContainer,
-      buttonStyle: CustomButtonStyles.fillPrimary,
+      buttonStyle: CustomButtonStyles.fillPrimaryRadius12,
     );
   }
 

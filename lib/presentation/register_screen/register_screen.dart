@@ -69,7 +69,7 @@ class RegisterScreen extends StatelessWidget {
                     CustomElevatedButton(
                       height: 44.h,
                       text: "lbl_sign_up".tr,
-                      buttonStyle: CustomButtonStyles.fillPrimary,
+                      buttonStyle: CustomButtonStyles.fillPrimaryRadius12,
                       buttonTextStyle: theme.textTheme.bodyLarge!,
                       onPressed: () => {
                         onTapSignUpButton(context)
