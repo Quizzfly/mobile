@@ -139,6 +139,7 @@ class ApiClient {
     }
   }
 
+
   Future<GetMyUserResp> updateProfile({
     required PatchUpdateProfileReq requestData,
     Map<String, String> headers = const {},
@@ -174,6 +175,7 @@ class ApiClient {
     try {
       await isNetworkConnected();
 
+
       String fileName = file.path.split('/').last;
       FormData formData = FormData.fromMap({
         "file": await MultipartFile.fromFile(file.path, filename: fileName),
@@ -184,6 +186,7 @@ class ApiClient {
         data: formData,
         options: Options(headers: headers),
       );
+
 
       ProgressDialogUtils.hideProgressDialog();
       if (isSuccessCall(response)) {
