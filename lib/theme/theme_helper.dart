@@ -199,10 +199,11 @@ class LightCodeColors {
   Color get deepPurple300 => Color(0XFF9087E5);
   Color get deepPurple50 => Color(0XFFEFEDFB);
   Color get deepPurple600 => Color(0XFF5144B6);
+  Color get deppPurplePrimary => Color(0XFF6A5AE0);
 // Gray
   Color get gray100 => Color(0XFFFCF2F2);
   Color get gray10001 => Color(0XFFF2F6FA);
-  Color get gray10002 => Color(0XFFF3F9FA);
+  Color get gray10002 => Color(0XFD4D3D7);
   Color get gray200 => Color(0XFFECEBE7);
   Color get gray300 => Color(0XFFE6E6E6);
   Color get gray30001 => Color(0XFFE1E1E2);

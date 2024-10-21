@@ -72,7 +72,7 @@ class LoginScreen extends StatelessWidget {
                     CustomElevatedButton(
                       height: 44.h,
                       text: "lbl_sign_in".tr,
-                      buttonStyle: CustomButtonStyles.fillPrimary,
+                      buttonStyle: CustomButtonStyles.fillPrimaryRadius12,
                       buttonTextStyle: theme.textTheme.bodyLarge!,
                       onPressed: () {
                         onTapSignin(context);
@@ -366,7 +366,7 @@ class LoginScreen extends StatelessWidget {
   /// The [BuildContext] parameter represents current [BuildContext]
   void _onLoginEventSuccess(BuildContext context) {
     NavigatorService.pushNamed(
-      AppRoutes.profileSettingScreen,
+      AppRoutes.libraryScreen,
     );
   }
 

@@ -9,6 +9,13 @@ class ImageConstant {
 
   static String imagePhoto = "$imagePath/img_photo.svg";
 
-    static String imageTick = '$imagePath/image_tick.png';
+  static String imageTick = '$imagePath/image_tick.png';
 
+  static String imageEducation = "$imagePath/img_education.jpg";
+
+  static String imageBackToSchool = "$imagePath/images_back_to_school.jpg";
+
+  static String imageUser = "$imagePath/user-svgrepo-com.svg";
+
+  static String imageUserGroup = "$imagePath/users-people-svgrepo-com.svg";
 }

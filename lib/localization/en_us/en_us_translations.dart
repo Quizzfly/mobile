@@ -82,6 +82,10 @@ final Map<String, String> enUs = {
 //Forgot Password Screen
   "title_forgot_password": "Forgot Password",
   "lbl_enter_your_email_get_reset": "Enter your email to get reset password",
+  "msg_password_reset_link": "Password reset link has been sent",
+  "msg_an_email_with_password":
+      "An email with password reset link has been sent to your email address. If you do not see it in the inbox, check your spam folder",
+  "lbl_back_to_log_in": "Back to log in",
 
 //Reset password
   "title_reset_password": "Reset Password",
@@ -131,7 +135,18 @@ final Map<String, String> enUs = {
   "lbl_old_password": "Old password",
   "lbl_new_password2": "New password",
   "msg_confirm_password": "Confirm new password",
-  
+
+//Library Collection Screen
+  "lbl_quizzfly": "Quizzfly",
+  "lbl_collections": "Collections",
+  "lbl_7_collections": "7 Collections",
+
+//Library Screen
+  "lbl_10_qs": "10 Qs",
+  "lbl_45_quizzfly": " 45 Quizzfly",
+  "lbl_host_live" : "Host live",
+  "lbl_play_solo" : "Play solo",
+  "lbl_draft" : "DRAFT",
 // Common String
   "lbl": "👋",
   "lbl_1": "1",
