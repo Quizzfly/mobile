@@ -151,6 +151,7 @@ class CustomTextStyles {
       );
 
 
+
   static get headlineSmallRobotoBlueGray10001 =>
       theme.textTheme.headlineSmall!.roboto.copyWith(
         color: appTheme.blueGray10001,

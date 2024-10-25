@@ -111,7 +111,7 @@ class AppRoutes {
         transitionDuration:
             const Duration(milliseconds: 400), // Set duration to 400ms
         pageBuilder: (context, animation, secondaryAnimation) =>
-            RegisterScreen.builder(context),
+            LibraryScreen.builder(context),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           const begin = Offset(1.0, 0.0); // Slide from right to left
           const end = Offset.zero;

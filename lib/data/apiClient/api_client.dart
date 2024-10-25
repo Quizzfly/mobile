@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:quizzfly_application_flutter/data/models/detail_quizzfly/get_detail_quizzfly_resp.dart';
 import '../../core/app_export.dart';
 import '../models/library_quizzfly/get_library_quizzfly_resp.dart';
+import '../models/library_quizzfly/get_library_quizzfly_resp.dart';
 import '../models/login/post_login_resp.dart';
 import '../models/register/post_register_resp.dart';
 import '../models/my_user/get_my_user_resp.dart';
@@ -140,6 +141,7 @@ class ApiClient {
     }
   }
 
+
   Future<GetMyUserResp> updateProfile({
     required PatchUpdateProfileReq requestData,
     Map<String, String> headers = const {},
@@ -175,6 +177,7 @@ class ApiClient {
     try {
       await isNetworkConnected();
 
+
       String fileName = file.path.split('/').last;
       FormData formData = FormData.fromMap({
         "file": await MultipartFile.fromFile(file.path, filename: fileName),
@@ -185,6 +188,7 @@ class ApiClient {
         data: formData,
         options: Options(headers: headers),
       );
+
 
       ProgressDialogUtils.hideProgressDialog();
       if (isSuccessCall(response)) {

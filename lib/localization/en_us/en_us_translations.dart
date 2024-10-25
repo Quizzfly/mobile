@@ -145,10 +145,9 @@ final Map<String, String> enUs = {
 //Library Screen
   "lbl_10_qs": "10 Qs",
   "lbl_45_quizzfly": " 45 Quizzfly",
-  "lbl_draft": "DRAFT",
-//Detail Quizzfly
-  "lbl_description": "Description",
-  "msg_this_is_a_back_to" : "This is a back to school quizzfly. Let’s make this game in your class to revive the classroom atmosphere after the holidays. Let’s have fun at school",
+  "lbl_host_live" : "Host live",
+  "lbl_play_solo" : "Play solo",
+  "lbl_draft" : "DRAFT",
 // Common String
   "lbl": "👋",
   "lbl_1": "1",
