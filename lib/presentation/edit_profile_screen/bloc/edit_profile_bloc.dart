@@ -28,17 +28,13 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
     return [
       SelectionPopupModel(
         id: 1,
-        title: "Item One",
+        title: "English",
         isSelected: true,
       ),
       SelectionPopupModel(
         id: 2,
-        title: "Item Two",
+        title: "Tiếng Việt",
       ),
-      SelectionPopupModel(
-        id: 3,
-        title: "Item Three",
-      )
     ];
   }
   // In your EditProfileBloc
@@ -126,7 +122,7 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
     UpdateProfileEvent event,
     Emitter<EditProfileState> emit,
   ) async {
-    String accessToken = await PrefUtils().getAccessToken();
+    String accessToken =  await PrefUtils().getAccessToken();
     String? avatarUrl;
 
     if (state.imageFile != null && state.imageFile is File) {

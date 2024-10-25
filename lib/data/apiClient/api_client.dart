@@ -1,10 +1,7 @@
 import 'dart:io';
-
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 import '../../core/app_export.dart';
-import '../models/forgot_password/post_forgot_password_resp.dart';
+import '../models/library_quizzfly/get_library_quizzfly_resp.dart';
 import '../models/login/post_login_resp.dart';
 import '../models/register/post_register_resp.dart';
 import '../models/my_user/get_my_user_resp.dart';
@@ -144,6 +141,7 @@ class ApiClient {
     }
   }
 
+
   Future<GetMyUserResp> updateProfile({
     required PatchUpdateProfileReq requestData,
     Map<String, String> headers = const {},
@@ -179,6 +177,7 @@ class ApiClient {
     try {
       await isNetworkConnected();
 
+
       String fileName = file.path.split('/').last;
       FormData formData = FormData.fromMap({
         "file": await MultipartFile.fromFile(file.path, filename: fileName),
@@ -189,6 +188,7 @@ class ApiClient {
         data: formData,
         options: Options(headers: headers),
       );
+
 
       ProgressDialogUtils.hideProgressDialog();
       if (isSuccessCall(response)) {
@@ -209,7 +209,7 @@ class ApiClient {
   /// with the provided headers and request data
   /// Returns a [PostPostAuthForgot PasswordResp] object representing the response.
   /// Throws an error if the request fails or an exception occurs.
-  Future<PostForgotPasswordResp> postAuthForgotPassword({
+  Future<bool> postAuthForgotPassword({
     Map<String, String> headers = const {},
     Map requestData = const {},
   }) async {
@@ -222,11 +222,35 @@ class ApiClient {
         options: Options(headers: headers),
       );
       ProgressDialogUtils.hideProgressDialog();
+      // Return true if status code is 204
+      return response.statusCode == 204;
+    } catch (error, stackTrace) {
+      ProgressDialogUtils.hideProgressDialog();
+      Logger.log(
+        error,
+        stackTrace: stackTrace,
+      );
+      rethrow;
+    }
+  }
+
+  // Add this method to your ApiClient class
+  Future<GetLibraryQuizzflyResp> getLibraryQuizzfly({
+    Map<String, String> headers = const {},
+  }) async {
+    ProgressDialogUtils.showProgressDialog();
+    try {
+      await isNetworkConnected();
+      var response = await _dio.get(
+        '$url/api/v1/quizzfly',
+        options: Options(headers: headers),
+      );
+      ProgressDialogUtils.hideProgressDialog();
       if (isSuccessCall(response)) {
-        return PostForgotPasswordResp.fromJson(response.data);
+        return GetLibraryQuizzflyResp.fromJson(response.data);
       } else {
         throw response.data != null
-            ? PostForgotPasswordResp.fromJson(response.data)
+            ? GetLibraryQuizzflyResp.fromJson(response.data)
             : 'Something Went Wrong!';
       }
     } catch (error, stackTrace) {

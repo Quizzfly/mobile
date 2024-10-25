@@ -63,7 +63,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                     CustomElevatedButton(
                       height: 44.h,
                       text: "lbl_submit".tr,
-                      buttonStyle: CustomButtonStyles.fillPrimary,
+                      buttonStyle: CustomButtonStyles.fillPrimaryRadius12,
                       buttonTextStyle: theme.textTheme.bodyLarge!,
                       onPressed: () {
                         onTapSubmit(context);
