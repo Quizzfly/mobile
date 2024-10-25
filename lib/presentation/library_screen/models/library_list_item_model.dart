@@ -80,7 +80,7 @@ class LibraryListItemModel extends Equatable {
     final isPublic = json['is_public'] as bool? ?? false;
 
     return LibraryListItemModel(
-      id: json['id'] as String?,
+      id: json['id'] as String?,  
       title: json['title'] as String?,
       coverImage: json['cover_image'] as String?,
       quizzflyStatus: json['quizzfly_status'] as String?,
@@ -90,7 +90,7 @@ class LibraryListItemModel extends Equatable {
       username: json['username'] as String?,
       avatar: json['avatar'] as String?,
       // UI-specific fields
-      displayImage: json['cover_image'] ?? ImageConstant.imageBackToSchool,
+      displayImage: json['cover_image'] ?? ImageConstant.imageLogo,
       displayTitle: json['title'] ?? "Untitled",
       displayDate: formattedDate,
       publicIcon:

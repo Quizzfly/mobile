@@ -29,7 +29,7 @@ class CustomButtonStyles {
         padding: EdgeInsets.zero,
       );
   static ButtonStyle get fillBlackGray => ElevatedButton.styleFrom(
-        backgroundColor: appTheme.gray500,
+        backgroundColor: appTheme.gray500.withOpacity(0.3),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.h),
         ),

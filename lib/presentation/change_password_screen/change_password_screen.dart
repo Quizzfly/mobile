@@ -30,7 +30,7 @@ class ChangePasswordScreen extends StatelessWidget {
         resizeToAvoidBottomInset: false,
         body: Container(
           width: double.maxFinite,
-          padding: EdgeInsets.symmetric(horizontal: 22.h),
+          padding: EdgeInsets.symmetric(horizontal: 15.h, vertical: 15.h),
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [_buildChangePasswordForm(context)],
@@ -135,7 +135,7 @@ class ChangePasswordScreen extends StatelessWidget {
         borderRadius: BorderRadiusStyle.roundedBorder5,
         boxShadow: [
           BoxShadow(
-              color: appTheme.black900.withOpacity(0.1),
+            color: appTheme.gray10001.withOpacity(0.8),
               spreadRadius: 2.h,
               blurRadius: 2.h,
               offset: Offset(

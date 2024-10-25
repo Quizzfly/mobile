@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../core/app_export.dart';
+import '../../routes/navigation_args.dart';
 import '../../theme/custom_button_style.dart';
 import '../../widgets/custom_elevated_button.dart';
 import '../../widgets/custom_outlined_button.dart';
@@ -120,10 +121,21 @@ class LibraryScreen extends StatelessWidget {
                     LibraryListItemModel();
             return LibraryListItemWidget(
               model,
+              callDetail: () {
+                callDetail(context, index);
+              },
             );
           },
         );
       },
     );
+  }
+
+  /// Navigates to the quizzflyDetailScreen when the action is triggered.
+  callDetail(BuildContext context, int index) {
+    NavigatorService.pushNamed(AppRoutes.quizzflyDetailScreen, arguments: {
+      NavigationArgs.id:
+          context.read<LibraryBloc>().getLibraryResp.data?[index].id,
+    });
   }
 }

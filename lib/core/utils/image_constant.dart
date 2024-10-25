@@ -18,4 +18,14 @@ class ImageConstant {
   static String imageUser = "$imagePath/user-svgrepo-com.svg";
 
   static String imageUserGroup = "$imagePath/users-people-svgrepo-com.svg";
+
+  static String imageAvatar = "$imagePath/avatar.png";
+
+  static String imgClose = "$imagePath/image_close.png";
+
+  static String imgHeart = "$imagePath/image_favourite.png";
+
+  static String imgMore = "$imagePath/image_more.png";
+
+  static String imgEdit = "$imagePath/image_edit.png";
 }

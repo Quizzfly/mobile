@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:quizzfly_application_flutter/data/models/detail_quizzfly/get_detail_quizzfly_resp.dart';
 import 'package:quizzfly_application_flutter/data/models/upload_file/post_upload_file.dart';
 import '../apiClient/api_client.dart';
 import '../models/library_quizzfly/get_library_quizzfly_resp.dart';
@@ -76,27 +77,31 @@ class Repository {
     Map<String, String> headers = const {},
     Map requestData = const {},
   }) async {
-    try{
-    return await _apiClient.postAuthForgotPassword(
-      headers: headers,
-      requestData: requestData,
-    );
-    } catch(e){
+    try {
+      return await _apiClient.postAuthForgotPassword(
+        headers: headers,
+        requestData: requestData,
+      );
+    } catch (e) {
       print('Error forgot password : $e');
       rethrow;
     }
   }
 
   Future<GetLibraryQuizzflyResp> getLibraryQuizzfly({
-  Map<String, String> headers = const {},
-}) async {
-  try {
-    return await _apiClient.getLibraryQuizzfly(
-      headers: headers,
-    );
-  } catch (e) {
-    print('Error fetching quizzfly library: $e');
-    rethrow;
+    Map<String, String> headers = const {},
+  }) async {
+    try {
+      return await _apiClient.getLibraryQuizzfly(
+        headers: headers,
+      );
+    } catch (e) {
+      print('Error fetching quizzfly library: $e');
+      rethrow;
+    }
   }
-}
+
+  Future<GetDetailQuizzflyResp> getDetailQuizzfly(String id) async {
+    return await _apiClient.getDetailQuizzfly(id);
+  }
 }

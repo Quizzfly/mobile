@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:quizzfly_application_flutter/data/models/detail_quizzfly/get_detail_quizzfly_resp.dart';
 import '../../core/app_export.dart';
 import '../models/library_quizzfly/get_library_quizzfly_resp.dart';
 import '../models/login/post_login_resp.dart';
@@ -139,7 +140,6 @@ class ApiClient {
     }
   }
 
-
   Future<GetMyUserResp> updateProfile({
     required PatchUpdateProfileReq requestData,
     Map<String, String> headers = const {},
@@ -175,7 +175,6 @@ class ApiClient {
     try {
       await isNetworkConnected();
 
-
       String fileName = file.path.split('/').last;
       FormData formData = FormData.fromMap({
         "file": await MultipartFile.fromFile(file.path, filename: fileName),
@@ -186,7 +185,6 @@ class ApiClient {
         data: formData,
         options: Options(headers: headers),
       );
-
 
       ProgressDialogUtils.hideProgressDialog();
       if (isSuccessCall(response)) {
@@ -249,6 +247,35 @@ class ApiClient {
       } else {
         throw response.data != null
             ? GetLibraryQuizzflyResp.fromJson(response.data)
+            : 'Something Went Wrong!';
+      }
+    } catch (error, stackTrace) {
+      ProgressDialogUtils.hideProgressDialog();
+      Logger.log(
+        error,
+        stackTrace: stackTrace,
+      );
+      rethrow;
+    }
+  }
+
+  Future<GetDetailQuizzflyResp>
+      getDetailQuizzfly(String id) async {
+    ProgressDialogUtils.showProgressDialog();
+    try {
+      await isNetworkConnected();
+      Response response = await _dio.get(
+        '$url/api/v1/quizzfly/{$id}',
+        options: Options(),
+      );
+      ProgressDialogUtils.hideProgressDialog();
+      if (isSuccessCall(response)) {
+        return GetDetailQuizzflyResp.fromJson(
+            response.data);
+      } else {
+        throw response.data != null
+            ? GetDetailQuizzflyResp.fromJson(
+                response.data)
             : 'Something Went Wrong!';
       }
     } catch (error, stackTrace) {
