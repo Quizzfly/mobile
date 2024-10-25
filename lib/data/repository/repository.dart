@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:quizzfly_application_flutter/data/models/change_password/post_change_password_resp.dart';
 import 'package:quizzfly_application_flutter/data/models/detail_quizzfly/get_detail_quizzfly_resp.dart';
 import 'package:quizzfly_application_flutter/data/models/upload_file/post_upload_file.dart';
 import '../apiClient/api_client.dart';
@@ -103,5 +104,19 @@ class Repository {
 
   Future<GetDetailQuizzflyResp> getDetailQuizzfly(String id) async {
     return await _apiClient.getDetailQuizzfly(id);
+  }
+
+  Future<PostChangePasswordResp> changePassword({
+      Map<String, String> headers = const {},
+      Map requestData = const {}}) async {
+    try {
+      return await _apiClient.changePassword(
+        headers: headers,
+        requestData: requestData,
+      );
+    } catch (e) {
+      print('Error fetching user profile: $e');
+      rethrow;
+    }
   }
 }

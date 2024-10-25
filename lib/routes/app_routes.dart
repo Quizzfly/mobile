@@ -35,43 +35,6 @@ class AppRoutes {
         quizzflyDetailScreen : QuizzflyDetailScreen.builder,
         initialRoute: LoginScreen.builder,
       };
-
-  // static Widget initialRouteWidget(BuildContext context) {
-  //   return FutureBuilder(
-  //     future: PrefUtils().init(),
-  //     builder: (context, snapshot) {
-  //       if (snapshot.connectionState == ConnectionState.done) {
-  //         final accessToken = PrefUtils().getAccessToken();
-  //         if (accessToken.isEmpty) {
-  //           return LoginScreen.builder(context);
-  //         } else {
-  //           return ProfileSettingScreen.builder(context);
-  //         }
-  //       }
-  //       // You might want to show a loading indicator here
-  //       return const CircularProgressIndicator();
-  //     },
-  //   );
-  // }
-
-  // static Widget initialRouteWidget(BuildContext context) {
-  //   return FutureBuilder(
-  //     future: PrefUtils().init(),
-  //     builder: (context, snapshot) {
-  //       if (snapshot.connectionState == ConnectionState.done) {
-  //         final accessToken = PrefUtils().getAccessToken();
-  //         if (accessToken.isEmpty) {
-  //           return LoginScreen.builder(context);
-  //         } else {
-  //           return ProfileSettingScreen.builder(context);
-  //         }
-  //       }
-  //       // You might want to show a loading indicator here
-  //       return const CircularProgressIndicator();
-  //     },
-  //   );
-  // }
-
   // static Route<dynamic> generateRoute(RouteSettings settings) {
   //   switch (settings.name) {
   //     case initialRoute:

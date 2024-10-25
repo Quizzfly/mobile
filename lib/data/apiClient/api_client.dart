@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:quizzfly_application_flutter/data/models/detail_quizzfly/get_detail_quizzfly_resp.dart';
 import '../../core/app_export.dart';
-import '../models/library_quizzfly/get_library_quizzfly_resp.dart';
+import '../models/change_password/post_change_password_resp.dart';
 import '../models/library_quizzfly/get_library_quizzfly_resp.dart';
 import '../models/login/post_login_resp.dart';
 import '../models/register/post_register_resp.dart';
@@ -141,7 +141,6 @@ class ApiClient {
     }
   }
 
-
   Future<GetMyUserResp> updateProfile({
     required PatchUpdateProfileReq requestData,
     Map<String, String> headers = const {},
@@ -177,7 +176,6 @@ class ApiClient {
     try {
       await isNetworkConnected();
 
-
       String fileName = file.path.split('/').last;
       FormData formData = FormData.fromMap({
         "file": await MultipartFile.fromFile(file.path, filename: fileName),
@@ -188,7 +186,6 @@ class ApiClient {
         data: formData,
         options: Options(headers: headers),
       );
-
 
       ProgressDialogUtils.hideProgressDialog();
       if (isSuccessCall(response)) {
@@ -263,8 +260,7 @@ class ApiClient {
     }
   }
 
-  Future<GetDetailQuizzflyResp>
-      getDetailQuizzfly(String id) async {
+  Future<GetDetailQuizzflyResp> getDetailQuizzfly(String id) async {
     ProgressDialogUtils.showProgressDialog();
     try {
       await isNetworkConnected();
@@ -274,12 +270,40 @@ class ApiClient {
       );
       ProgressDialogUtils.hideProgressDialog();
       if (isSuccessCall(response)) {
-        return GetDetailQuizzflyResp.fromJson(
-            response.data);
+        return GetDetailQuizzflyResp.fromJson(response.data);
       } else {
         throw response.data != null
-            ? GetDetailQuizzflyResp.fromJson(
-                response.data)
+            ? GetDetailQuizzflyResp.fromJson(response.data)
+            : 'Something Went Wrong!';
+      }
+    } catch (error, stackTrace) {
+      ProgressDialogUtils.hideProgressDialog();
+      Logger.log(
+        error,
+        stackTrace: stackTrace,
+      );
+      rethrow;
+    }
+  }
+
+  Future<PostChangePasswordResp> changePassword({
+    Map<String, String> headers = const {},
+    Map requestData = const {},
+  }) async {
+    ProgressDialogUtils.showProgressDialog();
+    try {
+      await isNetworkConnected();
+      var response = await _dio.post(
+        '$url/api/v1/users/change-password',
+        data: requestData,
+        options: Options(headers: headers),
+      );
+      ProgressDialogUtils.hideProgressDialog();
+      if (isSuccessCall(response)) {
+        return PostChangePasswordResp.fromJson(response.data);
+      } else {
+        throw response.data != null
+            ? PostChangePasswordResp.fromJson(response.data)
             : 'Something Went Wrong!';
       }
     } catch (error, stackTrace) {

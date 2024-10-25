@@ -198,8 +198,6 @@ final Map<String, String> enUs = {
   "err_msg_please_enter_valid_password": "Please enter valid password",
   "err_msg_please_enter_valid_email": "Please enter valid email",
   "err_msg_please_enter_valid_name": "Please enter valid name",
-  "lbl_host_live": "Host live",
-  "lbl_play_solo": "Play solo",
 //Network error
   "msg_newtwork_err": "Network Error",
   "msg_something_went wrong": "Something went wrong",
