@@ -37,6 +37,7 @@ class ProfileSettingScreenState extends State<ProfileSettingScreen>
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: appTheme.whiteA700,
         body: Container(
           width: double.maxFinite,
           child: Column(
@@ -72,7 +73,7 @@ class ProfileSettingScreenState extends State<ProfileSettingScreen>
         children: [
           Align(
             alignment: Alignment.centerLeft,
-            child: Container(   
+            child: Container(
               height: 112.h,
               width: double.maxFinite,
               decoration: BoxDecoration(
@@ -104,7 +105,7 @@ class ProfileSettingScreenState extends State<ProfileSettingScreen>
                     controller: tabViewController,
                     isScrollable: true,
                     tabAlignment: TabAlignment.start,
-                    labelColor: appTheme.blueGray900,
+                    labelColor: appTheme.deppPurplePrimary,
                     labelStyle: TextStyle(
                       fontSize: 14.fSize,
                       fontFamily: 'Roboto',
@@ -118,33 +119,33 @@ class ProfileSettingScreenState extends State<ProfileSettingScreen>
                     ),
                     indicator: UnderlineTabIndicator(
                       borderSide: BorderSide(
-                        color: theme.colorScheme.primary,
+                        color: appTheme.deppPurplePrimary,
                         width: 4.h,
                       ),
                     ),
                     indicatorSize: TabBarIndicatorSize.tab,
                     tabs: [
                       Padding(
-                        padding: const EdgeInsets.only(left : 6.0,right: 6.0),
+                        padding: const EdgeInsets.only(left: 6.0, right: 6.0),
                         child: Tab(text: "lbl_top_bar_edit".tr),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left : 6.0,right: 6.0),
+                        padding: const EdgeInsets.only(left: 6.0, right: 6.0),
                         child: Tab(text: "lbl_top_bar_privacy".tr),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left : 6.0,right: 6.0),
+                        padding: const EdgeInsets.only(left: 6.0, right: 6.0),
                         child: Tab(text: "lbl_top_bar_change_password".tr),
                       ),
                       Tab(text: "lbl_billing".tr),
                     ],
                   ),
                 ),
-                Container(
-                  width: double.infinity,
-                  height: 1.h,
-                  color: appTheme.indigo50,
-                ),
+                // Container(
+                //   width: double.infinity,
+                //   height: 0.h,
+                //   color: appTheme.whiteA700,
+                // ),
               ],
             ),
           )
@@ -153,4 +154,3 @@ class ProfileSettingScreenState extends State<ProfileSettingScreen>
     );
   }
 }
-

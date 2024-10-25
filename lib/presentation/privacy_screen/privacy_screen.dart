@@ -29,7 +29,7 @@ class PrivacyScreen extends StatelessWidget {
           child: SingleChildScrollView(
             child: Container(
               width: double.maxFinite,
-              padding: EdgeInsets.symmetric(horizontal: 22.h),
+              padding: EdgeInsets.symmetric(horizontal: 15.h, vertical: 15.h),
               child: Column(
                 children: [
                   _buildNotificationSettings(context),
@@ -42,7 +42,7 @@ class PrivacyScreen extends StatelessWidget {
                       borderRadius: BorderRadiusStyle.roundedBorder5,
                       boxShadow: [
                         BoxShadow(
-                          color: appTheme.black900.withOpacity(0.1),
+                          color: appTheme.gray10001.withOpacity(0.8),
                           spreadRadius: 2.h,
                           blurRadius: 2.h,
                           offset: Offset(
@@ -239,7 +239,7 @@ class PrivacyScreen extends StatelessWidget {
         borderRadius: BorderRadiusStyle.roundedBorder5,
         boxShadow: [
           BoxShadow(
-            color: appTheme.black900.withOpacity(0.1),
+            color: appTheme.gray10001.withOpacity(0.8),
             spreadRadius: 2.h,
             blurRadius: 2.h,
             offset: Offset(

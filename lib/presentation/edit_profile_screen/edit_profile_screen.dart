@@ -38,7 +38,7 @@ class EditProfileScreen extends StatelessWidget {
           child: SingleChildScrollView(
             child: Container(
               width: double.maxFinite,
-              padding: EdgeInsets.symmetric(horizontal: 22.h),
+              padding: EdgeInsets.symmetric(horizontal: 15.h, vertical: 15.h),
               child: Column(
                 children: [
                   _buildUserInformationForm(context),
@@ -171,7 +171,7 @@ class EditProfileScreen extends StatelessWidget {
         borderRadius: BorderRadiusStyle.roundedBorder5,
         boxShadow: [
           BoxShadow(
-            color: appTheme.black900.withOpacity(0.1),
+            color: appTheme.gray10001.withOpacity(0.8),
             spreadRadius: 2.h,
             blurRadius: 2.h,
             offset: Offset(
@@ -287,7 +287,7 @@ class EditProfileScreen extends StatelessWidget {
         borderRadius: BorderRadiusStyle.roundedBorder5,
         boxShadow: [
           BoxShadow(
-            color: appTheme.black900.withOpacity(0.1),
+            color: appTheme.gray10001.withOpacity(0.8),
             spreadRadius: 2.h,
             blurRadius: 2.h,
             offset: Offset(
@@ -322,21 +322,7 @@ class EditProfileScreen extends StatelessWidget {
           Container(
             width: double.maxFinite,
             margin: EdgeInsets.symmetric(horizontal: 24.h),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "lbl_organization".tr,
-                        style: CustomTextStyles.bodyMediumRobotoGray90003,
-                      ),
-                      SizedBox(height: 4.h),
-                      _buildOrganizationInput(context)
-                    ],
-                  ),
-                ),
+            child: 
                 SizedBox(
                   width: 126.h,
                   child: Column(
@@ -362,7 +348,7 @@ class EditProfileScreen extends StatelessWidget {
                               ),
                             ),
                             iconSize: 16.h,
-                            hintText: "lbl_language".tr,
+                            hintText: "lbl_select_language".tr,
                             items: editProfileModelObj?.dropdownItemList ?? [],
                             contentPadding: EdgeInsets.symmetric(
                               horizontal: 10.h,
@@ -374,8 +360,6 @@ class EditProfileScreen extends StatelessWidget {
                     ],
                   ),
                 )
-              ],
-            ),
           ),
           SizedBox(height: 10.h),
         ],
@@ -415,11 +399,6 @@ class EditProfileScreen extends StatelessWidget {
                       height: 24.h,
                       width: 30.h,
                     ),
-                  SizedBox(height: 20.h),
-                  Text(
-                    state.imageFile != null ? "Change Picture" : "Add Picture",
-                    style: CustomTextStyles.titleSmallRobotoSansBlack900,
-                  ),
                 ],
               ),
             ),

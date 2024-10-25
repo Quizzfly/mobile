@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../presentation/library_collections_screen/library_collections_screen.dart';
+import '../presentation/quizzfly_detail_screen/quizzfly_detail_screen.dart';
 import '../presentation/library_screen/library_screen.dart';
 import '../presentation/reset_password_screen/reset_password_screen.dart';
 import '../presentation/change_password_screen/change_password_screen.dart';
@@ -21,6 +21,7 @@ class AppRoutes {
   static const String profileSettingScreen = '/profile_setting_screen';
   static const String changePasswordScreen = '/change_password_screen';
   static const String libraryScreen = '/library_screen';
+  static const String quizzflyDetailScreen = "/quizzfly_detail_screen";
 
   static Map<String, WidgetBuilder> get routes => {
         loginScreen: LoginScreen.builder,
@@ -31,6 +32,7 @@ class AppRoutes {
         profileSettingScreen: ProfileSettingScreen.builder,
         resetPassWordScreen: ResetPasswordScreen.builder,
         libraryScreen: LibraryScreen.builder,
+        quizzflyDetailScreen : QuizzflyDetailScreen.builder,
         initialRoute: LoginScreen.builder,
       };
 
@@ -52,6 +54,39 @@ class AppRoutes {
   //   );
   // }
 
+  // static Widget initialRouteWidget(BuildContext context) {
+  //   return FutureBuilder(
+  //     future: PrefUtils().init(),
+  //     builder: (context, snapshot) {
+  //       if (snapshot.connectionState == ConnectionState.done) {
+  //         final accessToken = PrefUtils().getAccessToken();
+  //         if (accessToken.isEmpty) {
+  //           return LoginScreen.builder(context);
+  //         } else {
+  //           return ProfileSettingScreen.builder(context);
+  //         }
+  //       }
+  //       // You might want to show a loading indicator here
+  //       return const CircularProgressIndicator();
+  //     },
+  //   );
+  // }
+
+  // static Route<dynamic> generateRoute(RouteSettings settings) {
+  //   switch (settings.name) {
+  //     case initialRoute:
+  //       return MaterialPageRoute(
+  //         builder: (context) => initialRouteWidget(context),
+  //       );
+  //     // Add cases for other routes if needed
+  //     default:
+  //       return MaterialPageRoute(
+  //         builder: (_) => const Scaffold(
+  //           body: Center(child: Text('Route not found!')),
+  //         ),
+  //       );
+  //   }
+  // }
   // static Route<dynamic> generateRoute(RouteSettings settings) {
   //   switch (settings.name) {
   //     case initialRoute:
@@ -102,12 +137,11 @@ class AppRoutes {
         transitionDuration:
             const Duration(milliseconds: 400), // Set duration to 400ms
         pageBuilder: (context, animation, secondaryAnimation) =>
-            ForgotPasswordScreen.builder(context),
+            ProfileSettingScreen.builder(context),
         transitionsBuilder: (context, animation, secondaryAnimation, child) {
           const begin = Offset(1.0, 0.0); // Slide from right to left
           const end = Offset.zero;
           const curve = Curves.easeInOut;
-
           var tween =
               Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
           var offsetAnimation = animation.drive(tween);

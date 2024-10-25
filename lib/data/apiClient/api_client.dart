@@ -1,12 +1,12 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:quizzfly_application_flutter/data/models/detail_quizzfly/get_detail_quizzfly_resp.dart';
 import '../../core/app_export.dart';
+import '../models/library_quizzfly/get_library_quizzfly_resp.dart';
 import '../models/library_quizzfly/get_library_quizzfly_resp.dart';
 import '../models/login/post_login_resp.dart';
 import '../models/register/post_register_resp.dart';
 import '../models/my_user/get_my_user_resp.dart';
-import '../models/update_profile/patch_update_profile_req.dart';
-import '../models/upload_file/post_upload_file.dart';
 import '../models/update_profile/patch_update_profile_req.dart';
 import '../models/upload_file/post_upload_file.dart';
 import 'network_interceptor.dart';
@@ -251,6 +251,35 @@ class ApiClient {
       } else {
         throw response.data != null
             ? GetLibraryQuizzflyResp.fromJson(response.data)
+            : 'Something Went Wrong!';
+      }
+    } catch (error, stackTrace) {
+      ProgressDialogUtils.hideProgressDialog();
+      Logger.log(
+        error,
+        stackTrace: stackTrace,
+      );
+      rethrow;
+    }
+  }
+
+  Future<GetDetailQuizzflyResp>
+      getDetailQuizzfly(String id) async {
+    ProgressDialogUtils.showProgressDialog();
+    try {
+      await isNetworkConnected();
+      Response response = await _dio.get(
+        '$url/api/v1/quizzfly/{$id}',
+        options: Options(),
+      );
+      ProgressDialogUtils.hideProgressDialog();
+      if (isSuccessCall(response)) {
+        return GetDetailQuizzflyResp.fromJson(
+            response.data);
+      } else {
+        throw response.data != null
+            ? GetDetailQuizzflyResp.fromJson(
+                response.data)
             : 'Something Went Wrong!';
       }
     } catch (error, stackTrace) {
