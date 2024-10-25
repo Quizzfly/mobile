@@ -26,3 +26,9 @@ class CreateLoginEvent extends LoginEvent {
   List<Object?> get props =>
       [onCreateLoginEventSuccess, onCreateLoginEventError];
 }
+
+class FetchMeEvent extends LoginEvent {
+  FetchMeEvent();
+  @override
+  List<Object> get props => [];
+}

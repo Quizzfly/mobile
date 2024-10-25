@@ -107,6 +107,7 @@ final Map<String, String> enUs = {
   "lbl_delete_account": "Delete account",
   "msg_if_you_delete_your":
       "If you delete your account, you'll lose access to all the quizzfly you created",
+  "lbl_select_language": "Select a language",
 
 //Privacy screen
   "lbl_notification": "Notification",
@@ -197,7 +198,8 @@ final Map<String, String> enUs = {
   "err_msg_please_enter_valid_password": "Please enter valid password",
   "err_msg_please_enter_valid_email": "Please enter valid email",
   "err_msg_please_enter_valid_name": "Please enter valid name",
-
+  "lbl_host_live": "Host live",
+  "lbl_play_solo": "Play solo",
 //Network error
   "msg_newtwork_err": "Network Error",
   "msg_something_went wrong": "Something went wrong",

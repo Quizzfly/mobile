@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:equatable/equatable.dart';
+import 'package:quizzfly_application_flutter/data/models/my_user/get_my_user_resp.dart';
 import '../../../data/models/login/post_login_resp.dart';
 import '../../../core/app_export.dart';
 import '../../../data/models/login/post_login_req.dart';
@@ -14,22 +15,26 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc(LoginState initialstate) : super(initialstate) {
     on<LoginInitialEvent>(_onInitialize);
     on<CreateLoginEvent>(_callLogin);
+    on<FetchMeEvent>(_callGetMyUser);
   }
 
   final _repository = Repository();
 
   var postLoginResp = PostLoginResp();
 
+  var getMyUserResp = GetMyUserResp();
   _onInitialize(
     LoginInitialEvent event,
     Emitter<LoginState> emit,
   ) async {
-    emit(
-      state.copyWith(
-        emailController: TextEditingController(),
-        passwordController: TextEditingController(),
-      ),
-    );
+    try {
+      emit(
+        state.copyWith(
+          emailController: TextEditingController(),
+          passwordController: TextEditingController(),
+        ),
+      );
+    } catch (e) {}
   }
 
   ///Calls [{{baseUrl}}/api/v1/auth/login] with the provided event and emits the state.
@@ -62,16 +67,49 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   void _onLoginSuccess(
     PostLoginResp resp,
     Emitter<LoginState> emit,
-  ) {
+  ) async {
     PrefUtils().setAccessToken(resp.data?.accessToken ?? '');
     PrefUtils().setRefreshToken(resp.data?.refreshToken ?? '');
+    await _callGetMyUser(FetchMeEvent(), emit);
+
     emit(
       state.copyWith(
         loginModelObj: state.loginModelObj?.copyWith(),
       ),
-    );  
+    );
   }
 
   void _onLoginError() {}
 
+  FutureOr<void> _callGetMyUser(
+    FetchMeEvent event,
+    Emitter<LoginState> emit,
+  ) async {
+    String accessToken = await PrefUtils().getAccessToken();
+    // Retrieve access token from SharedPreferences
+    await _repository.getMyUser(
+      headers: {'Authorization': 'Bearer $accessToken'},
+    ).then((value) async {
+      getMyUserResp = value;
+      _onGetUsersMeSuccess(value, emit);
+    }).onError((error, stackTrace) {
+      _onGetMyUserError();
+    });
+  }
+
+  void _onGetUsersMeSuccess(
+    GetMyUserResp resp,
+    Emitter<LoginState> emit,
+  ) {
+    PrefUtils().setUsername(resp.data?.userInfo?.username ?? '');
+    PrefUtils().setName(resp.data?.userInfo?.name ?? '');
+    PrefUtils().setAvatar(resp.data?.userInfo?.avatar ?? '');
+    emit(
+      state.copyWith(
+        loginModelObj: state.loginModelObj?.copyWith(),
+      ),
+    );
+  }
+
+  void _onGetMyUserError() {}
 }

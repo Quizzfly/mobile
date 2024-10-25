@@ -151,6 +151,7 @@ class CustomTextStyles {
       );
 
 
+
   static get headlineSmallRobotoBlueGray10001 =>
       theme.textTheme.headlineSmall!.roboto.copyWith(
         color: appTheme.blueGray10001,
@@ -248,6 +249,9 @@ class CustomTextStyles {
         color: appTheme.gray500,
         fontSize: 9.h,
       );
+      static get titleSmallGray500 => theme.textTheme.titleMedium!.copyWith(
+        color: appTheme.gray500,
+      );
   //Title text
   static get titleSmallOnErrorContainer =>
       theme.textTheme.titleSmall!.roboto.copyWith(
@@ -255,7 +259,8 @@ class CustomTextStyles {
       );
   static get titleSmallRobotoSansBlack900 =>
       theme.textTheme.titleSmall!.roboto.copyWith(
-        color: appTheme.black900,
+        color: appTheme.black900.withOpacity(0.5),
+        fontSize: 12.h
       );
   static get titleMediumRobotoBlack900 =>
       theme.textTheme.titleMedium!.roboto.copyWith(
