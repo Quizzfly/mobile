@@ -14,3 +14,11 @@ class ChangePasswordInitialEvent extends ChangePasswordEvent {
   @override
   List<Object?> get props => [];
 }
+
+// ignore: must_be_immutable
+class CreateChangePasswordEvent extends ChangePasswordEvent {
+  CreateChangePasswordEvent({this.onCreateChangePasswordEventSuccess});
+  Function? onCreateChangePasswordEventSuccess;
+  @override
+  List<Object?> get props => [onCreateChangePasswordEventSuccess];
+}

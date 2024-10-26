@@ -44,14 +44,14 @@ class CustomButtonStyles {
         elevation: 0,
         padding: EdgeInsets.zero,
       );
-    static ButtonStyle get fillErrorRadius5 => ElevatedButton.styleFrom(
+  static ButtonStyle get fillErrorRadius5 => ElevatedButton.styleFrom(
         backgroundColor: appTheme.red10001.withOpacity(0.5),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(5.h),
         ),
         elevation: 0,
         padding: EdgeInsets.zero,
-      );   
+      );
   static ButtonStyle get fillPrimaryRadius20 => ElevatedButton.styleFrom(
         backgroundColor: theme.colorScheme.primary,
         shape: RoundedRectangleBorder(
@@ -62,6 +62,14 @@ class CustomButtonStyles {
       );
   static ButtonStyle get fillWhiteRadius20 => ElevatedButton.styleFrom(
         backgroundColor: appTheme.whiteA700,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.h),
+        ),
+        elevation: 0,
+        padding: EdgeInsets.zero,
+      );
+  static ButtonStyle get fillRedRadius20 => ElevatedButton.styleFrom(
+        backgroundColor: appTheme.red700,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20.h),
         ),

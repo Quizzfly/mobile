@@ -1,7 +1,7 @@
-class PostChangePasswordResp {
+class DeleteVerifyDeleteUserResp {
   String? status;
-  PostChangePasswordResp({this.status});
-  PostChangePasswordResp.fromJson(Map<String, dynamic> json) {
+  DeleteVerifyDeleteUserResp({this.status});
+  DeleteVerifyDeleteUserResp.fromJson(Map<String, dynamic> json) {
     status = json['status'];
   }
   Map<String, dynamic> toJson() {

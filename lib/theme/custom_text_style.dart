@@ -187,11 +187,12 @@ class CustomTextStyles {
         color: appTheme.red100,
       );
   static get labelLargeWhiteA700 => theme.textTheme.labelLarge!.copyWith(
-        color: appTheme.whiteA700.withOpacity(0.5),
-      );
-  static get labelLargeWhiteA700_1 => theme.textTheme.labelLarge!.copyWith(
         color: appTheme.whiteA700,
       );
+  static get labelLargeGray500 => theme.textTheme.labelLarge!.copyWith(
+        color: appTheme.gray500,
+      );
+
   static get labelSmallRoboto => theme.textTheme.labelSmall!.roboto.copyWith(
         color: appTheme.whiteA700,
       );
@@ -202,6 +203,7 @@ class CustomTextStyles {
   static get labelSmallRed700 => theme.textTheme.labelLarge!.copyWith(
         color: appTheme.red700.withOpacity(0.5),
       );
+
 // Title text style
   static get titleLargePrimary => theme.textTheme.titleLarge!.copyWith(
         color: appTheme.deppPurplePrimary,

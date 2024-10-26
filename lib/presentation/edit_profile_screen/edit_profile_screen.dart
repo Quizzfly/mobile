@@ -58,7 +58,10 @@ class EditProfileScreen extends StatelessWidget {
                               decorationColor: CustomTextStyles
                                   .bodyMediumErrorContainer.color,
                             ),
-                            recognizer: TapGestureRecognizer()..onTap = () {},
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                AppRoutes.navigateToDeleteAccount(context);
+                              },
                           ),
                           TextSpan(
                             text: "\n\n",
@@ -320,47 +323,45 @@ class EditProfileScreen extends StatelessWidget {
           ),
           SizedBox(height: 10.h),
           Container(
-            width: double.maxFinite,
-            margin: EdgeInsets.symmetric(horizontal: 24.h),
-            child: 
-                SizedBox(
-                  width: 126.h,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "lbl_language".tr,
-                        style: CustomTextStyles.bodyMediumRobotoGray90003,
-                      ),
-                      SizedBox(height: 6.h),
-                      BlocSelector<EditProfileBloc, EditProfileState,
-                          EditProfileModel?>(
-                        selector: (state) => state.editProfileModelObj,
-                        builder: (context, editProfileModelObj) {
-                          return CustomDropDown(
-                            icon: Container(
-                              margin: EdgeInsets.only(left: 4.h),
-                              child: CustomImageView(
-                                imagePath: ImageConstant.imageArrowDown,
-                                height: 16.h,
-                                width: 16.h,
-                                fit: BoxFit.contain,
-                              ),
+              width: double.maxFinite,
+              margin: EdgeInsets.symmetric(horizontal: 24.h),
+              child: SizedBox(
+                width: 126.h,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "lbl_language".tr,
+                      style: CustomTextStyles.bodyMediumRobotoGray90003,
+                    ),
+                    SizedBox(height: 6.h),
+                    BlocSelector<EditProfileBloc, EditProfileState,
+                        EditProfileModel?>(
+                      selector: (state) => state.editProfileModelObj,
+                      builder: (context, editProfileModelObj) {
+                        return CustomDropDown(
+                          icon: Container(
+                            margin: EdgeInsets.only(left: 4.h),
+                            child: CustomImageView(
+                              imagePath: ImageConstant.imageArrowDown,
+                              height: 16.h,
+                              width: 16.h,
+                              fit: BoxFit.contain,
                             ),
-                            iconSize: 16.h,
-                            hintText: "lbl_select_language".tr,
-                            items: editProfileModelObj?.dropdownItemList ?? [],
-                            contentPadding: EdgeInsets.symmetric(
-                              horizontal: 10.h,
-                              vertical: 12.h,
-                            ),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                )
-          ),
+                          ),
+                          iconSize: 16.h,
+                          hintText: "lbl_select_language".tr,
+                          items: editProfileModelObj?.dropdownItemList ?? [],
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: 10.h,
+                            vertical: 12.h,
+                          ),
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              )),
           SizedBox(height: 10.h),
         ],
       ),
