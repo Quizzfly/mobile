@@ -2,13 +2,15 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:quizzfly_application_flutter/data/models/detail_quizzfly/get_detail_quizzfly_resp.dart';
 import '../../core/app_export.dart';
-import '../models/library_quizzfly/get_library_quizzfly_resp.dart';
+import '../models/change_password/post_change_password_resp.dart';
+import '../models/delete_user/post_request_delete_user_req.dart';
 import '../models/library_quizzfly/get_library_quizzfly_resp.dart';
 import '../models/login/post_login_resp.dart';
 import '../models/register/post_register_resp.dart';
 import '../models/my_user/get_my_user_resp.dart';
 import '../models/update_profile/patch_update_profile_req.dart';
 import '../models/upload_file/post_upload_file.dart';
+import '../models/verify_delete_user/delete_verify_delete_user_resp.dart';
 import 'network_interceptor.dart';
 
 // ignore_for_file: must_be_immutable
@@ -81,10 +83,6 @@ class ApiClient {
     }
   }
 
-  /// Sends a POST request to the server's '{{baseUrl}}/api/v1/auth/register' endpoint
-  /// with the provided headers and request data
-  /// Returns a [PostRegisterResp] object representing the response.
-  /// Throws an error if the request fails or an exception occurs.
   Future<PostRegisterResp> register({
     Map<String, String> headers = const {},
     Map requestData = const {},
@@ -115,7 +113,6 @@ class ApiClient {
     }
   }
 
-  /// Get user information with Bearer token
   Future<GetMyUserResp> getMyUser({
     Map<String, String> headers = const {},
   }) async {
@@ -140,7 +137,6 @@ class ApiClient {
       rethrow;
     }
   }
-
 
   Future<GetMyUserResp> updateProfile({
     required PatchUpdateProfileReq requestData,
@@ -177,7 +173,6 @@ class ApiClient {
     try {
       await isNetworkConnected();
 
-
       String fileName = file.path.split('/').last;
       FormData formData = FormData.fromMap({
         "file": await MultipartFile.fromFile(file.path, filename: fileName),
@@ -188,7 +183,6 @@ class ApiClient {
         data: formData,
         options: Options(headers: headers),
       );
-
 
       ProgressDialogUtils.hideProgressDialog();
       if (isSuccessCall(response)) {
@@ -205,10 +199,6 @@ class ApiClient {
     }
   }
 
-  /// Sends a POST request to the server's 'http://103.161.96.76:3000/api/v1/auth/forgot-password' endpoint
-  /// with the provided headers and request data
-  /// Returns a [PostPostAuthForgot PasswordResp] object representing the response.
-  /// Throws an error if the request fails or an exception occurs.
   Future<bool> postAuthForgotPassword({
     Map<String, String> headers = const {},
     Map requestData = const {},
@@ -263,8 +253,7 @@ class ApiClient {
     }
   }
 
-  Future<GetDetailQuizzflyResp>
-      getDetailQuizzfly(String id) async {
+  Future<GetDetailQuizzflyResp> getDetailQuizzfly(String id) async {
     ProgressDialogUtils.showProgressDialog();
     try {
       await isNetworkConnected();
@@ -274,14 +263,126 @@ class ApiClient {
       );
       ProgressDialogUtils.hideProgressDialog();
       if (isSuccessCall(response)) {
-        return GetDetailQuizzflyResp.fromJson(
-            response.data);
+        return GetDetailQuizzflyResp.fromJson(response.data);
       } else {
         throw response.data != null
-            ? GetDetailQuizzflyResp.fromJson(
-                response.data)
+            ? GetDetailQuizzflyResp.fromJson(response.data)
             : 'Something Went Wrong!';
       }
+    } catch (error, stackTrace) {
+      ProgressDialogUtils.hideProgressDialog();
+      Logger.log(
+        error,
+        stackTrace: stackTrace,
+      );
+      rethrow;
+    }
+  }
+
+  Future<PostChangePasswordResp> changePassword({
+    Map<String, String> headers = const {},
+    Map requestData = const {},
+  }) async {
+    ProgressDialogUtils.showProgressDialog();
+    try {
+      await isNetworkConnected();
+      var response = await _dio.post(
+        '$url/api/v1/users/change-password',
+        data: requestData,
+        options: Options(headers: headers),
+      );
+      ProgressDialogUtils.hideProgressDialog();
+      if (isSuccessCall(response)) {
+        return PostChangePasswordResp.fromJson(response.data);
+      } else {
+        throw response.data != null
+            ? PostChangePasswordResp.fromJson(response.data)
+            : 'Something Went Wrong!';
+      }
+    } catch (error, stackTrace) {
+      ProgressDialogUtils.hideProgressDialog();
+      Logger.log(
+        error,
+        stackTrace: stackTrace,
+      );
+      rethrow;
+    }
+  }
+
+  Future<PostRequestDeleteUserResp> requestDeleteUser({
+    Map<String, String> headers = const {},
+    Map requestData = const {},
+  }) async {
+    ProgressDialogUtils.showProgressDialog();
+    try {
+      await isNetworkConnected();
+      var response = await _dio.post(
+        '$url/api/v1/users/request-delete',
+        data: requestData,
+        options: Options(headers: headers),
+      );
+      ProgressDialogUtils.hideProgressDialog();
+      if (isSuccessCall(response)) {
+        return PostRequestDeleteUserResp.fromJson(response.data);
+      } else {
+        throw response.data != null
+            ? PostRequestDeleteUserResp.fromJson(response.data)
+            : 'Something Went Wrong!';
+      }
+    } catch (error, stackTrace) {
+      ProgressDialogUtils.hideProgressDialog();
+      Logger.log(
+        error,
+        stackTrace: stackTrace,
+      );
+      rethrow;
+    }
+  }
+
+  Future<DeleteVerifyDeleteUserResp> verifyDeleteUser({
+    Map<String, String> headers = const {},
+    Map<String, dynamic> queryParams = const {},
+  }) async {
+    ProgressDialogUtils.showProgressDialog();
+    try {
+      await isNetworkConnected();
+      Response response = await _dio.delete(
+        '$url/api/v1/users/verify-delete',
+        queryParameters: queryParams,
+        options: Options(headers: headers),
+      );
+      ProgressDialogUtils.hideProgressDialog();
+      if (isSuccessCall(response)) {
+        return DeleteVerifyDeleteUserResp.fromJson(response.data);
+      } else {
+        throw response.data != null
+            ? DeleteVerifyDeleteUserResp.fromJson(response.data)
+            : 'Something Went Wrong!';
+      }
+    } catch (error, stackTrace) {
+      ProgressDialogUtils.hideProgressDialog();
+      Logger.log(
+        error,
+        stackTrace: stackTrace,
+      );
+      rethrow;
+    }
+  }
+
+  Future<bool> logoutPost({
+    Map<String, String> headers = const {},
+    Map requestData = const {},
+  }) async {
+    ProgressDialogUtils.showProgressDialog();
+    try {
+      await isNetworkConnected();
+      var response = await _dio.post(
+        '$url/api/v1/auth/logout',
+        data: requestData,
+        options: Options(headers: headers),
+      );
+      ProgressDialogUtils.hideProgressDialog();
+      return response.statusCode == 204;
     } catch (error, stackTrace) {
       ProgressDialogUtils.hideProgressDialog();
       Logger.log(

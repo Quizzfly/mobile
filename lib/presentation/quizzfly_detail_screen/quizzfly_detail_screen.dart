@@ -273,7 +273,7 @@ class QuizzflyDetailScreen extends StatelessWidget {
         ),
         actions: [
           AppbarLeadingImage(
-            imagePath: ImageConstant.imgEdit,
+            imagePath: ImageConstant.imgSetting,
             margin: EdgeInsets.only(right: 16.h),
             onTap: () {
               // Handle favorite action

@@ -304,7 +304,7 @@ class LoginScreen extends StatelessWidget {
         children: [
           InkWell(
             onTap: () {
-              AppRoutes.navigateToRegisterScreen(context);
+              AppRoutes.navigateToProfileSetting(context);
             },
             child: RichText(
               text: TextSpan(

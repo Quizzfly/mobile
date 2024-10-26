@@ -145,9 +145,17 @@ final Map<String, String> enUs = {
 //Library Screen
   "lbl_10_qs": "10 Qs",
   "lbl_45_quizzfly": " 45 Quizzfly",
-  "lbl_host_live" : "Host live",
-  "lbl_play_solo" : "Play solo",
-  "lbl_draft" : "DRAFT",
+  "lbl_host_live": "Host live",
+  "lbl_play_solo": "Play solo",
+  "lbl_draft": "DRAFT",
+// Delete account
+  "msg_request_delete_account": "Request delete account",
+  "msg_are_you_sure_you_d": "Are you sure you'd like to delete your account?",
+  "msg_we_re_sorry_to_see" : "We’re sorry to see you go. Once you delete your account, you’ll lose access to the kahoots you’ve created.",
+  "msg_we_d_appreciate" : "We’d appreciate if you could share why you decided to delete your account so we can improve our services.",
+  "lbl_request": "Request",
+  "lbl_cancel" : "Cancel",
+  "lbl_code" : "Code",
 // Common String
   "lbl": "👋",
   "lbl_1": "1",
@@ -198,8 +206,6 @@ final Map<String, String> enUs = {
   "err_msg_please_enter_valid_password": "Please enter valid password",
   "err_msg_please_enter_valid_email": "Please enter valid email",
   "err_msg_please_enter_valid_name": "Please enter valid name",
-  "lbl_host_live": "Host live",
-  "lbl_play_solo": "Play solo",
 //Network error
   "msg_newtwork_err": "Network Error",
   "msg_something_went wrong": "Something went wrong",

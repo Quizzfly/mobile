@@ -4,7 +4,7 @@ import 'package:equatable/equatable.dart';
 /// and is typically used to hold data that is passed between different parts of the application.
 class ChangePasswordModel extends Equatable {
   ChangePasswordModel();
-  ChangePasswordModel copywith() {
+  ChangePasswordModel copyWith() {
     return ChangePasswordModel();
   }
 
