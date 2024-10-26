@@ -28,5 +28,6 @@ class ImageConstant {
   static String imgMore = "$imagePath/image_more.png";
 
   static String imgEdit = "$imagePath/image_edit.png";
-  
+
+  static String imgSetting = "$imagePath/image_setting.png";
 }

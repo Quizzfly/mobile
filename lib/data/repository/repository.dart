@@ -3,11 +3,13 @@ import 'package:quizzfly_application_flutter/data/models/change_password/post_ch
 import 'package:quizzfly_application_flutter/data/models/detail_quizzfly/get_detail_quizzfly_resp.dart';
 import 'package:quizzfly_application_flutter/data/models/upload_file/post_upload_file.dart';
 import '../apiClient/api_client.dart';
+import '../models/delete_user/post_request_delete_user_req.dart';
 import '../models/library_quizzfly/get_library_quizzfly_resp.dart';
 import '../models/login/post_login_resp.dart';
 import '../models/my_user/get_my_user_resp.dart';
 import '../models/register/post_register_resp.dart';
 import '../models/update_profile/patch_update_profile_req.dart';
+import '../models/verify_delete_user/delete_verify_delete_user_resp.dart';
 
 /// Repository class for managing API requests.
 ///
@@ -106,8 +108,8 @@ class Repository {
     return await _apiClient.getDetailQuizzfly(id);
   }
 
-  Future<PostChangePasswordResp> changePassword({
-      Map<String, String> headers = const {},
+  Future<PostChangePasswordResp> changePassword(
+      {Map<String, String> headers = const {},
       Map requestData = const {}}) async {
     try {
       return await _apiClient.changePassword(
@@ -118,5 +120,36 @@ class Repository {
       print('Error fetching user profile: $e');
       rethrow;
     }
+  }
+
+  Future<PostRequestDeleteUserResp> requestDeleteUser({
+    Map<String, String> headers = const {},
+    Map requestData = const {},
+  }) async {
+    return await _apiClient.requestDeleteUser(
+      headers: headers,
+      requestData: requestData,
+    );
+  }
+
+  Future<bool> logoutPost({
+    Map<String, String> headers = const {},
+    Map requestData = const {},
+  }) async {
+    return await _apiClient.logoutPost(
+      headers: headers,
+      requestData: requestData,
+    );
+  }
+
+  Future<DeleteVerifyDeleteUserResp> verifyDeleteUser({
+    Map<String, String> headers = const {},
+    Map<String, dynamic> queryParams = const {},
+    Map requestData = const {},
+  }) async {
+    return await _apiClient.verifyDeleteUser(
+      headers: headers,
+      queryParams: queryParams,
+    );
   }
 }
