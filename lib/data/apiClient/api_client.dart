@@ -9,6 +9,7 @@ import '../models/login/post_login_resp.dart';
 import '../models/register/post_register_resp.dart';
 import '../models/my_user/get_my_user_resp.dart';
 import '../models/update_profile/patch_update_profile_req.dart';
+import '../models/update_quizzfly_setting/put_update_quizzfly_setting_resp.dart';
 import '../models/upload_file/post_upload_file.dart';
 import '../models/verify_delete_user/delete_verify_delete_user_resp.dart';
 import 'network_interceptor.dart';
@@ -386,6 +387,36 @@ class ApiClient {
     } catch (error, stackTrace) {
       ProgressDialogUtils.hideProgressDialog();
       Logger.log(
+        error,
+        stackTrace: stackTrace,
+      );
+      rethrow;
+    }
+  }
+
+  Future<PutUpdateQuizzflySettingsResp> updateQuizzflySettings({
+    Map<String, String> headers = const {},
+    Map requestData = const {},
+  }) async {
+    ProgressDialogUtils.showProgressDialog();
+    try {
+      await isNetworkConnected();
+      var response = await _dio.put(
+        '$url/api/v1/quizzfly/a3132834-83bf-47e2-bfd8-5f3c9ce15fc3/settings',
+        data: requestData,
+        options: Options(headers: headers),
+      );
+      ProgressDialogUtils.hideProgressDialog();
+      if (isSuccessCall(response)) {
+        return PutUpdateQuizzflySettingsResp.fromJson(response.data);
+      } else {
+        throw response.data != null
+            ? PutUpdateQuizzflySettingsResp.fromJson(response.data)
+            : 'Something Went Wrong!';
+      }
+    } catch (error, stackTrace) {
+      ProgressDialogUtils.hideProgressDialog();
+      Logger.log(   
         error,
         stackTrace: stackTrace,
       );

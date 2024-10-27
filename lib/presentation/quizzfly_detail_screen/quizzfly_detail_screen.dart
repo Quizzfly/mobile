@@ -276,7 +276,7 @@ class QuizzflyDetailScreen extends StatelessWidget {
             imagePath: ImageConstant.imgSetting,
             margin: EdgeInsets.only(right: 16.h),
             onTap: () {
-              // Handle favorite action
+              navigateToQuizzfflySetting(context);
             },
           ),
           AppbarLeadingImage(
@@ -399,5 +399,28 @@ class QuizzflyDetailScreen extends StatelessWidget {
   /// Navigates to the previous screen.
   onTapCloseOne(BuildContext context) {
     NavigatorService.goBack();
+  }
+
+  /// Navigates to the popupSettingScreen when the action is triggered.
+  navigateToQuizzfflySetting(BuildContext context) {
+    NavigatorService.pushNamed(AppRoutes.quizzflySetting, arguments: {
+      NavigationArgs.isPublic: context
+          .read<QuizzflyDetailBloc>()
+          .getDetailQuizzflyResp
+          .data
+          ?.isPublic,
+      NavigationArgs.title:
+          context.read<QuizzflyDetailBloc>().getDetailQuizzflyResp.data?.title,
+      NavigationArgs.description: context
+          .read<QuizzflyDetailBloc>()
+          .getDetailQuizzflyResp
+          .data
+          ?.description,
+      NavigationArgs.coverImage: context
+          .read<QuizzflyDetailBloc>()
+          .getDetailQuizzflyResp
+          .data
+          ?.coverImage
+    });
   }
 }

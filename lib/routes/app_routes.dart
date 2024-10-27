@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quizzfly_application_flutter/presentation/quizzfly_setting_screen/quizzfly_setting_screen.dart';
 import '../presentation/delete_account_screen/delete_account_screen.dart';
 import '../presentation/edit_profile_screen/edit_profile_screen.dart';
 import '../presentation/quizzfly_detail_screen/quizzfly_detail_screen.dart';
@@ -23,6 +24,7 @@ class AppRoutes {
   static const String libraryScreen = '/library_screen';
   static const String quizzflyDetailScreen = "/quizzfly_detail_screen";
   static const String deleteAccountScreen = '/delete_account_screen';
+  static const String quizzflySetting = "/quizzfly_setting_screen";
 
   static Map<String, WidgetBuilder> get routes => {
         loginScreen: LoginScreen.builder,
@@ -34,6 +36,7 @@ class AppRoutes {
         libraryScreen: LibraryScreen.builder,
         quizzflyDetailScreen: QuizzflyDetailScreen.builder,
         deleteAccountScreen: DeleteAccountScreen.builder,
+        quizzflySetting : QuizzflySettingScreen.builder,
         initialRoute: LoginScreen.builder,
       };
   // static Route<dynamic> generateRoute(RouteSettings settings) {
@@ -150,6 +153,20 @@ class AppRoutes {
     return navigateWithSlide(
       context,
       RegisterScreen.builder,
+      replace: true, // Will replace current screen
+    );
+  }
+  static Future<void> navigateToQuizzflyDetailScreen(BuildContext context) {
+    return navigateWithSlide(
+      context,
+      QuizzflyDetailScreen.builder,
+      replace: true, // Will replace current screen
+    );
+  }
+  static Future<void> navigateToQuizzflySettingScreen(BuildContext context) {
+    return navigateWithSlide(
+      context,
+      QuizzflySettingScreen.builder,
       replace: true, // Will replace current screen
     );
   }

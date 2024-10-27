@@ -27,6 +27,9 @@ class QuizzflyDetailBloc
     QuizzflyDetailInitialEvent event,
     Emitter<QuizzflyDetailState> emit,
   ) async {
+    if (state.id != null) {
+      add(FetchQuizzflyDetailEvent(state.id!));
+    }
     // Get user data from PrefUtils
     final username = _prefUtils.getUsername();
     final name = _prefUtils.getName();
@@ -43,9 +46,6 @@ class QuizzflyDetailBloc
         ),
       ),
     );
-    if (state.id != null) {
-      add(FetchQuizzflyDetailEvent(state.id!));
-    }
   }
 
   List<OverviewQuizzflyItemModel> fillListtenItemList() {
