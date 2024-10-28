@@ -9,6 +9,7 @@ import '../models/login/post_login_resp.dart';
 import '../models/my_user/get_my_user_resp.dart';
 import '../models/register/post_register_resp.dart';
 import '../models/update_profile/patch_update_profile_req.dart';
+import '../models/update_quizzfly_setting/put_update_quizzfly_setting_resp.dart';
 import '../models/verify_delete_user/delete_verify_delete_user_resp.dart';
 
 /// Repository class for managing API requests.
@@ -150,6 +151,27 @@ class Repository {
     return await _apiClient.verifyDeleteUser(
       headers: headers,
       queryParams: queryParams,
+    );
+  }
+
+  Future<PutUpdateQuizzflySettingsResp> updateQuizzflySettings({
+    Map<String, String> headers = const {},
+    Map requestData = const {},
+    String? id
+  }) async {
+    return await _apiClient.updateQuizzflySettings(
+      headers: headers,
+      requestData: requestData,
+      id: id
+    );
+  }
+  Future<bool> deleteQuizzfly({
+    Map<String, String> headers = const {},
+    String? id
+  }) async {
+    return await _apiClient.deleteQuizzfly(
+      headers: headers,
+      id: id
     );
   }
 }
