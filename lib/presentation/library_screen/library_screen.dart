@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import '../../core/app_export.dart';
 import '../../routes/navigation_args.dart';
 import '../../theme/custom_button_style.dart';
@@ -124,6 +125,9 @@ class LibraryScreen extends StatelessWidget {
               callDetail: () {
                 callDetail(context, index);
               },
+              onDelete: (String id) {
+                callAPIDelete(context, id);
+              },
             );
           },
         );
@@ -137,5 +141,35 @@ class LibraryScreen extends StatelessWidget {
       NavigationArgs.id:
           context.read<LibraryBloc>().getLibraryResp.data?[index].id,
     });
+  }
+
+  callAPIDelete(BuildContext context, String id) {
+    context.read<LibraryBloc>().add(
+          DeleteQuizzflyEvent(
+            id: id,
+            onDeleteQuizzflyEventSuccess: () {
+              _onDeleteQuizzflyApiEventSuccess(context);
+            },
+            onDeleteQuizzflyEventError: () {
+              _onDeleteQuizzflyApiEventError(context);
+            },
+          ),
+        );
+  }
+
+  void _onDeleteQuizzflyApiEventSuccess(BuildContext context) {
+    Fluttertoast.showToast(msg: "Delete succeed");
+    // Refresh the list after successful deletion
+    context.read<LibraryBloc>().add(CreateGetLibraryEvent(
+      onGetLibrarySuccess: () {
+        Fluttertoast.showToast(
+          msg: "Delete succeed",
+        );
+      },
+    ));
+  }
+
+  void _onDeleteQuizzflyApiEventError(BuildContext context) {
+    Fluttertoast.showToast(msg: "Delete failed");
   }
 }

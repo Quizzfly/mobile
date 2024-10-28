@@ -88,6 +88,7 @@ class QuizzflySettingBloc
     await _repository.updateQuizzflySettings(
       headers: {'Authorization': 'Bearer $accessToken'},
       requestData: putUpdateQuizzflySettingsReq.toJson(),
+      id: state.id,
     ).then((value) async {
       putUpdateQuizzflySettingsResp = value;
       _onUpdateQuizzflySettingsSuccess(value, emit);

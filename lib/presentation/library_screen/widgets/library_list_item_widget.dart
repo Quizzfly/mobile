@@ -2,16 +2,20 @@ import 'package:flutter/material.dart';
 import '../../../core/app_export.dart';
 import '../../../theme/custom_button_style.dart';
 import '../../../widgets/custom_elevated_button.dart';
+import '../../../widgets/custom_icon_button.dart';
 import '../../library_screen/models/library_list_item_model.dart';
+
 // ignore_for_file: must_be_immutable
 class LibraryListItemWidget extends StatelessWidget {
-  LibraryListItemWidget(this.libraryListItemModelObj, {Key? key, this.callDetail})
+  LibraryListItemWidget(this.libraryListItemModelObj,
+      {Key? key, this.callDetail, this.onDelete})
       : super(key: key);
 
   LibraryListItemModel libraryListItemModelObj;
 
   VoidCallback? callDetail;
 
+  Function(String)? onDelete;
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -99,16 +103,24 @@ class LibraryListItemWidget extends StatelessWidget {
                     ),
                   ),
                   Container(
-                    width: double.maxFinite,
-                    margin: EdgeInsets.symmetric(horizontal: 15.h),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        _buildHostLiveButton(context),
-                        _buildPlaySoloButton(context)
-                      ],
-                    ),
-                  )
+                      width: double.maxFinite,
+                      alignment: Alignment.topRight,
+                      padding: EdgeInsets.only(right: 20.h),
+                      child: CustomIconButton(
+                        height: 32.h,
+                        width: 40.h,
+                        padding: EdgeInsets.all(2.h),
+                        decoration: IconButtonStyleHelper.none,
+                        child: CustomImageView(
+                          imagePath: ImageConstant.imgDelete,
+                        ),
+                        onTap: () {
+                          if (onDelete != null &&
+                              libraryListItemModelObj.id != null) {
+                            onDelete!(libraryListItemModelObj.id!);
+                          }
+                        },
+                      ))
                 ],
               ),
             )

@@ -37,8 +37,10 @@ class PickImageEvent extends QuizzflySettingEvent {
 }
 
 class UpdateSettingsEvent extends QuizzflySettingEvent {
-  UpdateSettingsEvent({this.onUpdateSettingsEventSuccess});
+  UpdateSettingsEvent({this.onUpdateSettingsEventSuccess, this.id});
+
   Function? onUpdateSettingsEventSuccess;
+  String? id;
   @override
-  List<Object?> get props => [onUpdateSettingsEventSuccess];
+  List<Object?> get props => [onUpdateSettingsEventSuccess, id];
 }

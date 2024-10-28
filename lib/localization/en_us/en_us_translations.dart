@@ -165,7 +165,8 @@ final Map<String, String> enUs = {
   "lbl_description": "Description",
   "lbl_visible": "Visible",
   "lbl_save_change" : "Save change",
-  
+  "lbl_title": "Title",
+
 // Common String
   "lbl": "👋",
   "lbl_1": "1",

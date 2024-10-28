@@ -157,10 +157,21 @@ class Repository {
   Future<PutUpdateQuizzflySettingsResp> updateQuizzflySettings({
     Map<String, String> headers = const {},
     Map requestData = const {},
+    String? id
   }) async {
     return await _apiClient.updateQuizzflySettings(
       headers: headers,
       requestData: requestData,
+      id: id
+    );
+  }
+  Future<bool> deleteQuizzfly({
+    Map<String, String> headers = const {},
+    String? id
+  }) async {
+    return await _apiClient.deleteQuizzfly(
+      headers: headers,
+      id: id
     );
   }
 }

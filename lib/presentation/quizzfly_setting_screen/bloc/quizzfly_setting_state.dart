@@ -11,6 +11,7 @@ class QuizzflySettingState extends Equatable {
   String? title;
   String? description;
   dynamic coverImage;
+  String? id;
   QuizzflySettingState({
     this.quizzflySettingModelObj,
     this.titleController,
@@ -20,6 +21,7 @@ class QuizzflySettingState extends Equatable {
     this.title,
     this.description,
     this.coverImage,
+    this.id
   });
 
   @override
@@ -32,6 +34,7 @@ class QuizzflySettingState extends Equatable {
         title,
         description,
         coverImage,
+        id,
       ];
   QuizzflySettingState copyWith({
     QuizzflySettingModel? quizzflySettingModelObj,
@@ -42,6 +45,7 @@ class QuizzflySettingState extends Equatable {
     String? title,
     String? description,
     dynamic coverImage,
+    String? id
   }) {
     return QuizzflySettingState(
       quizzflySettingModelObj:
@@ -54,6 +58,7 @@ class QuizzflySettingState extends Equatable {
       title: title ?? this.title,
       description: description ?? this.description,
       coverImage: coverImage ?? this.coverImage,
+      id : id ?? this.id,
     );
   }
 }

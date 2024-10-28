@@ -404,6 +404,11 @@ class QuizzflyDetailScreen extends StatelessWidget {
   /// Navigates to the popupSettingScreen when the action is triggered.
   navigateToQuizzfflySetting(BuildContext context) {
     NavigatorService.pushNamed(AppRoutes.quizzflySetting, arguments: {
+      NavigationArgs.id: context
+          .read<QuizzflyDetailBloc>()
+          .getDetailQuizzflyResp
+          .data
+          ?.id,
       NavigationArgs.isPublic: context
           .read<QuizzflyDetailBloc>()
           .getDetailQuizzflyResp

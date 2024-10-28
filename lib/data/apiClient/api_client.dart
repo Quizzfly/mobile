@@ -397,12 +397,13 @@ class ApiClient {
   Future<PutUpdateQuizzflySettingsResp> updateQuizzflySettings({
     Map<String, String> headers = const {},
     Map requestData = const {},
+    String? id,
   }) async {
     ProgressDialogUtils.showProgressDialog();
     try {
       await isNetworkConnected();
       var response = await _dio.put(
-        '$url/api/v1/quizzfly/a3132834-83bf-47e2-bfd8-5f3c9ce15fc3/settings',
+        '$url/api/v1/quizzfly/$id/settings',
         data: requestData,
         options: Options(headers: headers),
       );
@@ -416,7 +417,28 @@ class ApiClient {
       }
     } catch (error, stackTrace) {
       ProgressDialogUtils.hideProgressDialog();
-      Logger.log(   
+      Logger.log(
+        error,
+        stackTrace: stackTrace,
+      );
+      rethrow;
+    }
+  }
+
+  Future<bool> deleteQuizzfly(
+      {Map<String, String> headers = const {}, String? id}) async {
+    ProgressDialogUtils.showProgressDialog();
+    try {
+      await isNetworkConnected();
+      Response response = await _dio.delete(
+        '$url/api/v1/quizzfly/$id',
+        options: Options(headers: headers),
+      );
+      ProgressDialogUtils.hideProgressDialog();
+      return response.statusCode == 204;
+    } catch (error, stackTrace) {
+      ProgressDialogUtils.hideProgressDialog();
+      Logger.log(
         error,
         stackTrace: stackTrace,
       );

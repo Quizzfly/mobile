@@ -19,13 +19,30 @@ class LibraryInitialEvent extends LibraryEvent {
 // ignore: must_be_immutable
 class CreateGetLibraryEvent extends LibraryEvent {
   CreateGetLibraryEvent({
+    this.id,
     this.onGetLibrarySuccess,
     this.onGetLibraryError,
   });
 
   Function? onGetLibrarySuccess;
   Function? onGetLibraryError;
-
+  String? id;
   @override
-  List<Object?> get props => [onGetLibrarySuccess, onGetLibraryError];
+  List<Object?> get props => [onGetLibrarySuccess, onGetLibraryError, id];
+}
+
+// ignore: must_be_immutable
+class DeleteQuizzflyEvent extends LibraryEvent {
+  DeleteQuizzflyEvent({
+    this.id,
+    this.onDeleteQuizzflyEventSuccess,
+    this.onDeleteQuizzflyEventError,
+  });
+
+  Function? onDeleteQuizzflyEventSuccess;
+  Function? onDeleteQuizzflyEventError;
+  String? id;
+  @override
+  List<Object?> get props =>
+      [onDeleteQuizzflyEventSuccess, onDeleteQuizzflyEventError, id];
 }

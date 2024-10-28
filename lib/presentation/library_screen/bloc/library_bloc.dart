@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:equatable/equatable.dart';
 import '../../../data/models/library_quizzfly/get_library_quizzfly_resp.dart';
 import '../../../core/app_export.dart';
@@ -15,6 +16,7 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
   LibraryBloc(LibraryState initialState) : super(initialState) {
     on<LibraryInitialEvent>(_onInitialize);
     on<CreateGetLibraryEvent>(_callGetLibrary);
+    on<DeleteQuizzflyEvent>(_callDeleteQuizzflyApi);
   }
 
   Future<void> _onInitialize(
@@ -38,7 +40,7 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
     }
   }
 
-  Future<void> _callGetLibrary(
+  FutureOr<void> _callGetLibrary(
     CreateGetLibraryEvent event,
     Emitter<LibraryState> emit,
   ) async {
@@ -109,6 +111,25 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
       }
     } catch (e) {
       return dateStr;
+    }
+  }
+
+  FutureOr<void> _callDeleteQuizzflyApi(
+    DeleteQuizzflyEvent event,
+    Emitter<LibraryState> emit,
+  ) async {
+    String? accessToken = await PrefUtils().getAccessToken();
+
+    try {
+      bool success = await _repository.deleteQuizzfly(
+          headers: {'Authorization': 'Bearer $accessToken '}, id: event.id);
+      if (success) {
+        event.onDeleteQuizzflyEventSuccess?.call();
+      } else {
+        event.onDeleteQuizzflyEventError?.call();
+      }
+    } catch (error) {
+      event.onDeleteQuizzflyEventError?.call();
     }
   }
 }

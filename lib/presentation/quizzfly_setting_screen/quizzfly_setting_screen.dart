@@ -22,6 +22,7 @@ class QuizzflySettingScreen extends StatelessWidget {
     return BlocProvider<QuizzflySettingBloc>(
       create: (context) => QuizzflySettingBloc(QuizzflySettingState(
         quizzflySettingModelObj: QuizzflySettingModel(),
+        id: arg[NavigationArgs.id],
         isPublic: arg[NavigationArgs.isPublic],
         title: arg[NavigationArgs.title],
         description: arg[NavigationArgs.description],
@@ -114,35 +115,35 @@ class QuizzflySettingScreen extends StatelessWidget {
   }
 
   Widget _buildImageWidget(dynamic coverImage) {
-  if (coverImage is File) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(20.h), 
-      child: Image.file(
-        coverImage,
-        height: 200.h, 
-        width: double.maxFinite, 
-        fit: BoxFit.cover,
-      ),
-    );
-  } else if (coverImage is String) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(20.h),
-      child: Image.network(
-        coverImage,
-        height: 200.h, 
-        width: double.maxFinite, 
-        fit: BoxFit.cover,
-      ),
-    );
-  } else {
-    return CustomImageView(
-      imagePath: ImageConstant.imageBackToSchool,
-      height: 250.h, 
-      width: double.maxFinite,
-      radius: BorderRadius.circular(20.h), 
-    );
+    if (coverImage is File) {
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(20.h),
+        child: Image.file(
+          coverImage,
+          height: 200.h,
+          width: double.maxFinite,
+          fit: BoxFit.cover,
+        ),
+      );
+    } else if (coverImage is String) {
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(20.h),
+        child: Image.network(
+          coverImage,
+          height: 200.h,
+          width: double.maxFinite,
+          fit: BoxFit.cover,
+        ),
+      );
+    } else {
+      return CustomImageView(
+        imagePath: ImageConstant.imageBackToSchool,
+        height: 250.h,
+        width: double.maxFinite,
+        radius: BorderRadius.circular(20.h),
+      );
+    }
   }
-}
 
   void _pickImage(BuildContext context) async {
     final ImagePicker picker = ImagePicker();
@@ -267,7 +268,7 @@ class QuizzflySettingScreen extends StatelessWidget {
           CustomElevatedButton(
             height: 40.h,
             width: 160.h,
-            text: "lbl_host_live".tr,
+            text: "lbl_save_change".tr,
             margin: EdgeInsets.only(bottom: 12.h),
             buttonStyle: CustomButtonStyles.fillPrimaryRadius12,
             onPressed: () => callAPISettingQuizzfly(context),
