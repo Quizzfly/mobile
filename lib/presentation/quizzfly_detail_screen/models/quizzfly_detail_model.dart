@@ -25,6 +25,11 @@ class QuizzflyDetailModel extends Equatable {
   final String? coverImage;
   final String? title;
   final String? description;
+  int get quizCount {
+    return quizListItemList
+        .where((item) => item.questionType?.toLowerCase() == 'quiz')
+        .length;
+  }
 
   QuizzflyDetailModel copyWith({
     List<OverviewQuizzflyItemModel>? overviewQuizzflyItemList,
@@ -45,7 +50,7 @@ class QuizzflyDetailModel extends Equatable {
       avatar: avatar ?? this.avatar,
       coverImage: coverImage ?? this.coverImage,
       title: title ?? this.title,
-      description : description ?? this.description,
+      description: description ?? this.description,
     );
   }
 

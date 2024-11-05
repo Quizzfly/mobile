@@ -133,7 +133,7 @@ class CustomTextStyles {
       ).graphik;
   static get graphikwhiteA700SemiBold => TextStyle(
         color: appTheme.whiteA700,
-        fontSize: 80.fSize,
+        fontSize: 30.fSize,
         fontWeight: FontWeight.w600,
       ).graphik;
 // Headline text style

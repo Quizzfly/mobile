@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:quizzfly_application_flutter/data/models/change_password/post_change_password_resp.dart';
 import 'package:quizzfly_application_flutter/data/models/detail_quizzfly/get_detail_quizzfly_resp.dart';
+import 'package:quizzfly_application_flutter/data/models/list_question/get_list_question_resp.dart';
 import 'package:quizzfly_application_flutter/data/models/upload_file/post_upload_file.dart';
 import '../apiClient/api_client.dart';
 import '../models/delete_user/post_request_delete_user_req.dart';
@@ -154,24 +155,24 @@ class Repository {
     );
   }
 
-  Future<PutUpdateQuizzflySettingsResp> updateQuizzflySettings({
-    Map<String, String> headers = const {},
-    Map requestData = const {},
-    String? id
-  }) async {
+  Future<PutUpdateQuizzflySettingsResp> updateQuizzflySettings(
+      {Map<String, String> headers = const {},
+      Map requestData = const {},
+      String? id}) async {
     return await _apiClient.updateQuizzflySettings(
-      headers: headers,
-      requestData: requestData,
-      id: id
-    );
+        headers: headers, requestData: requestData, id: id);
   }
-  Future<bool> deleteQuizzfly({
-    Map<String, String> headers = const {},
-    String? id
-  }) async {
-    return await _apiClient.deleteQuizzfly(
-      headers: headers,
-      id: id
-    );
+
+  Future<bool> deleteQuizzfly(
+      {Map<String, String> headers = const {}, String? id}) async {
+    return await _apiClient.deleteQuizzfly(headers: headers, id: id);
+  }
+
+  Future<GetListQuestionsResp> listQuestions(
+      {Map<String, String> headers = const {},
+      Map requestData = const {},
+      String? id}) async {
+    return await _apiClient.listQuestions(
+        headers: headers, requestData: requestData, id: id);
   }
 }

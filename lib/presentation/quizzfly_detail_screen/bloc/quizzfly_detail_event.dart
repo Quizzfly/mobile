@@ -19,7 +19,17 @@ class FetchQuizzflyDetailEvent extends QuizzflyDetailEvent {
   final String id;
 
   FetchQuizzflyDetailEvent(this.id);
-  
+
+  @override
+  List<Object?> get props => [id];
+}
+
+// ignore: must_be_immutable
+class FetchGetListQuestionsEvent extends QuizzflyDetailEvent {
+  final String id;
+
+  FetchGetListQuestionsEvent(this.id);
+
   @override
   List<Object?> get props => [id];
 }

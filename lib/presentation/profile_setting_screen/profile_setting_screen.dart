@@ -9,7 +9,7 @@ import '../change_password_screen/change_password_screen.dart';
 import "../privacy_screen/privacy_screen.dart";
 
 class ProfileSettingScreen extends StatefulWidget {
-  const ProfileSettingScreen({Key? key}) : super(key: key);
+  const ProfileSettingScreen({super.key});
   @override
   ProfileSettingScreenState createState() => ProfileSettingScreenState();
   static Widget builder(BuildContext context) {
@@ -104,6 +104,8 @@ class ProfileSettingScreenState extends State<ProfileSettingScreen>
                   child: TabBar(
                     controller: tabViewController,
                     isScrollable: true,
+                    dividerColor: Colors.transparent,
+                    indicatorColor: Colors.transparent,
                     tabAlignment: TabAlignment.start,
                     labelColor: appTheme.deppPurplePrimary,
                     labelStyle: TextStyle(

@@ -12,7 +12,7 @@ import 'models/login_model.dart';
 class LoginScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
 
-  LoginScreen({Key? key}) : super(key: key);
+  LoginScreen({super.key});
 
   static Widget builder(BuildContext context) {
     return BlocProvider<LoginBloc>(
@@ -304,7 +304,7 @@ class LoginScreen extends StatelessWidget {
         children: [
           InkWell(
             onTap: () {
-              AppRoutes.navigateToProfileSetting(context);
+              AppRoutes.navigateToEnterPinScreen(context);
             },
             child: RichText(
               text: TextSpan(

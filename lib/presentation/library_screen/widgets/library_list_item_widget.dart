@@ -8,8 +8,7 @@ import '../../library_screen/models/library_list_item_model.dart';
 // ignore_for_file: must_be_immutable
 class LibraryListItemWidget extends StatelessWidget {
   LibraryListItemWidget(this.libraryListItemModelObj,
-      {Key? key, this.callDetail, this.onDelete})
-      : super(key: key);
+      {super.key, this.callDetail, this.onDelete});
 
   LibraryListItemModel libraryListItemModelObj;
 
@@ -102,25 +101,25 @@ class LibraryListItemWidget extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Container(
-                      width: double.maxFinite,
-                      alignment: Alignment.topRight,
-                      padding: EdgeInsets.only(right: 20.h),
-                      child: CustomIconButton(
-                        height: 32.h,
-                        width: 40.h,
-                        padding: EdgeInsets.all(2.h),
-                        decoration: IconButtonStyleHelper.none,
-                        child: CustomImageView(
-                          imagePath: ImageConstant.imgDelete,
-                        ),
-                        onTap: () {
-                          if (onDelete != null &&
-                              libraryListItemModelObj.id != null) {
-                            onDelete!(libraryListItemModelObj.id!);
-                          }
-                        },
-                      ))
+                  // Container(
+                  //     width: double.maxFinite,
+                  //     alignment: Alignment.topRight,
+                  //     padding: EdgeInsets.only(right: 20.h),
+                  //     child: CustomIconButton(
+                  //       height: 32.h,
+                  //       width: 40.h,
+                  //       padding: EdgeInsets.all(2.h),
+                  //       decoration: IconButtonStyleHelper.none,
+                  //       child: CustomImageView(
+                  //         imagePath: ImageConstant.imgDelete,
+                  //       ),
+                  //       onTap: () {
+                  //         if (onDelete != null &&
+                  //             libraryListItemModelObj.id != null) {
+                  //           onDelete!(libraryListItemModelObj.id!);
+                  //         }
+                  //       },
+                  //     ))
                 ],
               ),
             )
@@ -155,29 +154,6 @@ class LibraryListItemWidget extends StatelessWidget {
       buttonStyle: CustomButtonStyles.fillPrimaryRadius12,
       buttonTextStyle: CustomTextStyles.titleSmallWhiteA700,
       alignment: Alignment.bottomRight,
-    );
-  }
-
-  /// Section Widget
-  Widget _buildHostLiveButton(BuildContext context) {
-    return CustomElevatedButton(
-      height: 30.h,
-      width: 50.h,
-      text: "lbl_host_live".tr,
-      buttonStyle: CustomButtonStyles.fillPrimaryRadius12,
-      buttonTextStyle: CustomTextStyles.titleSmallWhiteA700,
-    );
-  }
-
-  /// Section Widget
-  Widget _buildPlaySoloButton(BuildContext context) {
-    return CustomElevatedButton(
-      height: 30.h,
-      width: 50.h,
-      text: "lbl_play_solo".tr,
-      margin: EdgeInsets.only(left: 10.h),
-      buttonStyle: CustomButtonStyles.fillGray,
-      buttonTextStyle: CustomTextStyles.titleMediumGray500,
     );
   }
 }

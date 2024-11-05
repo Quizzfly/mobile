@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../core/app_export.dart';
 
-enum Style {bgFillonErrorContainer}
+enum Style {bgFillonErrorContainer,bgFillonPurple}
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   CustomAppBar(
       {Key? key,
@@ -50,6 +50,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           height: 22.h,
           width: 338.h,
           decoration: BoxDecoration(color: appTheme.whiteA700),
+        );
+      case Style.bgFillonPurple : 
+return Container(
+          height: 22.h,
+          width: 338.h,
+          decoration: BoxDecoration(color: appTheme.deppPurplePrimary),
         );
       default:
         return null;

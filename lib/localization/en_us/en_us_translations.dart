@@ -21,7 +21,7 @@ final Map<String, String> enUs = {
   "lbl discover": "Discover",
   "lbl_friends": "Friends",
   "lbl_ma": "Ma |",
-  "lbl_maren_workman": "Maren Workman",
+  "lbl_maren_workman": "Maren Workman", 
   "lbl_matrices_quiz": "Matrices Quiz",
   "lbl_quiz": "Quiz",
   "lbl_top": "Top",
@@ -164,9 +164,14 @@ final Map<String, String> enUs = {
   "lbl_change_image": "+ Change image",
   "lbl_description": "Description",
   "lbl_visible": "Visible",
-  "lbl_save_change" : "Save change",
+  "lbl_save_change": "Save change",
   "lbl_title": "Title",
-
+  "lbl_question":"Question",
+//Enter Pin Screen
+  "lbl_enter_pin": "Enter pin",
+  "lbl_join_now": "JOIN NOW",
+//QR code Screen
+  "lbl_scan_qr_code2": "Scan QR",
 // Common String
   "lbl": "👋",
   "lbl_1": "1",
@@ -217,6 +222,7 @@ final Map<String, String> enUs = {
   "err_msg_please_enter_valid_password": "Please enter valid password",
   "err_msg_please_enter_valid_email": "Please enter valid email",
   "err_msg_please_enter_valid_name": "Please enter valid name",
+  "lbl_untitled": "Untitled",
 //Network error
   "msg_newtwork_err": "Network Error",
   "msg_something_went wrong": "Something went wrong",

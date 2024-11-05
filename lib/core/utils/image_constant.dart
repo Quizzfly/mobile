@@ -32,4 +32,6 @@ class ImageConstant {
   static String imgSetting = "$imagePath/image_setting.png";
 
   static String imgDelete = "$imagePath/image_delete.png";
+
+  static String imgBackground1 = "$imagePath/image_background1.png";
 }

@@ -13,10 +13,7 @@ import 'widgets/overview_list_item_widget.dart';
 import 'widgets/quiz_list_item_widget.dart';
 
 class QuizzflyDetailScreen extends StatelessWidget {
-  const QuizzflyDetailScreen({Key? key})
-      : super(
-          key: key,
-        );
+  const QuizzflyDetailScreen({super.key});
   static Widget builder(BuildContext context) {
     var arg =
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
@@ -26,7 +23,7 @@ class QuizzflyDetailScreen extends StatelessWidget {
         id: arg[NavigationArgs.id],
       ))
         ..add(QuizzflyDetailInitialEvent()),
-      child: QuizzflyDetailScreen(),
+      child: const QuizzflyDetailScreen(),
     );
   }
 
@@ -166,7 +163,7 @@ class QuizzflyDetailScreen extends StatelessWidget {
                                     Padding(
                                       padding: EdgeInsets.only(left: 2.h),
                                       child: Text(
-                                        "(5)",
+                                        "(${model?.quizCount})",
                                         style: CustomTextStyles
                                             .titleMediumRobotoBlack900,
                                       ),
@@ -267,9 +264,7 @@ class QuizzflyDetailScreen extends StatelessWidget {
         leadingWidth: 28.h,
         leading: AppbarLeadingImage(
           imagePath: ImageConstant.imgClose,
-          onTap: () {
-            onTapCloseOne(context);
-          },
+          onTap: () => Navigator.pop(context,true),
         ),
         actions: [
           AppbarLeadingImage(
@@ -396,19 +391,12 @@ class QuizzflyDetailScreen extends StatelessWidget {
     );
   }
 
-  /// Navigates to the previous screen.
-  onTapCloseOne(BuildContext context) {
-    NavigatorService.goBack();
-  }
-
   /// Navigates to the popupSettingScreen when the action is triggered.
-  navigateToQuizzfflySetting(BuildContext context) {
-    NavigatorService.pushNamed(AppRoutes.quizzflySetting, arguments: {
-      NavigationArgs.id: context
-          .read<QuizzflyDetailBloc>()
-          .getDetailQuizzflyResp
-          .data
-          ?.id,
+  navigateToQuizzfflySetting(BuildContext context) async {
+    final result =
+        await NavigatorService.pushNamed(AppRoutes.quizzflySetting, arguments: {
+      NavigationArgs.id:
+          context.read<QuizzflyDetailBloc>().getDetailQuizzflyResp.data?.id,
       NavigationArgs.isPublic: context
           .read<QuizzflyDetailBloc>()
           .getDetailQuizzflyResp
@@ -427,5 +415,9 @@ class QuizzflyDetailScreen extends StatelessWidget {
           .data
           ?.coverImage
     });
+
+    if (result == true) {
+      context.read<QuizzflyDetailBloc>().add(QuizzflyDetailInitialEvent());
+    }
   }
 }
