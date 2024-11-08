@@ -124,6 +124,7 @@ class EnterPinTabPageState extends State<EnterPinTabPage> {
                                   );
                             }
                           },
+                          
                         ),
                         if (state.connectionStatus ==
                             ConnectionStatus.connecting)
@@ -140,9 +141,4 @@ class EnterPinTabPageState extends State<EnterPinTabPage> {
     );
   }
 
-  @override
-  void dispose() {
-    pinController.dispose();
-    super.dispose();
-  }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:quizzfly_application_flutter/presentation/enter_pin_screen/enter_pin_screen.dart';
+import 'package:quizzfly_application_flutter/presentation/input_nickname_screen/input_nick_name_screen.dart';
 import 'package:quizzfly_application_flutter/presentation/quizzfly_setting_screen/quizzfly_setting_screen.dart';
+import 'package:quizzfly_application_flutter/presentation/waiting_room_screen/waiting_room_screen.dart';
 import '../presentation/delete_account_screen/delete_account_screen.dart';
 import '../presentation/edit_profile_screen/edit_profile_screen.dart';
 import '../presentation/quizzfly_detail_screen/quizzfly_detail_screen.dart';
@@ -27,7 +29,8 @@ class AppRoutes {
   static const String deleteAccountScreen = '/delete_account_screen';
   static const String quizzflySetting = "/quizzfly_setting_screen";
   static const String enterPinScreen = "/enter_pin_screen";
-
+  static const String inputNickname = "/input_nickname_screen";
+  static const String waitingRoom = "/waiting_room_screen";
   static Map<String, WidgetBuilder> get routes => {
         loginScreen: LoginScreen.builder,
         registerScreen: RegisterScreen.builder,
@@ -41,6 +44,8 @@ class AppRoutes {
         quizzflySetting: QuizzflySettingScreen.builder,
         enterPinScreen: EnterPinScreen.builder,
         initialRoute: LoginScreen.builder,
+        inputNickname: InputNicknameScreen.builder,
+        waitingRoom : WaitingRoomScreen.builder,
       };
   // static Route<dynamic> generateRoute(RouteSettings settings) {
   //   switch (settings.name) {
@@ -140,7 +145,7 @@ class AppRoutes {
     return navigateWithSlide(
       context,
       LoginScreen.builder,
-      replace: true, // Will replace current screen
+      replace: false, // Will replace current screen
     );
   }
 
@@ -148,7 +153,7 @@ class AppRoutes {
     return navigateWithSlide(
       context,
       ForgotPasswordScreen.builder,
-      replace: true, // Will replace current screen
+      replace: false, // Will replace current screen
     );
   }
 
@@ -156,7 +161,7 @@ class AppRoutes {
     return navigateWithSlide(
       context,
       RegisterScreen.builder,
-      replace: true, // Will replace current screen
+      replace: false, // Will replace current screen
     );
   }
 
@@ -164,7 +169,7 @@ class AppRoutes {
     return navigateWithSlide(
       context,
       QuizzflyDetailScreen.builder,
-      replace: true, // Will replace current screen
+      replace: false, // Will replace current screen
     );
   }
 
@@ -172,14 +177,29 @@ class AppRoutes {
     return navigateWithSlide(
       context,
       QuizzflySettingScreen.builder,
-      replace: true, // Will replace current screen
+      replace: false, // Will replace current screen
     );
   }
 
   static Future<void> navigateToEnterPinScreen(BuildContext context) {
     return navigateWithSlide(
       context,
-      EnterPinScreen.builder, replace: true, // Will replace current screen
+      EnterPinScreen.builder, replace: false, // Will replace current screen
+    );
+  }
+
+  static Future<void> navigateToInputNickNameScreen(BuildContext context) {
+    return navigateWithSlide(
+      context,
+      InputNicknameScreen.builder,
+      replace: false, // Will replace current screen
+    );
+  }
+
+  static Future<void> navigateToWaitingRoomScreen(BuildContext context) {
+    return navigateWithSlide(
+      context,
+      WaitingRoomScreen.builder, replace: false, // Will replace current screen
     );
   }
 }

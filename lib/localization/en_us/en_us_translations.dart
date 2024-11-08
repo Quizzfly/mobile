@@ -223,7 +223,11 @@ final Map<String, String> enUs = {
   "err_msg_please_enter_valid_email": "Please enter valid email",
   "err_msg_please_enter_valid_name": "Please enter valid name",
   "lbl_untitled": "Untitled",
-//Network error
+  "lbl_nick_name": "Nickname",
+  "lbl_ok_go": "OK, go!",
+  "lbl_anh_dung" : "Anh Dung",
+  "msg_you_re_in_see_your" : 'You’re in! See your nickname on your screen ?',
+  //Network error
   "msg_newtwork_err": "Network Error",
   "msg_something_went wrong": "Something went wrong",
 };

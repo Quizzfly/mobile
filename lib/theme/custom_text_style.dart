@@ -128,7 +128,7 @@ class CustomTextStyles {
 // Graphik text style
   static get graphikwhiteA700 => TextStyle(
         color: appTheme.whiteA700,
-        fontSize: 100.fSize,
+        fontSize: 50.fSize,
         fontWeight: FontWeight.w600,
       ).graphik;
   static get graphikwhiteA700SemiBold => TextStyle(

@@ -304,7 +304,7 @@ class LoginScreen extends StatelessWidget {
         children: [
           InkWell(
             onTap: () {
-              AppRoutes.navigateToEnterPinScreen(context);
+              AppRoutes.navigateToWaitingRoomScreen(context);
             },
             child: RichText(
               text: TextSpan(
@@ -313,11 +313,7 @@ class LoginScreen extends StatelessWidget {
                     text: "msg_don_t_you_have_an2".tr,
                     style: CustomTextStyles.bodyLargeErrorContainer,
                   ),
-                  WidgetSpan(
-                    child: SizedBox(
-                        width: 10), // Add a SizedBox to simulate padding
-                  ),
-                  WidgetSpan(
+                  const WidgetSpan(
                     child: SizedBox(
                         width: 10), // Add a SizedBox to simulate padding
                   ),
