@@ -21,7 +21,7 @@ final Map<String, String> enUs = {
   "lbl discover": "Discover",
   "lbl_friends": "Friends",
   "lbl_ma": "Ma |",
-  "lbl_maren_workman": "Maren Workman",
+  "lbl_maren_workman": "Maren Workman", 
   "lbl_matrices_quiz": "Matrices Quiz",
   "lbl_quiz": "Quiz",
   "lbl_top": "Top",
@@ -55,6 +55,7 @@ final Map<String, String> enUs = {
   "msg_top_performance": "Top performance by category",
   "msg_you_have_played": "You have played a total 24 quizzes this month!",
   "msg_you_have_played2": "You have played a total",
+  "lbl_enter": "Enter",
 
 // Leaderboard Screen
   "lbl_06d_23h 00m": "06d 23h 00m",
@@ -164,16 +165,21 @@ final Map<String, String> enUs = {
   "lbl_change_image": "+ Change image",
   "lbl_description": "Description",
   "lbl_visible": "Visible",
-  "lbl_save_change" : "Save change",
+  "lbl_save_change": "Save change",
   "lbl_title": "Title",
-
+  "lbl_question":"Question",
+//Enter Pin Screen
+  "lbl_enter_pin": "Enter pin",
+  "lbl_join_now": "JOIN NOW",
+//QR code Screen
+  "lbl_scan_qr_code2": "Scan QR",
 // Common String
   "lbl": "👋",
   "lbl_1": "1",
   "lbl_1_438": "#1,438",
   "lbl_2": "2",
   "lbl_3": "3",
-  "lbl 42": "4",
+  "lbl_42": "42",
   "lbl_448_points": "448 points",
   "lbl 5": "5",
   "lbl_56": "#56",
@@ -217,7 +223,12 @@ final Map<String, String> enUs = {
   "err_msg_please_enter_valid_password": "Please enter valid password",
   "err_msg_please_enter_valid_email": "Please enter valid email",
   "err_msg_please_enter_valid_name": "Please enter valid name",
-//Network error
+  "lbl_untitled": "Untitled",
+  "lbl_nick_name": "Nickname",
+  "lbl_ok_go": "OK, go!",
+  "lbl_anh_dung" : "Anh Dung",
+  "msg_you_re_in_see_your" : 'You’re in! See your nickname on your screen ?',
+  //Network error
   "msg_newtwork_err": "Network Error",
   "msg_something_went wrong": "Something went wrong",
 };

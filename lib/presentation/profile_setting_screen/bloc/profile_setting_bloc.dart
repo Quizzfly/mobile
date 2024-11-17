@@ -6,7 +6,7 @@ part 'profile_setting_state.dart';
 
 /// A bloc that manages the state of a ProfileSetting according to the event that is dispatched to it.
 class ProfileSettingBloc extends Bloc<ProfileSettingEvent, ProfileSettingState> {
-  ProfileSettingBloc(ProfileSettingState initialstate) : super(initialstate) {
+  ProfileSettingBloc(super.initialState) {
     on<ProfileSettingInitialEvent>(_onInitialize);
   }
   _onInitialize(

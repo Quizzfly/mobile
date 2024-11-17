@@ -6,17 +6,14 @@ import 'bloc/reset_password_bloc.dart';
 import 'models/reset_password_model.dart';
 
 class ResetPasswordScreen extends StatelessWidget {
-  const ResetPasswordScreen({Key? key})
-      : super(
-          key: key,
-        );
+  const ResetPasswordScreen({super.key});
   static Widget builder(BuildContext context) {
     return BlocProvider<ResetPasswordBloc>(
       create: (context) => ResetPasswordBloc(ResetPasswordState(
         resetPasswordModelObj: ResetPasswordModel(),
       ))
         ..add(ResetPasswordInitialEvent()),
-      child: ResetPasswordScreen(),
+      child: const ResetPasswordScreen(),
     );
   }
 

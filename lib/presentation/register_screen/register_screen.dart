@@ -12,10 +12,7 @@ import 'models/register_model.dart';
 class RegisterScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
 
-  RegisterScreen({Key? key})
-      : super(
-          key: key,
-        );
+  RegisterScreen({super.key});
   static Widget builder(BuildContext context) {
     return BlocProvider<RegisterBloc>(
       create: (context) => RegisterBloc(RegisterState(

@@ -12,7 +12,7 @@ part 'forgot_password_state.dart';
 /// A bloc that manages the state of a ForgotPassword according to the event that is dispatche
 class ForgotPasswordBloc
     extends Bloc<ForgotPasswordEvent, ForgotPasswordState> {
-  ForgotPasswordBloc(ForgotPasswordState initialstate) : super(initialstate) {
+  ForgotPasswordBloc(super.initialstate) {
     on<ForgotPasswordInitialEvent>(_onInitialize);
     on<CreateForgotPasswordEvent>(_callPostAuthForgotPassword);
   }

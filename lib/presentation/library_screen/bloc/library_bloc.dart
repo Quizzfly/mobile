@@ -13,7 +13,7 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
   final _repository = Repository();
   var getLibraryResp = GetLibraryQuizzflyResp();
 
-  LibraryBloc(LibraryState initialState) : super(initialState) {
+  LibraryBloc(super.initialState) {
     on<LibraryInitialEvent>(_onInitialize);
     on<CreateGetLibraryEvent>(_callGetLibrary);
     on<DeleteQuizzflyEvent>(_callDeleteQuizzflyApi);

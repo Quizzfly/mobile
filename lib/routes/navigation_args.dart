@@ -5,4 +5,5 @@ class NavigationArgs {
   static String title = "title";
   static String description = "description";
   static String coverImage = "coverImage";
+  static String roomPin = "roomPin";
 }

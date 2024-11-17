@@ -12,7 +12,7 @@ part 'login_state.dart';
 
 /// A bloc that manages the state of a Login according to the event that is dispatche
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  LoginBloc(LoginState initialstate) : super(initialstate) {
+  LoginBloc(super.initialstate) {
     on<LoginInitialEvent>(_onInitialize);
     on<CreateLoginEvent>(_callLogin);
     on<FetchMeEvent>(_callGetMyUser);

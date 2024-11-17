@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:quizzfly_application_flutter/data/models/detail_quizzfly/get_detail_quizzfly_resp.dart';
+import 'package:quizzfly_application_flutter/data/models/list_question/get_list_question_resp.dart';
 import '../../core/app_export.dart';
 import '../models/change_password/post_change_password_resp.dart';
 import '../models/delete_user/post_request_delete_user_req.dart';
@@ -413,6 +414,37 @@ class ApiClient {
       } else {
         throw response.data != null
             ? PutUpdateQuizzflySettingsResp.fromJson(response.data)
+            : 'Something Went Wrong!';
+      }
+    } catch (error, stackTrace) {
+      ProgressDialogUtils.hideProgressDialog();
+      Logger.log(
+        error,
+        stackTrace: stackTrace,
+      );
+      rethrow;
+    }
+  }
+
+  Future<GetListQuestionsResp> listQuestions({
+    Map<String, String> headers = const {},
+    Map requestData = const {},
+    String? id,
+  }) async {
+    ProgressDialogUtils.showProgressDialog();
+    try {
+      await isNetworkConnected();
+      var response = await _dio.get(
+        '$url/api/v1/quizzfly/$id/questions',
+        data: requestData,
+        options: Options(headers: headers),
+      );
+      ProgressDialogUtils.hideProgressDialog();
+      if (isSuccessCall(response)) {
+        return GetListQuestionsResp.fromJson(response.data);
+      } else {
+        throw response.data != null
+            ? GetListQuestionsResp.fromJson(response.data)
             : 'Something Went Wrong!';
       }
     } catch (error, stackTrace) {

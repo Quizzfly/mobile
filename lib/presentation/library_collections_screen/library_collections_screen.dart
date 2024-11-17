@@ -73,7 +73,7 @@ class LibraryCollectionsScreen extends StatelessWidget {
           Expanded(
             child: CustomOutlinedButton(
               text: "lbl_quizzfly".tr,
-              buttonStyle: CustomButtonStyles.fillWhiteRadius20,
+              buttonStyle: CustomButtonStyles.fillWhiteRadius30,
               onPressed: () {
                 Navigator.pushReplacement(
                   context,

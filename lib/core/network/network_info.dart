@@ -20,7 +20,7 @@ class NetworkInfo implements NetworkInfol {
     return _networkInfo;
   }
   NetworkInfo._internal(this.connectivity) {
-    connectivity = this.connectivity;
+    connectivity = connectivity;
   }
 
   /// check network is connected or not
@@ -28,6 +28,7 @@ class NetworkInfo implements NetworkInfol {
   @override
   Future<bool> isConnected() async {
     final result = await connectivity.checkConnectivity();
+    // ignore: unrelated_type_equality_checks
     if (result != ConnectivityResult.none) {
       return true;
     }
@@ -69,7 +70,7 @@ class NoInternetException implements Exception {
       globalMessengerKey.currentState!
           .showSnackBar(SnackBar(content: Text(message)));
     }
-    this._message = message;
+    _message = message;
   }
   @override
   String toString() {

@@ -7,7 +7,7 @@ part 'reset_password_state.dart';
 
 /// A bloc that manages the state of a ResetPassword according to the event that is dispatche
 class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
-  ResetPasswordBloc(ResetPasswordState initialstate) : super(initialstate) {
+  ResetPasswordBloc(super.initialstate) {
     on<ResetPasswordInitialEvent>(_onInitialize);
   }
   _onInitialize(
