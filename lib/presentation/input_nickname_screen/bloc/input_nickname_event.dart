@@ -14,3 +14,22 @@ class InputNicknameInitialEvent extends InputNicknameEvent {
   @override
   List<Object?> get props => [];
 }
+
+class JoinRoomEvent extends InputNicknameEvent {
+  final String pin;
+  final String name;
+
+  JoinRoomEvent({required this.pin, required this.name});
+
+  @override
+  List<Object?> get props => [pin, name];
+}
+
+class SocketErrorEvent extends InputNicknameInitialEvent {
+  final String error;
+
+  SocketErrorEvent(this.error);
+
+  @override
+  List<Object?> get props => [error];
+}

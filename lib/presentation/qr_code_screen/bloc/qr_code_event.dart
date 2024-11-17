@@ -14,31 +14,3 @@ class QrCodeInitialEvent extends QrCodeEvent {
   @override
   List<Object?> get props => [];
 }
-
-class ScanQrCodeEvent extends QrCodeEvent {}
-
-class JoinRoomEvent extends QrCodeEvent {
-  final String roomPin;
-
-  JoinRoomEvent(this.roomPin);
-
-  @override
-  List<Object> get props => [roomPin];
-}
-
-class SocketConnectedEvent extends QrCodeEvent {
-  @override
-  List<Object?> get props => [];
-}
-
-class SocketErrorEvent extends QrCodeEvent {
-  final String error;
-
-  SocketErrorEvent(this.error);
-}
-
-class RoomJoinedEvent extends QrCodeEvent {
-  final String message;
-  
-  RoomJoinedEvent(this.message);
-}

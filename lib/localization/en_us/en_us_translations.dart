@@ -55,6 +55,7 @@ final Map<String, String> enUs = {
   "msg_top_performance": "Top performance by category",
   "msg_you_have_played": "You have played a total 24 quizzes this month!",
   "msg_you_have_played2": "You have played a total",
+  "lbl_enter": "Enter",
 
 // Leaderboard Screen
   "lbl_06d_23h 00m": "06d 23h 00m",
@@ -178,7 +179,7 @@ final Map<String, String> enUs = {
   "lbl_1_438": "#1,438",
   "lbl_2": "2",
   "lbl_3": "3",
-  "lbl 42": "4",
+  "lbl_42": "42",
   "lbl_448_points": "448 points",
   "lbl 5": "5",
   "lbl_56": "#56",

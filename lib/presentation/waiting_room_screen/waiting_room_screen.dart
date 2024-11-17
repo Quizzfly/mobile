@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import '../../core/app_export.dart';
+import '../room_quiz_screen/room_quiz_screen.dart';
 import 'bloc/waiting_room_bloc.dart';
 import 'models/waiting_room_model.dart';
 
-// ignore_for_file: must_be_immutable
-class WaitingRoomScreen extends StatelessWidget {
-  WaitingRoomScreen({Key? key})
-      : super(
-          key: key,
-        );
-  GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+class WaitingRoomScreen extends StatefulWidget {
+  WaitingRoomScreen({super.key});
+
   static Widget builder(BuildContext context) {
     return BlocProvider<WaitingRoomBloc>(
       create: (context) => WaitingRoomBloc(WaitingRoomState(
@@ -21,53 +18,92 @@ class WaitingRoomScreen extends StatelessWidget {
   }
 
   @override
+  State<WaitingRoomScreen> createState() => _WaitingRoomScreenState();
+}
+
+class _WaitingRoomScreenState extends State<WaitingRoomScreen> {
+  final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        extendBody: true,
-        extendBodyBehindAppBar: true,
-        resizeToAvoidBottomInset: false,
-        body: Container(
-          width: double.maxFinite,
-          height: SizeUtils.height,
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              image: AssetImage(
-                ImageConstant.imgBackground1,
-              ),
-              fit: BoxFit.fill,
+    return BlocListener<WaitingRoomBloc, WaitingRoomState>(
+      listener: (context, state) {
+        if (state.connectionStatus == ConnectionStatus.quizStarted) {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => RoomQuizScreen.builder(context),
             ),
-          ),
-          child: Form(
-            key: _formkey,
-            child: Column(
-              children: [
-                Container(
-                  margin: EdgeInsets.only(left: 15.h, top: 12.h),
-                  alignment: Alignment.centerLeft,
-                  child: GestureDetector(
-                    onTap: () => NavigatorService.goBack(),
-                    child: Container(
-                      padding: EdgeInsets.all(10.h),
-                      child: Image.asset(
-                        ImageConstant.imgClose,
-                        width: 24.h,
-                        height: 24.h,
-                        color: appTheme.whiteA700,
+          );
+        }
+      },
+      child: SafeArea(
+        child: Scaffold(
+          extendBody: true,
+          extendBodyBehindAppBar: true,
+          resizeToAvoidBottomInset: false,
+          body: Container(
+            width: double.maxFinite,
+            height: SizeUtils.height,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(
+                  ImageConstant.imgBackground1,
+                ),
+                fit: BoxFit.fill,
+              ),
+            ),
+            child: Form(
+              key: _formkey,
+              child: Column(
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(left: 15.h, top: 12.h),
+                    alignment: Alignment.centerLeft,
+                    child: GestureDetector(
+                      onTap: () => NavigatorService.goBack(),
+                      child: Container(
+                        padding: EdgeInsets.all(10.h),
+                        child: Image.asset(
+                          ImageConstant.imgClose,
+                          width: 24.h,
+                          height: 24.h,
+                          color: appTheme.whiteA700,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Container(
-                  margin: EdgeInsets.only(top: 150.h),
-                  padding: EdgeInsets.symmetric(horizontal: 22.h),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [_buildContentColumn(context)],
+                  Container(
+                    margin: EdgeInsets.only(top: 150.h),
+                    padding: EdgeInsets.symmetric(horizontal: 22.h),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [_buildContentColumn(context)],
+                    ),
                   ),
-                ),
-              ],
+                  BlocBuilder<WaitingRoomBloc, WaitingRoomState>(
+                    builder: (context, state) {
+                      if (state.connectionStatus ==
+                          ConnectionStatus.connecting) {
+                        return Column(
+                          children: [
+                            SizedBox(height: 30.h),
+                            CircularProgressIndicator(
+                              color: appTheme.whiteA700,
+                            ),
+                            SizedBox(height: 20.h),
+                            Text(
+                              "Waiting for quiz to start...",
+                              style: CustomTextStyles.titleLargeWhiteA700,
+                            ),
+                          ],
+                        );
+                      }
+                      return const SizedBox.shrink();
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -75,7 +111,6 @@ class WaitingRoomScreen extends StatelessWidget {
     );
   }
 
-  /// Section Widget
   Widget _buildContentColumn(BuildContext context) {
     return Container(
       width: double.maxFinite,
@@ -104,10 +139,15 @@ class WaitingRoomScreen extends StatelessWidget {
                         margin: EdgeInsets.symmetric(horizontal: 18.h),
                       ),
                       SizedBox(height: 22.h),
-                      Text(
-                        "lbl_anh_dung".tr,
-                        style: CustomTextStyles.graphikwhiteA700SemiBold,
-                      )
+                      BlocSelector<WaitingRoomBloc, WaitingRoomState, String?>(
+                        selector: (state) => state.nameController?.text,
+                        builder: (context, name) {
+                          return Text(
+                            name ?? "",
+                            style: CustomTextStyles.graphikwhiteA700SemiBold,
+                          );
+                        },
+                      ),
                     ],
                   ),
                 ),
@@ -119,7 +159,7 @@ class WaitingRoomScreen extends StatelessWidget {
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
-                    style: CustomTextStyles.bodyMediumRobotoWhiteA700
+                    style: CustomTextStyles.bodyMediumRobotoWhiteA700,
                   ),
                 )
               ],

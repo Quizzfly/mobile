@@ -34,38 +34,34 @@ class EnterPinScreenState extends State<EnterPinScreen>
   Widget build(BuildContext context) {
     return BlocBuilder<EnterPinBloc, EnterPinState>(
       builder: (context, state) {
-        return SafeArea(
-          child: Scaffold(
-            backgroundColor: appTheme.whiteA700.withOpacity(1),
-            body: Container(
-              width: double.maxFinite,
-              padding: EdgeInsets.only(top: 2.h),
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage(
-                    ImageConstant.imgBackground1,
-                  ),
-                  fit: BoxFit.fill,
+        return Scaffold(
+          backgroundColor: appTheme.whiteA700.withOpacity(1),
+          body: Container(
+            width: double.maxFinite,
+            padding: EdgeInsets.only(top: 2.h),
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage(
+                  ImageConstant.imgBackground1,
                 ),
+                fit: BoxFit.fill,
               ),
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  SizedBox(height: 26.h),
-                  _buildTabView(context),
-                  Expanded(
-                    child: Container(
-                      child: TabBarView(
-                        controller: tabViewController,
-                        children: [
-                          EnterPinTabPage.builder(context),
-                          QrCodeTabPage.builder(context)
-                        ],
-                      ),
-                    ),
-                  )
-                ],
-              ),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                SizedBox(height: 26.h),
+                _buildTabView(context),
+                Expanded(
+                  child: TabBarView(
+                    controller: tabViewController,
+                    children: [
+                      EnterPinTabPage.builder(context),
+                      QrCodeTabPage.builder(context)
+                    ],
+                  ),
+                )
+              ],
             ),
           ),
         );
@@ -78,27 +74,26 @@ class EnterPinScreenState extends State<EnterPinScreen>
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 15.h),
       child: Column(
-
         children: [
           Container(
             padding: EdgeInsets.only(bottom: 10.h),
             child: GestureDetector(
-                  onTap: () => onTapClose(context),
-                  child: Container(
-                    alignment: Alignment.bottomLeft,
-                    padding: EdgeInsets.all(10.h),
-                    child: Image.asset(
-                      ImageConstant.imgClose,
-                      width: 24.h,
-                      height: 24.h,
-                      color: Colors.white,
-                    ),
-                  ),
+              onTap: () => onTapClose(context),
+              child: Container(
+                alignment: Alignment.bottomLeft,
+                padding: EdgeInsets.all(10.h),
+                child: Image.asset(
+                  ImageConstant.imgClose,
+                  width: 24.h,
+                  height: 24.h,
+                  color: Colors.white,
                 ),
+              ),
+            ),
           ),
           Row(
             children: [
-              SizedBox(height: 8.h), 
+              SizedBox(height: 8.h),
               Expanded(
                 child: TabBar(
                   controller: tabViewController,

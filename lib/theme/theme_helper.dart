@@ -220,9 +220,9 @@ class LightCodeColors {
 // Indigo
   Color get indigo200 => const Color(0XFFA9ADF3);
   Color get indigo50 => const Color(0XFFE7E5FA);
-  Color get indigo700 => const Color(0XFF2E42A4);
+  Color get indigo700 => const Color(0XFF3789FF);
 // LightGreen
-  Color get lightGreen700 => const Color(0XFF5DA922);
+  Color get lightGreen700 => const Color(0XFF0FD18D);
   Color get lightGreen900 => const Color(0XFF2E8D00);
 //Orange
   Color get orangeA100 => const Color(0XFFFFD56B);
@@ -237,6 +237,7 @@ class LightCodeColors {
   Color get red100 => const Color(0XFFFFD6DD);
   Color get red10001 => const Color(0XFFFFCBD6);
   Color get red10002 => const Color(0XFFFFCBD4);
+  Color get red600 => const Color(0XFFF65655);
   Color get red700 => const Color(0XFFE31D1C);
   Color get red900 => const Color(0XFFC41918);
   Color get redA700 => const Color(0XFFEF0000);
@@ -246,5 +247,5 @@ class LightCodeColors {
 // White
   Color get whiteA700 => const Color(0XFFFFFFFF);
 // Yellow
-  Color get yellowA400 => const Color(0XFFF9E813);
+  Color get yellowA400 => const Color(0XFFFE8920);
 }

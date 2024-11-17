@@ -60,10 +60,10 @@ class CustomButtonStyles {
         elevation: 0,
         padding: EdgeInsets.zero,
       );
-  static ButtonStyle get fillWhiteRadius20 => ElevatedButton.styleFrom(
+  static ButtonStyle get fillWhiteRadius30 => ElevatedButton.styleFrom(
         backgroundColor: appTheme.whiteA700,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20.h),
+          borderRadius: BorderRadius.circular(30.h),
         ),
         elevation: 4.h,
         shadowColor: appTheme.whiteA700,

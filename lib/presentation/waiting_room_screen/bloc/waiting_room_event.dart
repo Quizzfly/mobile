@@ -14,3 +14,20 @@ class WaitingRoomInitialEvent extends WaitingRoomEvent {
   @override
   List<Object?> get props => [];
 }
+
+class QuizStartedWaitingEvent extends WaitingRoomEvent {
+  QuizStartedWaitingEvent();
+
+  @override
+  List<Object?> get props => [];
+}
+
+/// Event that is dispatched when socket encounters an error
+class SocketErrorEvent extends WaitingRoomEvent {
+  final String error;
+
+  SocketErrorEvent(this.error);
+
+  @override
+  List<Object?> get props => [error];
+}

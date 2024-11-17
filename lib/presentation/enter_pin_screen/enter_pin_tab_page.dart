@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
+import 'package:quizzfly_application_flutter/routes/navigation_args.dart';
 import '../../core/app_export.dart';
 import '../../theme/custom_button_style.dart';
 import '../../widgets/custom_elevated_button.dart';
@@ -24,52 +25,29 @@ class EnterPinTabPage extends StatefulWidget {
 }
 
 class EnterPinTabPageState extends State<EnterPinTabPage> {
-  TextEditingController pinController = TextEditingController();
-  String currentPin = "";
-  void _showSnackBar(String message, bool isError) {
-    ScaffoldMessenger.of(context).hideCurrentSnackBar();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
-        backgroundColor: isError ? appTheme.red900 : Colors.green,
-        duration: Duration(seconds: isError ? 3 : 2),
-        behavior: SnackBarBehavior.floating,
-        margin: EdgeInsets.all(16),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10),
-        ),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<EnterPinBloc, EnterPinState>(
-      listener: (context, state) {
-        if (state.connectionStatus == ConnectionStatus.error) {
-          _showSnackBar(state.error ?? 'An error occurred', true);
-        } else if (state.connectionStatus == ConnectionStatus.joined) {
-          _showSnackBar("Joined room ", false);
-        }
-      },
-      builder: (context, state) {
-        return Container(
-          padding: EdgeInsets.symmetric(
-            horizontal: 28.h,
-            vertical: 90.h,
-          ),
-          child: Column(
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Container(
-                    width: double.maxFinite,
-                    margin: EdgeInsets.only(top: 70.h),
-                    child: Column(
-                      children: [
-                        SizedBox(height: 16.h),
-                        SizedBox(height: 40.h),
-                        Padding(
+    return Container(
+      padding: EdgeInsets.symmetric(
+        horizontal: 28.h,
+        vertical: 90.h,
+      ),
+      child: Column(
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              child: Container(
+                width: double.maxFinite,
+                margin: EdgeInsets.only(top: 70.h),
+                child: Column(
+                  children: [
+                    SizedBox(height: 16.h),
+                    SizedBox(height: 40.h),
+                    BlocSelector<EnterPinBloc, EnterPinState,
+                        TextEditingController?>(
+                      selector: (state) => state.pinController,
+                      builder: (context, pinController) {
+                        return Padding(
                           padding: EdgeInsets.symmetric(horizontal: 20.h),
                           child: PinCodeTextField(
                             appContext: context,
@@ -101,44 +79,41 @@ class EnterPinTabPageState extends State<EnterPinTabPage> {
                               debugPrint("Completed");
                             },
                             onChanged: (value) {
-                              setState(() {
-                                currentPin = value;
-                              });
+                              pinController?.text = value;
                             },
                           ),
-                        ),
-                        SizedBox(height: 185.h),
-                        CustomElevatedButton(
+                        );
+                      },
+                    ),
+                    SizedBox(height: 185.h),
+                    BlocSelector<EnterPinBloc, EnterPinState,
+                        TextEditingController?>(
+                      selector: (state) => state.pinController,
+                      builder: (context, pinController) {
+                        return CustomElevatedButton(
                           height: 55.h,
-                          text: "lbl_join_now".tr,
-                          buttonStyle: CustomButtonStyles.fillWhiteRadius20,
+                          text: "lbl_enter".tr,
+                          buttonStyle: CustomButtonStyles.fillWhiteRadius30,
                           buttonTextStyle: CustomTextStyles.bodyLargePrimary,
                           onPressed: () {
-                            if (currentPin.length == 6) {
-                              context.read<EnterPinBloc>().add(
-                                    JoinRoomEvent(
-                                      pin: currentPin,
-                                      name:
-                                          "User", 
-                                    ),
-                                  );
+                            if (pinController?.text.length == 6) {
+                              NavigatorService.pushNamed(
+                                  AppRoutes.inputNickname,
+                                  arguments: {
+                                    NavigationArgs.roomPin: pinController?.text
+                                  });
                             }
                           },
-                          
-                        ),
-                        if (state.connectionStatus ==
-                            ConnectionStatus.connecting)
-                          const CircularProgressIndicator(),
-                      ],
+                        );
+                      },
                     ),
-                  ),
+                  ],
                 ),
               ),
-            ],
+            ),
           ),
-        );
-      },
+        ],
+      ),
     );
   }
-
 }

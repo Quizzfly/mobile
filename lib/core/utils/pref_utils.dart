@@ -96,11 +96,36 @@ class PrefUtils {
   Future<void> setAvatar(String value) {
     return _sharedPreferences!.setString('avatar', value);
   }
-   String getAvatar(){
+
+  String getAvatar() {
     try {
       return _sharedPreferences!.getString('avatar') ?? '';
     } catch (e) {
       return '';
     }
-   }
+  }
+
+  Future<void> setNickname(String value) {
+    return _sharedPreferences!.setString('nickname', value);
+  }
+
+  String getNickname() {
+    try {
+      return _sharedPreferences!.getString('nickname') ?? '';
+    } catch (e) {
+      return '';
+    }
+  }
+
+  Future<void> setRoomPin(String value) {
+    return _sharedPreferences!.setString('roomPin', value);
+  }
+
+  String getRoomPin() {
+    try {
+      return _sharedPreferences!.getString('roomPin') ?? '';
+    } catch (e) {
+      return '';
+    }
+  }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quizzfly_application_flutter/presentation/enter_pin_screen/enter_pin_screen.dart';
 import 'package:quizzfly_application_flutter/presentation/input_nickname_screen/input_nick_name_screen.dart';
 import 'package:quizzfly_application_flutter/presentation/quizzfly_setting_screen/quizzfly_setting_screen.dart';
+import 'package:quizzfly_application_flutter/presentation/room_quiz_screen/room_quiz_screen.dart';
 import 'package:quizzfly_application_flutter/presentation/waiting_room_screen/waiting_room_screen.dart';
 import '../presentation/delete_account_screen/delete_account_screen.dart';
 import '../presentation/edit_profile_screen/edit_profile_screen.dart';
@@ -45,7 +46,7 @@ class AppRoutes {
         enterPinScreen: EnterPinScreen.builder,
         initialRoute: LoginScreen.builder,
         inputNickname: InputNicknameScreen.builder,
-        waitingRoom : WaitingRoomScreen.builder,
+        waitingRoom: WaitingRoomScreen.builder,
       };
   // static Route<dynamic> generateRoute(RouteSettings settings) {
   //   switch (settings.name) {
@@ -200,6 +201,13 @@ class AppRoutes {
     return navigateWithSlide(
       context,
       WaitingRoomScreen.builder, replace: false, // Will replace current screen
+    );
+  }
+
+  static Future<void> navigateToRoomQuizScreen(BuildContext context) {
+    return navigateWithSlide(
+      context,
+      RoomQuizScreen.builder, replace: false, // Will replace current screen
     );
   }
 }

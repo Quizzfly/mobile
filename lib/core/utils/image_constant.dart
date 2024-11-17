@@ -34,4 +34,16 @@ class ImageConstant {
   static String imgDelete = "$imagePath/image_delete.png";
 
   static String imgBackground1 = "$imagePath/image_background1.png";
+
+  static String imgCircle = "$imagePath/icons8-circle-96.png";
+
+  static String imgRhombus = "$imagePath/icons8-rhombus-96.png";
+
+  static String imgSquare = "$imagePath/icons8-square-96.png";
+
+  static String imgTriangle = "$imagePath/icons8-triangle-96.png";
+
+  static String imgLectureHall = "$imagePath/image_lecture_hall.jpg";
+
+  static String imgChristmasTree = "$imagePath/christmas_room.jpg";
 }
