@@ -35,7 +35,7 @@ class CustomTextFormField extends StatelessWidget {
     this.controller,
     this.focusNode,
     this.autofocus = false,
-    this.textstyle,
+    this.textStyle,
     this.obscureText = false,
     this.readonly = false,
     this.onTap,
@@ -63,7 +63,7 @@ class CustomTextFormField extends StatelessWidget {
   final TextEditingController? controller;
   final FocusNode? focusNode;
   final bool? autofocus;
-  final TextStyle? textstyle;
+  final TextStyle? textStyle;
   final bool? obscureText;
   final bool? readonly;
   final VoidCallback? onTap;
@@ -109,7 +109,7 @@ class CustomTextFormField extends StatelessWidget {
             }
           },
           autofocus: autofocus!,
-          style: textstyle ?? CustomTextStyles.bodyMediumRobotoBluegray30001,
+          style: textStyle ?? CustomTextStyles.bodyMediumRobotoBluegray30001,
           obscureText: obscureText!,
           readOnly: readonly!,
           onTap: () {

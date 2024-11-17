@@ -5,17 +5,14 @@ import 'bloc/privacy_bloc.dart';
 import 'models/privacy_model.dart';
 
 class PrivacyScreen extends StatelessWidget {
-  const PrivacyScreen({Key? key})
-      : super(
-          key: key,
-        );
+  const PrivacyScreen({super.key});
   static Widget builder(BuildContext context) {
     return BlocProvider<PrivacyBloc>(
       create: (context) => PrivacyBloc(PrivacyState(
         privacyModelObj: PrivacyModel(),
       ))
         ..add(PrivacyInitialEvent()),
-      child: PrivacyScreen(),
+      child: const PrivacyScreen(),
     );
   }
 

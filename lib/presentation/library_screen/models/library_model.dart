@@ -7,6 +7,10 @@ import '../../library_screen/models/library_list_item_model.dart';
 class LibraryModel extends Equatable {
   LibraryModel({this.libraryListItemList = const []});
   List<LibraryListItemModel> libraryListItemList;
+  int get quizCount {
+    return libraryListItemList
+        .length;
+  }
   LibraryModel copyWith({List<LibraryListItemModel>? libraryListItemList}) {
     return LibraryModel(
       libraryListItemList: libraryListItemList ?? this.libraryListItemList,

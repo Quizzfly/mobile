@@ -13,17 +13,14 @@ import 'bloc/edit_profile_bloc.dart';
 import 'models/edit_profile_model.dart';
 
 class EditProfileScreen extends StatelessWidget {
-  const EditProfileScreen({Key? key})
-      : super(
-          key: key,
-        );
+  const EditProfileScreen({super.key});
   static Widget builder(BuildContext context) {
     return BlocProvider<EditProfileBloc>(
       create: (context) => EditProfileBloc(EditProfileState(
         editProfileModelObj: EditProfileModel(),
       ))
         ..add(EditProfileInitialEvent()),
-      child: EditProfileScreen(),
+      child: const EditProfileScreen(),
     );
   }
 

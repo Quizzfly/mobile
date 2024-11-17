@@ -128,12 +128,12 @@ class CustomTextStyles {
 // Graphik text style
   static get graphikwhiteA700 => TextStyle(
         color: appTheme.whiteA700,
-        fontSize: 100.fSize,
+        fontSize: 50.fSize,
         fontWeight: FontWeight.w600,
       ).graphik;
   static get graphikwhiteA700SemiBold => TextStyle(
         color: appTheme.whiteA700,
-        fontSize: 80.fSize,
+        fontSize: 30.fSize,
         fontWeight: FontWeight.w600,
       ).graphik;
 // Headline text style
@@ -149,8 +149,6 @@ class CustomTextStyles {
         color: appTheme.gray90003,
         fontWeight: FontWeight.w400,
       );
-
-
 
   static get headlineSmallRobotoBlueGray10001 =>
       theme.textTheme.headlineSmall!.roboto.copyWith(
@@ -251,7 +249,7 @@ class CustomTextStyles {
         color: appTheme.gray500,
         fontSize: 9.h,
       );
-      static get titleSmallGray500 => theme.textTheme.titleMedium!.copyWith(
+  static get titleSmallGray500 => theme.textTheme.titleMedium!.copyWith(
         color: appTheme.gray500,
       );
   //Title text
@@ -259,11 +257,8 @@ class CustomTextStyles {
       theme.textTheme.titleSmall!.roboto.copyWith(
         color: appTheme.whiteA700,
       );
-  static get titleSmallRobotoSansBlack900 =>
-      theme.textTheme.titleSmall!.roboto.copyWith(
-        color: appTheme.black900.withOpacity(0.5),
-        fontSize: 12.h
-      );
+  static get titleSmallRobotoSansBlack900 => theme.textTheme.titleSmall!.roboto
+      .copyWith(color: appTheme.black900.withOpacity(0.5), fontSize: 12.h);
   static get titleMediumRobotoBlack900 =>
       theme.textTheme.titleMedium!.roboto.copyWith(
         color: appTheme.black900,

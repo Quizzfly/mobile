@@ -6,13 +6,14 @@ import '../../domain/googleauth/google_auth_helper.dart';
 import '../../theme/custom_button_style.dart';
 import '../../widgets/custom_elevated_button.dart';
 import '../../widgets/custom_text_form_field.dart';
+import '../enter_pin_screen/enter_pin_screen.dart';
 import 'bloc/login_bloc.dart';
 import 'models/login_model.dart';
 
 class LoginScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
 
-  LoginScreen({Key? key}) : super(key: key);
+  LoginScreen({super.key});
 
   static Widget builder(BuildContext context) {
     return BlocProvider<LoginBloc>(
@@ -304,7 +305,7 @@ class LoginScreen extends StatelessWidget {
         children: [
           InkWell(
             onTap: () {
-              AppRoutes.navigateToProfileSetting(context);
+              _showEnterPinBottomSheet(context);
             },
             child: RichText(
               text: TextSpan(
@@ -313,11 +314,7 @@ class LoginScreen extends StatelessWidget {
                     text: "msg_don_t_you_have_an2".tr,
                     style: CustomTextStyles.bodyLargeErrorContainer,
                   ),
-                  WidgetSpan(
-                    child: SizedBox(
-                        width: 10), // Add a SizedBox to simulate padding
-                  ),
-                  WidgetSpan(
+                  const WidgetSpan(
                     child: SizedBox(
                         width: 10), // Add a SizedBox to simulate padding
                   ),
@@ -388,5 +385,27 @@ class LoginScreen extends StatelessWidget {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(onError.toString())));
     });
+  }
+
+  void _showEnterPinBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true, // This makes the bottom sheet full screen
+      backgroundColor: Colors.transparent,
+      builder: (BuildContext context) {
+        return Container(
+          height:
+              MediaQuery.of(context).size.height * 0.9, // 90% of screen height
+          decoration: BoxDecoration(
+            color: Colors.transparent,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(20.h),
+              topRight: Radius.circular(20.h),
+            ),
+          ),
+          child: EnterPinScreen.builder(context),
+        );
+      },
+    );
   }
 }

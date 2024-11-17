@@ -10,7 +10,7 @@ import 'models/change_password_model.dart';
 class ChangePasswordScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
 
-  ChangePasswordScreen({Key? key}) : super(key: key);
+  ChangePasswordScreen({super.key});
 
   static Widget builder(BuildContext context) {
     return BlocProvider<ChangePasswordBloc>(

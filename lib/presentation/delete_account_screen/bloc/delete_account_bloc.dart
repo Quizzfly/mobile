@@ -14,7 +14,7 @@ part 'delete_account_state.dart';
 
 /// A bloc that manages the state of a DeleteAccount according to the event that is dispatched to it.
 class DeleteAccountBloc extends Bloc<DeleteAccountEvent, DeleteAccountState> {
-  DeleteAccountBloc(DeleteAccountState initialState) : super(initialState) {
+  DeleteAccountBloc(super.initialState) {
     on<DeleteAccountInitialEvent>(_onInitialize);
     on<CreateRequestDeleteEvent>(_callRequestDeleteUser);
     on<DeleteVerifyDeleteEvent>(_callVerifyDeleteUser);

@@ -8,17 +8,14 @@ import 'bloc/delete_account_bloc.dart';
 import 'models/delete_account_model.dart';
 
 class DeleteAccountScreen extends StatelessWidget {
-  const DeleteAccountScreen({Key? key})
-      : super(
-          key: key,
-        );
+  const DeleteAccountScreen({super.key});
   static Widget builder(BuildContext context) {
     return BlocProvider<DeleteAccountBloc>(
       create: (context) => DeleteAccountBloc(DeleteAccountState(
         deleteAccountModelObj: DeleteAccountModel(),
       ))
         ..add(DeleteAccountInitialEvent()),
-      child: DeleteAccountScreen(),
+      child: const DeleteAccountScreen(),
     );
   }
 

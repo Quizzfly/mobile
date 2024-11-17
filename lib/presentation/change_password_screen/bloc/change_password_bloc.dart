@@ -13,7 +13,7 @@ part 'change_password_state.dart';
 /// A bloc that manages the state of a ChangePassword according to the event that is dispatched to it.
 class ChangePasswordBloc
     extends Bloc<ChangePasswordEvent, ChangePasswordState> {
-  ChangePasswordBloc(ChangePasswordState initialState) : super(initialState) {
+  ChangePasswordBloc(super.initialState) {
     on<ChangePasswordInitialEvent>(_onInitialize);
     on<CreateChangePasswordEvent>(_callChangePassword);
   }

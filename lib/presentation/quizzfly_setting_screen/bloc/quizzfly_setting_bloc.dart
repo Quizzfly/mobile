@@ -15,7 +15,7 @@ part 'quizzfly_setting_state.dart';
 
 class QuizzflySettingBloc
     extends Bloc<QuizzflySettingEvent, QuizzflySettingState> {
-  QuizzflySettingBloc(QuizzflySettingState initialState) : super(initialState) {
+  QuizzflySettingBloc(super.initialState) {
     on<QuizzflySettingInitialEvent>(_onInitialize);
     on<ChangeVisibilityEvent>(_onChangeVisibility);
     on<PickImageEvent>(_onPickImage);

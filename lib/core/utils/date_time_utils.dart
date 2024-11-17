@@ -1,4 +1,6 @@
+// ignore: depend_on_referenced_packages
 import 'package:intl/date_symbol_data_local.dart';
+// ignore: depend_on_referenced_packages
 import 'package:intl/intl.dart';
 
 const String dateTimeFormatPattern = 'dd/MM/yyyy';

@@ -11,7 +11,7 @@ part 'register_state.dart';
 
 /// A bloc that manages the state of a Register according to the event that is disp
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
-  RegisterBloc(RegisterState initialState) : super(initialState) {
+  RegisterBloc(super.initialState) {
     on<RegisterInitialEvent>(_onInitialize);
     on<CreateRegisterEvent>(_callRegister);
   }

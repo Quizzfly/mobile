@@ -6,7 +6,7 @@ part 'privacy_state.dart';
 
 /// A bloc that manages the state of a Privacy according to the event that is dispatched to it.
 class PrivacyBloc extends Bloc<PrivacyEvent, PrivacyState> {
-  PrivacyBloc(PrivacyState initialState) : super(initialState) {
+  PrivacyBloc(super.initialState) {
     on<PrivacyInitialEvent>(_onInitialize);
     on<ChangeSwitchEvent>(_changeSwitch);
     on<ChangeSwitch1Event>(_changeSwitch1);

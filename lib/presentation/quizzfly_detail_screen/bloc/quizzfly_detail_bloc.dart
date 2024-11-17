@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:equatable/equatable.dart';
 import 'package:quizzfly_application_flutter/data/models/detail_quizzfly/get_detail_quizzfly_resp.dart';
+import 'package:quizzfly_application_flutter/data/models/list_question/get_list_question_resp.dart';
 import 'package:quizzfly_application_flutter/data/repository/repository.dart';
 import '../../../core/app_export.dart';
 import '../models/overview_quizzfly_item_model.dart';
@@ -13,9 +14,10 @@ part 'quizzfly_detail_state.dart';
 /// A bloc that manages the state of a QuizzflyDetail according to the event that is dispatched to it.
 class QuizzflyDetailBloc
     extends Bloc<QuizzflyDetailEvent, QuizzflyDetailState> {
-  QuizzflyDetailBloc(QuizzflyDetailState initialState) : super(initialState) {
+  QuizzflyDetailBloc(super.initialState) {
     on<QuizzflyDetailInitialEvent>(_onInitialize);
     on<FetchQuizzflyDetailEvent>(_callGetQuizzflyDetail);
+    on<FetchGetListQuestionsEvent>(_callListQuestion);
   }
   final PrefUtils _prefUtils = PrefUtils();
 
@@ -23,12 +25,14 @@ class QuizzflyDetailBloc
 
   var getDetailQuizzflyResp = GetDetailQuizzflyResp();
 
+  var getListQuestionsResp = GetListQuestionsResp();
   _onInitialize(
     QuizzflyDetailInitialEvent event,
     Emitter<QuizzflyDetailState> emit,
   ) async {
     if (state.id != null) {
       add(FetchQuizzflyDetailEvent(state.id!));
+      add(FetchGetListQuestionsEvent(state.id!));
     }
     // Get user data from PrefUtils
     final username = _prefUtils.getUsername();
@@ -38,33 +42,12 @@ class QuizzflyDetailBloc
     emit(
       state.copyWith(
         quizzflyDetailModelObj: state.quizzflyDetailModelObj?.copyWith(
-          overviewQuizzflyItemList: fillListtenItemList(),
-          quizListItemList: fillQuizListItemList(),
           username: username,
           name: name,
           avatar: avatar,
         ),
       ),
     );
-  }
-
-  List<OverviewQuizzflyItemModel> fillListtenItemList() {
-    return [
-      OverviewQuizzflyItemModel(ten: "10", questions: "Questions"),
-      OverviewQuizzflyItemModel(ten: "10", questions: "Questions"),
-      OverviewQuizzflyItemModel(ten: "10", questions: "Questions"),
-      OverviewQuizzflyItemModel(ten: "10", questions: "Questions")
-    ];
-  }
-
-  List<QuizListItemModel> fillQuizListItemList() {
-    return [
-      QuizListItemModel(one: "1", tf: "-", quiz: "Quiz"),
-      QuizListItemModel(one: "2", tf: "-", quiz: "True or false"),
-      QuizListItemModel(one: "3", tf: "-", quiz: "Slide"),
-      QuizListItemModel(one: "4", tf: "-", quiz: "Quiz"),
-      QuizListItemModel(one: "5", tf: "-", quiz: "True or false"),
-    ];
   }
 
   FutureOr<void> _callGetQuizzflyDetail(
@@ -86,6 +69,7 @@ class QuizzflyDetailBloc
     emit(
       state.copyWith(
         quizzflyDetailModelObj: state.quizzflyDetailModelObj?.copyWith(
+          overviewQuizzflyItemList: fillOverviewItemList(),
           title: resp.data?.title ?? '',
           description: resp.data?.description ?? '',
           coverImage: resp.data?.coverImage ?? '',
@@ -94,5 +78,63 @@ class QuizzflyDetailBloc
     );
   }
 
+  List<OverviewQuizzflyItemModel> fillOverviewItemList() {
+    return [
+      OverviewQuizzflyItemModel(ten: "10", questions: "Questions"),
+      OverviewQuizzflyItemModel(ten: "10", questions: "Questions"),
+      OverviewQuizzflyItemModel(ten: "10", questions: "Questions"),
+      OverviewQuizzflyItemModel(ten: "10", questions: "Questions")
+    ];
+  }
+
   void _onGetQuizzflyDetailError() {}
+
+  FutureOr<void> _callListQuestion(
+    FetchGetListQuestionsEvent event,
+    Emitter<QuizzflyDetailState> emit,
+  ) async {
+    try {
+      String? accessToken = await PrefUtils().getAccessToken();
+
+      await _repository.listQuestions(headers: {
+        'Authorization': 'Bearer $accessToken',
+      }, id: event.id).then((value) async {
+        getListQuestionsResp = value;
+        _onGetListQuestionSuccess(value, emit);
+      }).onError((error, stackTrace) {
+        _onGetListQuestionError();
+      });
+    } catch (e) {
+      print('Error loading list question: $e');
+      _onGetListQuestionError();
+    }
+  }
+
+  void _onGetListQuestionSuccess(
+    GetListQuestionsResp resp,
+    Emitter<QuizzflyDetailState> emit,
+  ) {
+    try {
+      final questionItems = resp.data?.asMap().entries.map((entry) {
+            return QuizListItemModel.fromQuestionData(
+              json: entry.value.toJson(),
+              index: entry.key,
+            );
+          }).toList() ??
+          [];
+
+      emit(state.copyWith(
+        quizzflyDetailModelObj: state.quizzflyDetailModelObj?.copyWith(
+          quizListItemList: questionItems,
+        ),
+      ));
+    } catch (e) {
+      print('Error processing question data: $e');
+      _onGetListQuestionError();
+    }
+  }
+
+  void _onGetListQuestionError() {
+    print('Error fetching question list');
+  }
 }

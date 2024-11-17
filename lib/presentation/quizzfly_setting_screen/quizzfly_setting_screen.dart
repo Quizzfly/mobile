@@ -14,7 +14,7 @@ import 'models/quizzfly_setting_model.dart';
 import 'dart:io';
 
 class QuizzflySettingScreen extends StatelessWidget {
-  const QuizzflySettingScreen({Key? key}) : super(key: key);
+  const QuizzflySettingScreen({super.key});
 
   static Widget builder(BuildContext context) {
     var arg =
@@ -29,7 +29,7 @@ class QuizzflySettingScreen extends StatelessWidget {
         coverImage: arg[NavigationArgs.coverImage],
       ))
         ..add(QuizzflySettingInitialEvent()),
-      child: QuizzflySettingScreen(),
+      child: const QuizzflySettingScreen(),
     );
   }
 
@@ -80,7 +80,7 @@ class QuizzflySettingScreen extends StatelessWidget {
           imagePath: ImageConstant.imgClose,
           height: 22.h,
           margin: EdgeInsets.only(right: 21.h),
-          onTap: () => Navigator.pop(context),
+          onTap: () => Navigator.pop(context,true),
         ),
       ],
     );

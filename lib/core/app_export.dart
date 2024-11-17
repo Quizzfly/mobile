@@ -14,3 +14,4 @@ export 'package:quizzfly_application_flutter/theme/theme_helper.dart';
 export 'package:quizzfly_application_flutter/widgets/custom_image_view.dart';
 export 'package:quizzfly_application_flutter/theme/bloc/theme_bloc.dart';
 export 'package:quizzfly_application_flutter/core/utils/progress_dialog_utils.dart';
+export 'package:quizzfly_application_flutter/core/utils/socket_service.dart';
