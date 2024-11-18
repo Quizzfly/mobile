@@ -228,6 +228,7 @@ final Map<String, String> enUs = {
   "lbl_ok_go": "OK, go!",
   "lbl_anh_dung" : "Anh Dung",
   "msg_you_re_in_see_your" : 'You’re in! See your nickname on your screen ?',
+  "lbl_leader_board" : "LeaderBoard",
   //Network error
   "msg_newtwork_err": "Network Error",
   "msg_something_went wrong": "Something went wrong",

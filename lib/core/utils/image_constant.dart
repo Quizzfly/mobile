@@ -46,4 +46,22 @@ class ImageConstant {
   static String imgLectureHall = "$imagePath/image_lecture_hall.jpg";
 
   static String imgChristmasTree = "$imagePath/christmas_room.jpg";
+
+  static String imgGold = "$imagePath/gold.svg";
+
+  static String imgSilver = "$imagePath/silver.svg";
+
+  static String imgBronze = "$imagePath/bronze.svg";
+
+  static String imgCheck = "$imagePath/check.png";
+
+  static String imgWrong = "$imagePath/wrong.png";
+
+  static String imgRank1 = "$imagePath/rank-1.png";
+
+  static String imgRank2 = "$imagePath/rank-2.png";
+
+  static String imgRank3 = "$imagePath/rank-3.png";
+
+  static String imgTurnBack = "$imagePath/turnBack.png";
 }

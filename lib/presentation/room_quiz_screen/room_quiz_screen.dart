@@ -275,7 +275,7 @@ class RoomQuizScreen extends StatelessWidget {
                 height: 34.h,
                 width: 82.h,
                 text: totalScore.toString(),
-                buttonStyle: CustomButtonStyles.fillBlackGray,
+                buttonStyle: CustomButtonStyles.fillDeepPurpleTL12,
                 buttonTextStyle: CustomTextStyles.titleMediumWhiteA700Bold,
               );
             },
