@@ -5,7 +5,7 @@ import 'bloc/waiting_room_bloc.dart';
 import 'models/waiting_room_model.dart';
 
 class WaitingRoomScreen extends StatefulWidget {
-  WaitingRoomScreen({super.key});
+  const WaitingRoomScreen({super.key});
 
   static Widget builder(BuildContext context) {
     return BlocProvider<WaitingRoomBloc>(
@@ -13,7 +13,7 @@ class WaitingRoomScreen extends StatefulWidget {
         inputNicknameModelObj: WaitingRoomModel(),
       ))
         ..add(WaitingRoomInitialEvent()),
-      child: WaitingRoomScreen(),
+      child: const WaitingRoomScreen(),
     );
   }
 

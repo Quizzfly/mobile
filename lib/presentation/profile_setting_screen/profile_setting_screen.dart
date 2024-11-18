@@ -95,7 +95,7 @@ class ProfileSettingScreenState extends State<ProfileSettingScreen>
                 CustomAppBar(
                   title: AppbarTitle(
                     text: "msg_profile_settings".tr,
-                    margin: EdgeInsets.only(left: 16.h),
+                    padding: EdgeInsets.only(left: 16.h),
                   ),
                 ),
                 SizedBox(height: 12.h),

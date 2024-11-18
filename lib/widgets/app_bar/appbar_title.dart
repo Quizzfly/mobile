@@ -2,24 +2,34 @@ import 'package:flutter/material.dart';
 import '../../core/app_export.dart';
 
 class AppbarTitle extends StatelessWidget {
-  AppbarTitle({Key? key, required this.text, this.onTap, this.margin})
-      : super(
-          key: key,
-        );
+  AppbarTitle({
+    super.key,
+    required this.text,
+    this.onTap,
+    this.padding,
+    this.textColor, 
+    this.textStyle, 
+  });
+
   final String text;
   final Function? onTap;
-  final EdgeInsetsGeometry? margin;
+  final EdgeInsetsGeometry? padding;
+  final Color? textColor; 
+  final TextStyle? textStyle; 
+
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: margin ?? EdgeInsets.zero,
+      padding: padding ?? EdgeInsets.zero,
       child: GestureDetector(
         onTap: () {
           onTap?.call();
         },
         child: Text(
           text,
-          style: CustomTextStyles.headlineSmallSFProRoundedGray90003
+          style: textStyle?.copyWith(color: textColor) ??
+              CustomTextStyles.headlineSmallSFProRoundedGray90003
+                  .copyWith(color: textColor),
         ),
       ),
     );
