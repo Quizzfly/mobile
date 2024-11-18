@@ -162,9 +162,8 @@ class LoginScreen extends StatelessWidget {
         child: BlocSelector<LoginBloc, LoginState, TextEditingController?>(
           selector: (state) => state.emailController,
           builder: (context, emailController) {
-            // Ensure the controller is not null
             if (emailController == null) {
-              return SizedBox.shrink(); // Return an empty widget if null
+              return const SizedBox.shrink();
             }
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -305,7 +304,8 @@ class LoginScreen extends StatelessWidget {
         children: [
           InkWell(
             onTap: () {
-              _showEnterPinBottomSheet(context);
+              // _showEnterPinBottomSheet(context);
+              AppRoutes.navigateToLeaderBoardScreen(context);
             },
             child: RichText(
               text: TextSpan(
