@@ -1,6 +1,4 @@
-// waiting_room_bloc.dart
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:equatable/equatable.dart';
 import '../../../core/app_export.dart';

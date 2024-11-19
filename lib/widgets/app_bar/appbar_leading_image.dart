@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import '../../core/app_export.dart';
 
-class AppbarLeadingImage extends StatelessWidget {
-  AppbarLeadingImage({
+class AppBarLeadingImage extends StatelessWidget {
+  AppBarLeadingImage({
     super.key,
     this.imagePath,
     this.height,

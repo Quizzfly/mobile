@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../presentation/enter_pin_screen/enter_pin_screen.dart';
 import '../presentation/input_nickname_screen/input_nick_name_screen.dart';
-import '../presentation/leader_board_screen/leader_board_screen.dart';
 import '../presentation/quizzfly_setting_screen/quizzfly_setting_screen.dart';
 import '../presentation/room_quiz_screen/room_quiz_screen.dart';
 import '../presentation/waiting_room_screen/waiting_room_screen.dart';
@@ -49,7 +48,6 @@ class AppRoutes {
         initialRoute: LoginScreen.builder,
         inputNickname: InputNicknameScreen.builder,
         waitingRoom: WaitingRoomScreen.builder,
-        leaderBoardScreen : LeaderBoardScreen.builder,
       };
   // static Route<dynamic> generateRoute(RouteSettings settings) {
   //   switch (settings.name) {
@@ -211,12 +209,6 @@ class AppRoutes {
     return navigateWithSlide(
       context,
       RoomQuizScreen.builder, replace: false, // Will replace current screen
-    );
-  }
-  static Future<void> navigateToLeaderBoardScreen(BuildContext context) {
-    return navigateWithSlide(
-      context,
-      LeaderBoardScreen.builder, replace: false, // Will replace current screen
     );
   }
 }
