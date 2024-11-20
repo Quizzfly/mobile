@@ -24,7 +24,7 @@ class _QuizGridItemWidgetState extends State<QuizGridItemWidget>
 
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1000),
+      duration: const Duration(milliseconds: 500),
     );
 
     _slideAnimation = Tween<Offset>(
@@ -35,7 +35,7 @@ class _QuizGridItemWidgetState extends State<QuizGridItemWidget>
       curve: Curves.easeInOut,
     ));
 
-    Future.delayed(const Duration(milliseconds: 100), () {
+    Future.delayed(const Duration(milliseconds: 50), () {
       if (mounted) {
         _animationController.forward();
       }

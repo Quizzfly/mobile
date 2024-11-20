@@ -325,7 +325,7 @@ class RoomQuizScreen extends StatelessWidget {
               ],
             ),
             Positioned(
-              top: 380.h, // Adjust this value to control overlap amount
+              top: 380.h, 
               left: 0,
               right: 0,
               bottom: 0,
