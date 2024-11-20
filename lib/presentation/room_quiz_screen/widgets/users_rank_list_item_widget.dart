@@ -59,7 +59,7 @@ class UsersRankListItemWidget extends StatelessWidget {
                     SizedBox(height: 8.h),
                     Text(
                       usersRankListItemModelObj.score.toString(),
-                      style: CustomTextStyles.titleSmallGray500,
+                      style: CustomTextStyles.titleMediumPurple100,
                     )
                   ],
                 ),

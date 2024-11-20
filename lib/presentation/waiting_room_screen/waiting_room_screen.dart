@@ -93,7 +93,7 @@ class _WaitingRoomScreenState extends State<WaitingRoomScreen> {
                             ),
                             SizedBox(height: 20.h),
                             Text(
-                              "Waiting for quiz to start...",
+                              "lbl_waiting_room".tr,
                               style: CustomTextStyles.titleLargeWhiteA700,
                             ),
                           ],

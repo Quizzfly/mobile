@@ -165,14 +165,22 @@ class RoomQuizScreen extends StatelessWidget {
 
           if (state.showResult) {
             return Center(
-              child: Icon(
-                state.isCorrect ?? false
-                    ? Icons.check_circle_outline
-                    : Icons.close,
-                size: 120.h,
-                color: state.isCorrect ?? false ? Colors.green : Colors.red,
-              ),
-            );
+                child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                  CustomImageView(
+                      height: 150.h,
+                      width: 150.h,
+                      imagePath: state.isCorrect ?? false
+                          ? ImageConstant.imgCheck
+                          : ImageConstant.imgWrong),
+                  Text(
+                    state.isCorrect ?? false
+                        ? "lbl_good_job".tr
+                        : "lbl_wrong_answer".tr,
+                    style: CustomTextStyles.titleLargeWhiteA700,
+                  )
+                ]));
           }
 
           return BlocSelector<RoomQuizBloc, RoomQuizState, RoomQuizModel?>(
@@ -308,59 +316,51 @@ class RoomQuizScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: theme.colorScheme.primary,
         appBar: _buildAppBar(context),
-        body: SizedBox(
-          width: double.maxFinite,
-          child: SingleChildScrollView(
-            child: Container(
-              width: double.maxFinite,
-              padding: EdgeInsets.only(
-                left: 10.h,
-                top: 4.h,
-                right: 8.h,
-              ),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 810.h,
-                    width: double.maxFinite,
-                    child: Stack(
-                      alignment: Alignment.bottomCenter,
-                      children: [
-                        Align(
-                          alignment: Alignment.topCenter,
-                          child: SizedBox(
-                            width: double.maxFinite,
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [_buildPodiumSection(context)],
-                            ),
-                          ),
-                        ),
-                        Container(
-                          width: double.maxFinite,
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 5.h,
-                            vertical: 10.h,
-                          ),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [_buildUsersRankList(context)],
-                          ),
-                        )
-                      ],
-                    ),
+        body: Stack(
+          children: [
+            Column(
+              children: [
+                _buildPodiumSection(context),
+                SizedBox(height: 80.h),
+              ],
+            ),
+            Positioned(
+              top: 380.h, // Adjust this value to control overlap amount
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: appTheme.gray10001,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(24.h),
+                    topRight: Radius.circular(24.h),
                   ),
-                  SizedBox(height: 16.h)
-                ],
+                ),
+                child: Column(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.symmetric(vertical: 8.h),
+                      width: 40.h,
+                      height: 4.h,
+                      decoration: BoxDecoration(
+                        color: appTheme.gray400,
+                        borderRadius: BorderRadius.circular(2.h),
+                      ),
+                    ),
+                    Expanded(
+                      child: _buildUsersRankList(context),
+                    ),
+                  ],
+                ),
               ),
             ),
-          ),
+          ],
         ),
       ),
     );
   }
 
-  /// Section Widget
   PreferredSizeWidget _buildAppBar(BuildContext context) {
     return CustomAppBar(
       leadingWidth: 20.h,
@@ -379,12 +379,68 @@ class RoomQuizScreen extends StatelessWidget {
     );
   }
 
-  /// Section Widget
+  Widget _buildPodiumSection(BuildContext context) {
+    return BlocBuilder<RoomQuizBloc, RoomQuizState>(
+      builder: (context, state) {
+        final topPlayers =
+            state.roomQuizModelObj?.usersRankListItem.take(3).toList() ?? [];
+        if (topPlayers.isEmpty) return const SizedBox();
+
+        final screenWidth = MediaQuery.of(context).size.width;
+        final podiumWidth = (screenWidth - 50.h) / 3;
+
+        return Container(
+          padding: EdgeInsets.symmetric(horizontal: 15.h),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              if (topPlayers.length > 1)
+                SizedBox(
+                  width: podiumWidth,
+                  child: _buildPodiumPlayer(
+                    topPlayers[1],
+                    ImageConstant.imgSilver,
+                    200.h,
+                    podiumWidth,
+                    2,
+                  ),
+                ),
+              if (topPlayers.isNotEmpty)
+                SizedBox(
+                  width: podiumWidth,
+                  child: _buildPodiumPlayer(
+                    topPlayers[0],
+                    ImageConstant.imgGold,
+                    250.h,
+                    podiumWidth,
+                    1,
+                  ),
+                ),
+              if (topPlayers.length > 2)
+                SizedBox(
+                  width: podiumWidth,
+                  child: _buildPodiumPlayer(
+                    topPlayers[2],
+                    ImageConstant.imgBronze,
+                    170.h,
+                    podiumWidth,
+                    3,
+                  ),
+                )
+              else if (topPlayers.length > 1)
+                SizedBox(width: podiumWidth),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
   Widget _buildUsersRankList(BuildContext context) {
     return BlocBuilder<RoomQuizBloc, RoomQuizState>(
       builder: (context, state) {
         final players =
-            state.roomQuizModelObj?.usersRankListItem.skip(3).toList() ?? [];
+            state.roomQuizModelObj?.usersRankListItem.toList() ?? [];
 
         return Container(
           decoration: BoxDecoration(
@@ -397,8 +453,7 @@ class RoomQuizScreen extends StatelessWidget {
           ),
           child: ListView.separated(
             padding: EdgeInsets.zero,
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
+            physics: const BouncingScrollPhysics(),
             separatorBuilder: (context, index) {
               return SizedBox(height: 10.h);
             },
@@ -412,126 +467,77 @@ class RoomQuizScreen extends StatelessWidget {
     );
   }
 
-  /// Section Widget
-  Widget _buildPodiumSection(BuildContext context) {
-    return BlocBuilder<RoomQuizBloc, RoomQuizState>(
-      builder: (context, state) {
-        final topPlayers =
-            state.roomQuizModelObj?.usersRankListItem.take(3).toList() ?? [];
-        if (topPlayers.isEmpty) return const SizedBox();
-
-        return Align(
-          alignment: Alignment.topCenter,
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 15.h),
-            child: Row(
-              children: [
-                if (topPlayers.length > 1)
-                  _buildPodiumPlayer(
-                    topPlayers[1],
-                    ImageConstant.imgSilver,
-                    200.h,
-                    2,
-                  ),
-                if (topPlayers.isNotEmpty)
-                  _buildPodiumPlayer(
-                    topPlayers[0],
-                    ImageConstant.imgGold,
-                    250.h,
-                    1,
-                  ),
-                if (topPlayers.length > 2)
-                  _buildPodiumPlayer(
-                    topPlayers[2],
-                    ImageConstant.imgBronze,
-                    170.h,
-                    3,
-                  ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
-
   Widget _buildPodiumPlayer(
     UsersRankListItemModel player,
     String medalImage,
     double podiumHeight,
+    double podiumWidth,
     int rank,
   ) {
-    return Expanded(
-      child: Column(
-        children: [
-          Container(
-            height: 100.h,
-            width: double.maxFinite,
-            margin: EdgeInsets.symmetric(horizontal: 26.h),
-            child: Stack(
-              alignment: Alignment.bottomCenter,
-              children: [
-                CustomIconButton(
-                  height: 56.h,
-                  width: 56.h,
-                  decoration: IconButtonStyleHelper.fillTeal,
-                  child: CustomImageView(
-                    imagePath: player.imageAvatar,
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          height: 100.h,
+          margin: EdgeInsets.symmetric(horizontal: 8.h),
+          child: Stack(
+            alignment: Alignment.bottomCenter,
+            children: [
+              CustomIconButton(
+                height: 56.h,
+                width: 56.h,
+                decoration: IconButtonStyleHelper.fillTeal,
+                child: CustomImageView(
+                  imagePath: player.imageAvatar,
+                ),
+              ),
+              Align(
+                alignment: Alignment.topCenter,
+                child: SizedBox(
+                  height: 50.h,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      CustomImageView(
+                        imagePath: medalImage,
+                        height: 50.h,
+                        width: 50.h,
+                        radius: BorderRadius.circular(4.h),
+                      ),
+                    ],
                   ),
                 ),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Container(
-                    height: 50.h,
-                    margin: EdgeInsets.only(right: 6.h),
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        CustomImageView(
-                          imagePath: medalImage,
-                          height: 50.h,
-                          width: double.maxFinite,
-                          radius: BorderRadius.circular(4.h),
-                        ),
-                        CustomImageView(
-                          imagePath: medalImage,
-                          height: 50.h,
-                          width: 50.h,
-                        )
-                      ],
-                    ),
-                  ),
-                )
-              ],
+              )
+            ],
+          ),
+        ),
+        SizedBox(height: 8.h),
+        Text(
+          player.nickName ?? "",
+          style: CustomTextStyles.titleMediumWhiteA700,
+          textAlign: TextAlign.center,
+          overflow: TextOverflow.ellipsis,
+        ),
+        SizedBox(height: 6.h),
+        CustomElevatedButton(
+          height: 34.h,
+          width: 56.h,
+          text: "${player.score}",
+          buttonStyle: CustomButtonStyles.fillDeepPurple50TL12,
+          buttonTextStyle: CustomTextStyles.labelLargeWhiteA700Bold,
+        ),
+        SizedBox(height: 8.h),
+        Container(
+          width: podiumWidth,
+          height: podiumHeight,
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(_getPodiumImage(rank)),
+              fit: BoxFit.fill,
             ),
           ),
-          SizedBox(height: 8.h),
-          Text(
-            player.nickName ?? "",
-            style: CustomTextStyles.titleMediumWhiteA700,
-          ),
-          SizedBox(height: 6.h),
-          CustomElevatedButton(
-            height: 34.h,
-            width: 56.h,
-            text: "${player.score}",
-            buttonStyle: CustomButtonStyles.fillDeepPurpleTL12,
-            buttonTextStyle: CustomTextStyles.labelLargeWhiteA700,
-          ),
-          SizedBox(height: 8.h),
-          Container(
-            width: double.maxFinite,
-            height: podiumHeight,
-            padding: EdgeInsets.symmetric(vertical: 24.h),
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(_getPodiumImage(rank)),
-                fit: BoxFit.fill,
-              ),
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
