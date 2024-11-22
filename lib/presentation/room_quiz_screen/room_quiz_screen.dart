@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_grid_list/responsive_grid_list.dart';
+import 'package:rive/rive.dart';
 import '../../core/app_export.dart';
 import '../../theme/custom_button_style.dart';
 import '../../widgets/app_bar/appbar_leading_image.dart';
@@ -152,13 +153,24 @@ class RoomQuizScreen extends StatelessWidget {
         builder: (context, state) {
           if (state.isWaiting) {
             return Center(
-              child: SizedBox(
-                width: 60.h,
-                height: 60.h,
-                child: const CircularProgressIndicator(
-                  color: Colors.white,
-                  strokeWidth: 5,
-                ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 150.h, 
+                    width: 150.h,
+                    child: RiveAnimation.asset(
+                      ImageConstant.riveLoadingPlay,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  SizedBox(height: 16.h),
+                  Text(
+                    "lbl_your_answer_is_processed".tr,
+                    style: CustomTextStyles.titleLargeWhiteA700,
+                    textAlign: TextAlign.center,
+                  )
+                ],
               ),
             );
           }
@@ -325,7 +337,7 @@ class RoomQuizScreen extends StatelessWidget {
               ],
             ),
             Positioned(
-              top: 380.h, 
+              top: 380.h,
               left: 0,
               right: 0,
               bottom: 0,
@@ -369,6 +381,7 @@ class RoomQuizScreen extends StatelessWidget {
       leading: AppBarLeadingImage(
         imagePath: ImageConstant.imgTurnBack,
         color: appTheme.whiteA700,
+        onTap: () => AppRoutes.navigateToLogin(context),
       ),
       centerTitle: true,
       title: AppBarTitle(

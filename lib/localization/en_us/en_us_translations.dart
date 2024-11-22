@@ -232,6 +232,7 @@ final Map<String, String> enUs = {
   "lbl_wrong_answer": "Wrong answer!",
   "lbl_good_job": "Good job! You go it right",
   "lbl_waiting_room": "Waiting for start",
+  "lbl_your_answer_is_processed": "Your answer is being processed",
   //Network error
   "msg_newtwork_err": "Network Error",
   "msg_something_went wrong": "Something went wrong",
