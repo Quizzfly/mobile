@@ -12,7 +12,20 @@
           "package_name": "com.example.quizzfly_application_flutter"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "248862924449-ldusjqjmpqies3g6f230lbn23b5o53sp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.quizzfly_application_flutter",
+            "certificate_hash": "9f6fdc138459b837dc53501affaa15b26cbe4cc2"
+          }
+        },
+        {
+          "client_id": "248862924449-2sh1t3hb2kf50e1lot9fh32291ujtteq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyB3X0oYhnV3WOcfwaDvzOo-ZPF2XpvOH5E"
@@ -20,7 +33,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "248862924449-2sh1t3hb2kf50e1lot9fh32291ujtteq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
