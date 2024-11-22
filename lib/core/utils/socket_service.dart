@@ -6,14 +6,17 @@ class QuizStartedData {
   final List<Map<String, String>> answers;
   final String quizType;
   final int timeLimit;
+  final int numberQuestion;
   QuizStartedData(
       {required this.questionId,
       required this.answers,
       required this.quizType,
-      required this.timeLimit});
+      required this.timeLimit,
+      required this.numberQuestion});
 
   factory QuizStartedData.fromJson(Map<String, dynamic> json) {
     final question = json['question'] as Map<String, dynamic>;
+    final questions = json['questions'] as List;
     final answers = (question['answers'] as List)
         .map((answer) => {
               'id': answer['id'] as String,
@@ -26,6 +29,7 @@ class QuizStartedData {
       answers: answers,
       quizType: question['quiz_type'] as String,
       timeLimit: question['time_limit'] as int,
+      numberQuestion: questions.length,
     );
   }
 }
@@ -36,6 +40,7 @@ class SocketService {
   bool _isInitialized = false;
   QuizStartedData? _lastQuizData;
   QuizStartedData? get lastQuizData => _lastQuizData;
+
   // Stream controller for quizStarted events
   final _quizStartedController = StreamController<QuizStartedData>.broadcast();
   Stream<QuizStartedData> get onQuizStarted => _quizStartedController.stream;
@@ -66,15 +71,13 @@ class SocketService {
         if (data != null && data['question'] != null) {
           try {
             final quizData = QuizStartedData.fromJson(data);
-            _lastQuizData = quizData; // Lưu lại quiz data
-
+            _lastQuizData = quizData;
             _quizStartedController.add(quizData);
           } catch (e) {
             print('Error parsing quiz data: $e');
           }
         }
       });
-
       _isInitialized = true;
     }
   }

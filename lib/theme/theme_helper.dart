@@ -191,11 +191,11 @@ class LightCodeColors {
   Color get deepOrange20001 => const Color(0XFFF6B191);
   Color get deepOrange300 => const Color(0XFFFF9A56);
 //DeepPurple
-  Color get deepPurple100 => const Color(0XFFCDC9F3);
+  Color get deepPurple100 => const Color(0XFF6C5CE0);
   Color get deepPurple10001 => const Color(0XFFD9D4F6);
   Color get deepPurple200 => const Color(0XFFB9B4E4);
   Color get deepPurple300 => const Color(0XFF9087E5);
-  Color get deepPurple50 => const Color(0XFFEFEDFB);
+  Color get deepPurple50 => const Color(0XFF9087E5);
   Color get deepPurple600 => const Color(0XFF5144B6);
   Color get deppPurplePrimary => const Color(0XFF6A5AE0);
 // Gray

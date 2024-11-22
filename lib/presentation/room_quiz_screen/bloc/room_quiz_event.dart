@@ -29,11 +29,13 @@ class QuizStartedEvent extends RoomQuizEvent {
   final String questionId;
   final String quizType;
   final int timeLimit;
-  QuizStartedEvent(
-      this.answers, this.questionId, this.quizType, this.timeLimit);
+  final int numberQuestion;
+  QuizStartedEvent(this.answers, this.questionId, this.quizType, this.timeLimit,
+      this.numberQuestion);
 
   @override
-  List<Object?> get props => [answers, questionId, quizType, timeLimit];
+  List<Object?> get props =>
+      [answers, questionId, quizType, timeLimit, numberQuestion];
 }
 
 class AnswerResponseEvent extends RoomQuizEvent {
@@ -76,4 +78,13 @@ class QuizTimeoutEvent extends RoomQuizEvent {
 
   @override
   List<Object?> get props => [];
+}
+
+class LeaderboardUpdateEvent extends RoomQuizEvent {
+  final List<Map<String, dynamic>> leaderboardData;
+
+  LeaderboardUpdateEvent(this.leaderboardData);
+
+  @override
+  List<Object?> get props => [leaderboardData];
 }

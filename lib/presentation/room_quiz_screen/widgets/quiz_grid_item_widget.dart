@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:quizzfly_application_flutter/theme/theme_helper.dart';
 import '../../../core/app_export.dart';
 import '../bloc/room_quiz_bloc.dart';
 import '../models/quiz_grid_item_model.dart';
@@ -25,7 +24,7 @@ class _QuizGridItemWidgetState extends State<QuizGridItemWidget>
 
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1000),
+      duration: const Duration(milliseconds: 500),
     );
 
     _slideAnimation = Tween<Offset>(
@@ -36,7 +35,7 @@ class _QuizGridItemWidgetState extends State<QuizGridItemWidget>
       curve: Curves.easeInOut,
     ));
 
-    Future.delayed(const Duration(milliseconds: 100), () {
+    Future.delayed(const Duration(milliseconds: 50), () {
       if (mounted) {
         _animationController.forward();
       }

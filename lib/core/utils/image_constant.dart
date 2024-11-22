@@ -64,4 +64,8 @@ class ImageConstant {
   static String imgRank3 = "$imagePath/rank-3.png";
 
   static String imgTurnBack = "$imagePath/turnBack.png";
+
+  static String imgLoadingPlay = "$imagePath/loadingPlay.svg";
+
+  static String riveLoadingPlay = "$imagePath/loadingPlay.riv";
 }

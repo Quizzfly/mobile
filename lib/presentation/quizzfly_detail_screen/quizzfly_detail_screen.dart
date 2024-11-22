@@ -262,26 +262,26 @@ class QuizzflyDetailScreen extends StatelessWidget {
       child: CustomAppBar(
         height: 22.h,
         leadingWidth: 28.h,
-        leading: AppbarLeadingImage(
+        leading: AppBarLeadingImage(
           imagePath: ImageConstant.imgClose,
           onTap: () => Navigator.pop(context,true),
         ),
         actions: [
-          AppbarLeadingImage(
+          AppBarLeadingImage(
             imagePath: ImageConstant.imgSetting,
             margin: EdgeInsets.only(right: 16.h),
             onTap: () {
               navigateToQuizzfflySetting(context);
             },
           ),
-          AppbarLeadingImage(
+          AppBarLeadingImage(
             imagePath: ImageConstant.imgHeart,
             margin: EdgeInsets.only(right: 16.h),
             onTap: () {
               // Handle favorite action
             },
           ),
-          AppbarLeadingImage(
+          AppBarLeadingImage(
             imagePath: ImageConstant.imgMore,
             margin: EdgeInsets.only(right: 2.h),
             onTap: () {},

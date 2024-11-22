@@ -76,7 +76,7 @@ class QuizzflySettingScreen extends StatelessWidget {
     return CustomAppBar(
       height: 56.h,
       actions: [
-        AppbarLeadingImage(
+        AppBarLeadingImage(
           imagePath: ImageConstant.imgClose,
           height: 22.h,
           margin: EdgeInsets.only(right: 21.h),
