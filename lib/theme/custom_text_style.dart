@@ -187,6 +187,10 @@ class CustomTextStyles {
   static get labelLargeWhiteA700 => theme.textTheme.labelLarge!.copyWith(
         color: appTheme.whiteA700,
       );
+  static get labelLargeWhiteA700Bold => theme.textTheme.labelLarge!.copyWith(
+        color: appTheme.whiteA700,
+        fontWeight: FontWeight.w900
+      );
   static get labelLargeGray500 => theme.textTheme.labelLarge!.copyWith(
         color: appTheme.gray500,
       );
@@ -245,9 +249,8 @@ class CustomTextStyles {
         color: appTheme.whiteA700.withOpacity(0.8),
         fontSize: 9.h,
       );
-  static get titleMediumGray500 => theme.textTheme.titleMedium!.copyWith(
-        color: appTheme.gray500,
-        fontSize: 9.h,
+  static get titleMediumPurple100 => theme.textTheme.titleMedium!.copyWith(
+        color: appTheme.deepPurple100,
       );
   static get titleSmallGray500 => theme.textTheme.titleMedium!.copyWith(
         color: appTheme.gray500,

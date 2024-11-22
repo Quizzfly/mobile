@@ -93,7 +93,7 @@ class ProfileSettingScreenState extends State<ProfileSettingScreen>
               mainAxisSize: MainAxisSize.min,
               children: [
                 CustomAppBar(
-                  title: AppbarTitle(
+                  title: AppBarTitle(
                     text: "msg_profile_settings".tr,
                     padding: EdgeInsets.only(left: 16.h),
                   ),

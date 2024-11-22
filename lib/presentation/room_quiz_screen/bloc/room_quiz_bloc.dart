@@ -4,6 +4,7 @@ import 'package:equatable/equatable.dart';
 import '../../../core/app_export.dart';
 import '../models/quiz_grid_item_model.dart';
 import '../models/room_quiz_model.dart';
+import '../models/users_rank_list_item_model.dart';
 part 'room_quiz_event.dart';
 part 'room_quiz_state.dart';
 
@@ -18,26 +19,31 @@ class RoomQuizBloc extends Bloc<RoomQuizEvent, RoomQuizState> {
     on<ResultAnswerEvent>(_onResultAnswer);
     on<NextQuestionEvent>(_onNextQuestion);
     on<QuizTimeoutEvent>(_onQuizTimeout);
-
+    on<LeaderboardUpdateEvent>(_onLeaderboardUpdate);
     _socketService.initializeSocket();
     _initializeQuizSubscription();
     _initializeAnswerResponseSubscription();
     _initializeResultAnswerSubscription();
     _initializeNextQuestionSubscription();
+    _initializeLeaderboardSubscription();
   }
 
   void _initializeQuizSubscription() {
     _socketService.onQuizStarted.listen(
       (quizData) => add(QuizStartedEvent(quizData.answers, quizData.questionId,
-          quizData.quizType, quizData.timeLimit)),
+          quizData.quizType, quizData.timeLimit, quizData.numberQuestion)),
       onError: (error) {
         print('Error in RoomQuizBloc: $error');
       },
     );
     final lastQuizData = _socketService.lastQuizData;
     if (lastQuizData != null) {
-      add(QuizStartedEvent(lastQuizData.answers, lastQuizData.questionId,
-          lastQuizData.quizType, lastQuizData.timeLimit));
+      add(QuizStartedEvent(
+          lastQuizData.answers,
+          lastQuizData.questionId,
+          lastQuizData.quizType,
+          lastQuizData.timeLimit,
+          lastQuizData.numberQuestion));
     }
   }
 
@@ -92,19 +98,11 @@ class RoomQuizBloc extends Bloc<RoomQuizEvent, RoomQuizState> {
       quizGridItemList: updatedQuizGridItemList,
       quizType: event.quizType,
       timeLimit: event.timeLimit,
+      currentQuestionNumber: state.roomQuizModelObj?.currentQuestionNumber ?? 1,
+      numberQuestion: event.numberQuestion,
     );
 
     emit(state.copyWith(roomQuizModelObj: updatedModel));
-  }
-
-  Color getColorForIndex(int index) {
-    final colors = [
-      appTheme.indigo700,
-      appTheme.redA700,
-      appTheme.yellowA400,
-      appTheme.lightGreen700,
-    ];
-    return colors[index % colors.length];
   }
 
   void _onQuizItemTapped(
@@ -182,6 +180,109 @@ class RoomQuizBloc extends Bloc<RoomQuizEvent, RoomQuizState> {
     ));
   }
 
+  void _initializeNextQuestionSubscription() {
+    _socketService.socket.on('nextQuestion', (data) {
+      if (data != null && data is Map<String, dynamic>) {
+        add(NextQuestionEvent(data));
+      }
+    });
+  }
+
+  void _onNextQuestion(
+    NextQuestionEvent event,
+    Emitter<RoomQuizState> emit,
+  ) {
+    final updatedQuestionNumber =
+        (state.roomQuizModelObj?.currentQuestionNumber ?? 0) + 1;
+    emit(state.copyWith(
+      showResult: false,
+      isCorrect: null,
+    ));
+    final questionData = event.questionData['question'] as Map<String, dynamic>;
+    final answers = (questionData['answers'] as List)
+        .map((answer) => answer as Map<String, dynamic>)
+        .toList();
+
+    add(QuizStartedEvent(
+      answers,
+      questionData['id'] as String,
+      questionData['quiz_type'] as String,
+      questionData['time_limit'] as int,
+      state.roomQuizModelObj!.numberQuestion as int,
+    ));
+    emit(state.copyWith(
+      roomQuizModelObj: state.roomQuizModelObj?.copyWith(
+        currentQuestionNumber: updatedQuestionNumber,
+      ),
+    ));
+  }
+
+  void _onQuizTimeout(
+    QuizTimeoutEvent event,
+    Emitter<RoomQuizState> emit,
+  ) async {
+    bool hasSelectedAnswer = state.roomQuizModelObj?.quizGridItemList
+            .any((item) => item.isSelected) ??
+        false;
+    emit(state.copyWith(
+      isTimeUp: true,
+      isWaiting: false,
+      showResult: true,
+      isCorrect: hasSelectedAnswer ? state.isCorrect : false,
+    ));
+  }
+
+  void _initializeLeaderboardSubscription() {
+    _socketService.socket.on('updateLeaderboard', (data) {
+      if (data != null && data is Map<String, dynamic>) {
+        try {
+          final leaderboard = (data['leader_board'] as List)
+              .map((item) => item as Map<String, dynamic>)
+              .toList();
+
+          add(LeaderboardUpdateEvent(
+            leaderboard,
+          ));
+        } catch (e) {
+          print('Error parsing leaderboard data: $e');
+        }
+      }
+    });
+  }
+
+  void _onLeaderboardUpdate(
+    LeaderboardUpdateEvent event,
+    Emitter<RoomQuizState> emit,
+  ) {
+    bool isLastQuestion = state.roomQuizModelObj?.currentQuestionNumber ==
+        state.roomQuizModelObj?.numberQuestion;
+    final leaderboardItems = event.leaderboardData.map((playerData) {
+      return UsersRankListItemModel(
+        id: playerData['socket_id'] ?? '',
+        nickName: playerData['name'] ?? '',
+        score: playerData['total_score'] ?? 0,
+        no: playerData['rank'] ?? 0,
+        imageAvatar: ImageConstant.imageAvatar, // Using default avatar
+      );
+    }).toList();
+
+    emit(state.copyWith(
+        roomQuizModelObj: state.roomQuizModelObj?.copyWith(
+          usersRankListItem: leaderboardItems,
+        ),
+        showLeaderboard: isLastQuestion ? true : false));
+  }
+
+  Color getColorForIndex(int index) {
+    final colors = [
+      appTheme.indigo700,
+      appTheme.redA700,
+      appTheme.yellowA400,
+      appTheme.lightGreen700,
+    ];
+    return colors[index % colors.length];
+  }
+
   List<QuizGridItemModel> fillQuizGridItemList() {
     if (state.roomQuizModelObj?.quizType?.toUpperCase() == 'TRUE_FALSE') {
       return List.generate(
@@ -218,55 +319,5 @@ class RoomQuizBloc extends Bloc<RoomQuizEvent, RoomQuizState> {
         ),
       );
     }
-  }
-
-  void _initializeNextQuestionSubscription() {
-    _socketService.socket.on('nextQuestion', (data) {
-      if (data != null && data is Map<String, dynamic>) {
-        add(NextQuestionEvent(data));
-      }
-    });
-  }
-
-  void _onNextQuestion(
-    NextQuestionEvent event,
-    Emitter<RoomQuizState> emit,
-  ) {
-    emit(state.copyWith(
-      showResult: false,
-      isCorrect: null,
-    ));
-    final questionData = event.questionData['question'] as Map<String, dynamic>;
-    final answers = (questionData['answers'] as List)
-        .map((answer) => answer as Map<String, dynamic>)
-        .toList();
-
-    add(QuizStartedEvent(
-      answers,
-      questionData['id'] as String,
-      questionData['quiz_type'] as String,
-      questionData['time_limit'] as int,
-    ));
-  }
-
-  void _onQuizTimeout(
-    QuizTimeoutEvent event,
-    Emitter<RoomQuizState> emit,
-  ) async {
-    bool hasSelectedAnswer = state.roomQuizModelObj?.quizGridItemList
-            .any((item) => item.isSelected) ??
-        false;
-
-    emit(state.copyWith(isTimeUp: true));
-    emit(state.copyWith(
-      isWaiting: false,
-      showResult: true,
-      isCorrect: hasSelectedAnswer ? state.isCorrect : false,
-    ));
-  }
-
-  @override
-  Future<void> close() async {
-    return super.close();
   }
 }

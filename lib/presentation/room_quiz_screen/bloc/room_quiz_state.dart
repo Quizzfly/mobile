@@ -8,7 +8,8 @@ class RoomQuizState extends Equatable {
   final bool? isCorrect;
   final int? totalScore;
   final bool isTimeUp;
-  final bool isTimerPaused; 
+  final bool isTimerPaused;
+  final bool showLeaderboard;
 
   const RoomQuizState({
     this.roomQuizModelObj,
@@ -18,7 +19,8 @@ class RoomQuizState extends Equatable {
     this.isCorrect,
     this.totalScore = 0,
     this.isTimeUp = false,
-    this.isTimerPaused = false, 
+    this.isTimerPaused = false,
+    this.showLeaderboard = false,
   });
 
   @override
@@ -31,6 +33,7 @@ class RoomQuizState extends Equatable {
         totalScore,
         isTimeUp,
         isTimerPaused,
+        showLeaderboard,
       ];
 
   RoomQuizState copyWith({
@@ -42,6 +45,7 @@ class RoomQuizState extends Equatable {
     int? totalScore,
     bool? isTimeUp,
     bool? isTimerPaused,
+    bool? showLeaderboard,
   }) {
     return RoomQuizState(
       roomQuizModelObj: roomQuizModelObj ?? this.roomQuizModelObj,
@@ -52,6 +56,7 @@ class RoomQuizState extends Equatable {
       totalScore: totalScore ?? this.totalScore,
       isTimeUp: isTimeUp ?? this.isTimeUp,
       isTimerPaused: isTimerPaused ?? this.isTimerPaused,
+      showLeaderboard: showLeaderboard ?? this.showLeaderboard,
     );
   }
 }
