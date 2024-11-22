@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "248862924449",
+    "project_id": "quizzfly-ebeb1",
+    "storage_bucket": "quizzfly-ebeb1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:248862924449:android:623d0a7d6f1a980127dae0",
+        "android_client_info": {
+          "package_name": "com.example.quizzfly_application_flutter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3X0oYhnV3WOcfwaDvzOo-ZPF2XpvOH5E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -32,3 +32,22 @@ class FetchMeEvent extends LoginEvent {
   @override
   List<Object> get props => [];
 }
+
+class CreateLoginGoogleEvent extends LoginEvent {
+  CreateLoginGoogleEvent({
+    required this.accessToken,
+    this.onCreateLoginEventSuccess,
+    this.onCreateLoginEventError,
+  });
+
+  final String accessToken;
+  final Function? onCreateLoginEventSuccess;
+  final Function? onCreateLoginEventError;
+
+  @override
+  List<Object?> get props => [
+        accessToken,
+        onCreateLoginEventSuccess,
+        onCreateLoginEventError,
+      ];
+}
