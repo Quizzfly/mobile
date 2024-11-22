@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../../core/app_export.dart';
 import '../../core/utils/validation_functions.dart';
 import '../../domain/googleauth/google_auth_helper.dart';
@@ -362,6 +363,12 @@ class LoginScreen extends StatelessWidget {
   ///
   /// The [BuildContext] parameter represents current [BuildContext]
   void _onLoginEventSuccess(BuildContext context) {
+    showTopSnackBar(
+      Overlay.of(context),
+      const CustomSnackBar.success(
+        message: 'Login succeed',
+      ),
+    );
     NavigatorService.pushNamed(
       AppRoutes.libraryScreen,
     );
@@ -369,17 +376,35 @@ class LoginScreen extends StatelessWidget {
 
   /// Displays a toast message using the Fluttertoast library.
   void _onLoginEventError(BuildContext context) {
-    Fluttertoast.showToast(
-      msg: "Login failed",
+    showTopSnackBar(
+      Overlay.of(context),
+      const CustomSnackBar.error(
+        message: 'Login failed',
+      ),
     );
   }
 
   onTapGoogle(BuildContext context) async {
     await GoogleAuthHelper().googleSignInProcess().then((googleUser) {
       if (googleUser != null) {
+        // Get the access token and call login with Google
+        googleUser.authentication.then((googleAuth) {
+          if (googleAuth.accessToken != null) {
+            context.read<LoginBloc>().add(
+                  CreateLoginGoogleEvent(
+                    accessToken: googleAuth.accessToken!,
+                    onCreateLoginEventSuccess: () {
+                      _onLoginEventSuccess(context);
+                    },
+                    onCreateLoginEventError: () {
+                      _onLoginEventError(context);
+                    },
+                  ),
+                );
+          }
+        });
       } else {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('user data is empty')));
+        _onLoginEventError(context);
       }
     }).catchError((onError) {
       ScaffoldMessenger.of(context)
@@ -390,12 +415,11 @@ class LoginScreen extends StatelessWidget {
   void _showEnterPinBottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
-      isScrollControlled: true, // This makes the bottom sheet full screen
+      isScrollControlled: true,
       backgroundColor: Colors.transparent,
       builder: (BuildContext context) {
         return Container(
-          height:
-              MediaQuery.of(context).size.height * 0.9, // 90% of screen height
+          height: MediaQuery.of(context).size.height * 0.9,
           decoration: BoxDecoration(
             color: Colors.transparent,
             borderRadius: BorderRadius.only(

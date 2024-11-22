@@ -5,24 +5,24 @@ import 'package:quizzfly_application_flutter/data/models/my_user/get_my_user_res
 import '../../../data/models/login/post_login_resp.dart';
 import '../../../core/app_export.dart';
 import '../../../data/models/login/post_login_req.dart';
+import '../../../data/models/login_google/post_login_google_req.dart';
 import '../../../data/repository/repository.dart';
 import '../models/login_model.dart';
 part 'login_event.dart';
 part 'login_state.dart';
 
-/// A bloc that manages the state of a Login according to the event that is dispatche
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc(super.initialstate) {
     on<LoginInitialEvent>(_onInitialize);
     on<CreateLoginEvent>(_callLogin);
+    on<CreateLoginGoogleEvent>(_callLoginWithGoogle);
     on<FetchMeEvent>(_callGetMyUser);
   }
 
   final _repository = Repository();
-
   var postLoginResp = PostLoginResp();
-
   var getMyUserResp = GetMyUserResp();
+
   _onInitialize(
     LoginInitialEvent event,
     Emitter<LoginState> emit,
@@ -37,12 +37,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     } catch (e) {}
   }
 
-  ///Calls [{{baseUrl}}/api/v1/auth/login] with the provided event and emits the state.
-  ///
-  /// The [CreateLoginEvent] parameter is used for handling event data
-  /// The [emit] parameter is used for emitting the state
-  ///
-  /// Throws an error if an error occurs during the API call process.
   FutureOr<void> _callLogin(
     CreateLoginEvent event,
     Emitter<LoginState> emit,
@@ -56,7 +50,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       requestData: postLoginReq.toJson(),
     ).then((value) async {
       postLoginResp = value;
-      _onLoginSuccess(value, emit);
+      await _onLoginSuccess(value, emit); // Add await here
       event.onCreateLoginEventSuccess?.call();
     }).onError((error, stackTrace) {
       _onLoginError();
@@ -64,19 +58,37 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     });
   }
 
-  void _onLoginSuccess(
+  FutureOr<void> _callLoginWithGoogle(
+    CreateLoginGoogleEvent event,
+    Emitter<LoginState> emit,
+  ) async {
+    var postLoginGoogleReq = PostLoginGoogleReq(
+      accessToken: event.accessToken,
+    );
+    await _repository.loginWithGoogle(
+      headers: {},
+      requestData: postLoginGoogleReq.toJson(),
+    ).then((value) async {
+      postLoginResp = value;
+      await _onLoginSuccess(value, emit); 
+      event.onCreateLoginEventSuccess?.call();
+    }).onError((error, stackTrace) {
+      _onLoginError();
+      event.onCreateLoginEventError?.call();
+    });
+  }
+
+  Future<void> _onLoginSuccess(
     PostLoginResp resp,
     Emitter<LoginState> emit,
   ) async {
     PrefUtils().setAccessToken(resp.data?.accessToken ?? '');
     PrefUtils().setRefreshToken(resp.data?.refreshToken ?? '');
-    await _callGetMyUser(FetchMeEvent(), emit);
 
-    emit(
-      state.copyWith(
-        loginModelObj: state.loginModelObj?.copyWith(),
-      ),
-    );
+    emit(state.copyWith(
+      loginModelObj: state.loginModelObj?.copyWith(),
+    ));
+    add(FetchMeEvent());
   }
 
   void _onLoginError() {}
@@ -86,7 +98,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     Emitter<LoginState> emit,
   ) async {
     String accessToken = await PrefUtils().getAccessToken();
-    // Retrieve access token from SharedPreferences
     await _repository.getMyUser(
       headers: {'Authorization': 'Bearer $accessToken'},
     ).then((value) async {

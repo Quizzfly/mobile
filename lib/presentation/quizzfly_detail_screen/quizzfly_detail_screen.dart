@@ -180,8 +180,6 @@ class QuizzflyDetailScreen extends StatelessWidget {
                     },
                   ),
                   SizedBox(height: 24.h),
-                  _buildActionButtons(context),
-                  SizedBox(height: 8.h)
                 ],
               ),
             ),
@@ -361,35 +359,7 @@ class QuizzflyDetailScreen extends StatelessWidget {
     );
   }
 
-  /// Section Widget
-  Widget _buildActionButtons(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.only(bottom: 8.h),
-      child: SizedBox(
-        width: double.maxFinite,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            CustomElevatedButton(
-              height: 35.h,
-              width: 160.h,
-              text: "lbl_host_live".tr,
-              buttonStyle: CustomButtonStyles.fillPrimaryRadius12,
-              buttonTextStyle: CustomTextStyles.titleMediumWhiteA700,
-            ),
-            CustomElevatedButton(
-              height: 35.h,
-              width: 160.h,
-              text: "lbl_play_solo".tr,
-              margin: EdgeInsets.only(right: 1.h),
-              buttonStyle: CustomButtonStyles.fillGray,
-              buttonTextStyle: CustomTextStyles.titleSmallGray500,
-            )
-          ],
-        ),
-      ),
-    );
-  }
+  
 
   /// Navigates to the popupSettingScreen when the action is triggered.
   navigateToQuizzfflySetting(BuildContext context) async {
