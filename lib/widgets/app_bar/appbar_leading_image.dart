@@ -10,7 +10,7 @@ class AppBarLeadingImage extends StatelessWidget {
     this.onTap,
     this.margin,
     this.color,
-    this.containerPadding, 
+    this.containerPadding,
   });
 
   final double? height;
@@ -19,7 +19,7 @@ class AppBarLeadingImage extends StatelessWidget {
   final Function? onTap;
   final EdgeInsetsGeometry? margin;
   final Color? color;
-  final EdgeInsetsGeometry? containerPadding; 
+  final EdgeInsetsGeometry? containerPadding;
   @override
   Widget build(BuildContext context) {
     return Container(

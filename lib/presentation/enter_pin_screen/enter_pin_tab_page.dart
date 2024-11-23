@@ -73,7 +73,7 @@ class EnterPinTabPageState extends State<EnterPinTabPage> {
                             controller: pinController,
                             keyboardType: TextInputType.number,
                             textStyle:
-                                CustomTextStyles.graphikwhiteA700SemiBold,
+                                CustomTextStyles.graphikWhiteA700SemiBold,
                             cursorColor: appTheme.whiteA700,
                             onCompleted: (v) {
                               debugPrint("Completed");

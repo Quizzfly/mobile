@@ -4,7 +4,9 @@ part of 'reset_password_bloc.dart';
 // ignore_for_file: must_be_immutable
 class ResetPasswordState extends Equatable {
   ResetPasswordState(
-      {this.newPasswordController,this.confirmNewPasswordController, this.resetPasswordModelObj});
+      {this.newPasswordController,
+      this.confirmNewPasswordController,
+      this.resetPasswordModelObj});
 
   TextEditingController? newPasswordController;
 
@@ -13,17 +15,23 @@ class ResetPasswordState extends Equatable {
   ResetPasswordModel? resetPasswordModelObj;
 
   @override
-  List<Object?> get props =>
-      [newPasswordController,confirmNewPasswordController, resetPasswordModelObj];
+  List<Object?> get props => [
+        newPasswordController,
+        confirmNewPasswordController,
+        resetPasswordModelObj
+      ];
   ResetPasswordState copyWith({
     TextEditingController? newPasswordController,
     TextEditingController? confirmNewPasswordController,
     ResetPasswordModel? resetPasswordModelObj,
   }) {
     return ResetPasswordState(
-      newPasswordController: newPasswordController ?? this.newPasswordController,
-      confirmNewPasswordController: confirmNewPasswordController ?? this.confirmNewPasswordController,
-      resetPasswordModelObj: resetPasswordModelObj ?? this.resetPasswordModelObj,
+      newPasswordController:
+          newPasswordController ?? this.newPasswordController,
+      confirmNewPasswordController:
+          confirmNewPasswordController ?? this.confirmNewPasswordController,
+      resetPasswordModelObj:
+          resetPasswordModelObj ?? this.resetPasswordModelObj,
     );
   }
 }

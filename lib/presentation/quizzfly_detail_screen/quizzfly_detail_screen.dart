@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:quizzfly_application_flutter/routes/navigation_args.dart';
 import '../../core/app_export.dart';
-import '../../theme/custom_button_style.dart';
 import '../../widgets/app_bar/appbar_leading_image.dart';
 import '../../widgets/app_bar/custom_app_bar.dart';
-import '../../widgets/custom_elevated_button.dart';
 import 'bloc/quizzfly_detail_bloc.dart';
 import 'models/overview_quizzfly_item_model.dart';
 import 'models/quiz_list_item_model.dart';
@@ -262,7 +260,7 @@ class QuizzflyDetailScreen extends StatelessWidget {
         leadingWidth: 28.h,
         leading: AppBarLeadingImage(
           imagePath: ImageConstant.imgClose,
-          onTap: () => Navigator.pop(context,true),
+          onTap: () => Navigator.pop(context, true),
         ),
         actions: [
           AppBarLeadingImage(
@@ -318,7 +316,7 @@ class QuizzflyDetailScreen extends StatelessWidget {
                 description ?? "",
                 maxLines: 5,
                 overflow: TextOverflow.ellipsis,
-                style: CustomTextStyles.bodyLargeBluegray900,
+                style: CustomTextStyles.bodyLargeBlueGray900,
               );
             },
           )
@@ -358,8 +356,6 @@ class QuizzflyDetailScreen extends StatelessWidget {
       ),
     );
   }
-
-  
 
   /// Navigates to the popupSettingScreen when the action is triggered.
   navigateToQuizzfflySetting(BuildContext context) async {

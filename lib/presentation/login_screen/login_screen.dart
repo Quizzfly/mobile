@@ -3,7 +3,7 @@ import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../../core/app_export.dart';
 import '../../core/utils/validation_functions.dart';
-import '../../domain/googleauth/google_auth_helper.dart';
+import '../../domain/googleAuth/google_auth_helper.dart';
 import '../../theme/custom_button_style.dart';
 import '../../widgets/custom_elevated_button.dart';
 import '../../widgets/custom_text_form_field.dart';
@@ -277,7 +277,7 @@ class LoginScreen extends StatelessWidget {
             alignment: Alignment.center,
             child: Text(
               "lbl_or_sign_in_with".tr,
-              style: CustomTextStyles.bodyMediumRobotoBluegray800,
+              style: CustomTextStyles.bodyMediumRobotoBlueGray800,
             ),
           ),
           SizedBox(width: 16.h),
@@ -333,7 +333,7 @@ class LoginScreen extends StatelessWidget {
             padding: EdgeInsets.only(right: 26.h),
             child: Text(
               "msg_2023_all_rights".tr,
-              style: CustomTextStyles.bodyMediumRobotoBluegray300,
+              style: CustomTextStyles.bodyMediumRobotoBlueGray300,
             ),
           )
         ],

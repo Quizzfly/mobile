@@ -8,9 +8,9 @@ class LibraryModel extends Equatable {
   LibraryModel({this.libraryListItemList = const []});
   List<LibraryListItemModel> libraryListItemList;
   int get quizCount {
-    return libraryListItemList
-        .length;
+    return libraryListItemList.length;
   }
+
   LibraryModel copyWith({List<LibraryListItemModel>? libraryListItemList}) {
     return LibraryModel(
       libraryListItemList: libraryListItemList ?? this.libraryListItemList,
