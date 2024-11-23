@@ -22,7 +22,7 @@ class WaitingRoomScreen extends StatefulWidget {
 }
 
 class _WaitingRoomScreenState extends State<WaitingRoomScreen> {
-  final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +54,7 @@ class _WaitingRoomScreenState extends State<WaitingRoomScreen> {
               ),
             ),
             child: Form(
-              key: _formkey,
+              key: _formKey,
               child: Column(
                 children: [
                   Container(
@@ -144,7 +144,7 @@ class _WaitingRoomScreenState extends State<WaitingRoomScreen> {
                         builder: (context, name) {
                           return Text(
                             name ?? "",
-                            style: CustomTextStyles.graphikwhiteA700SemiBold,
+                            style: CustomTextStyles.graphikWhiteA700SemiBold,
                           );
                         },
                       ),

@@ -24,7 +24,6 @@ class ChangeSwitchEvent extends PrivacyEvent {
   List<Object?> get props => [value];
 }
 
-
 class ChangeSwitch1Event extends PrivacyEvent {
   ChangeSwitch1Event({required this.value});
   bool value;

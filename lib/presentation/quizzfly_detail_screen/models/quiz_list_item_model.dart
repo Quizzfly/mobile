@@ -84,7 +84,7 @@ class QuizListItemModel extends Equatable {
       quizType: json['quiz_type'],
     );
   }
-  
+
   @override
   List<Object?> get props => [
         id,

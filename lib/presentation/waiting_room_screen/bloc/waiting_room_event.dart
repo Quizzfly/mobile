@@ -36,7 +36,7 @@ class PlayerKickedEvent extends WaitingRoomEvent {
   final String reason;
 
   PlayerKickedEvent(this.reason);
-  
+
   @override
   List<Object?> get props => [reason];
 }

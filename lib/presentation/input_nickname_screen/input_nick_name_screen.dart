@@ -14,7 +14,7 @@ class InputNicknameScreen extends StatelessWidget {
       : super(
           key: key,
         );
-  final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   static Widget builder(BuildContext context) {
     var arg =
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
@@ -47,7 +47,7 @@ class InputNicknameScreen extends StatelessWidget {
             ),
           ),
           child: Form(
-            key: _formkey,
+            key: _formKey,
             child: Column(
               children: [
                 Container(
@@ -122,7 +122,7 @@ class InputNicknameScreen extends StatelessWidget {
                   children: [
                     Text(
                       "lbl_quizzfly".tr,
-                      style: CustomTextStyles.graphikwhiteA700,
+                      style: CustomTextStyles.graphikWhiteA700,
                     ),
                     SizedBox(height: 16.h),
                     Container(

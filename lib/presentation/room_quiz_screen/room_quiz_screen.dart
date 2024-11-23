@@ -157,7 +157,7 @@ class RoomQuizScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(
-                    height: 150.h, 
+                    height: 150.h,
                     width: 150.h,
                     child: RiveAnimation.asset(
                       ImageConstant.riveLoadingPlay,

@@ -80,7 +80,7 @@ class QuizzflySettingScreen extends StatelessWidget {
           imagePath: ImageConstant.imgClose,
           height: 22.h,
           margin: EdgeInsets.only(right: 21.h),
-          onTap: () => Navigator.pop(context,true),
+          onTap: () => Navigator.pop(context, true),
         ),
       ],
     );

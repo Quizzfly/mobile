@@ -78,27 +78,26 @@ class QrCodeScreenState extends State<QrCodeScreen>
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 15.h),
       child: Column(
-
         children: [
           Container(
             padding: EdgeInsets.only(bottom: 10.h),
             child: GestureDetector(
-                  onTap: () => onTapClose(context),
-                  child: Container(
-                    alignment: Alignment.bottomLeft,
-                    padding: EdgeInsets.all(10.h),
-                    child: Image.asset(
-                      ImageConstant.imgClose,
-                      width: 24.h,
-                      height: 24.h,
-                      color: Colors.white,
-                    ),
-                  ),
+              onTap: () => onTapClose(context),
+              child: Container(
+                alignment: Alignment.bottomLeft,
+                padding: EdgeInsets.all(10.h),
+                child: Image.asset(
+                  ImageConstant.imgClose,
+                  width: 24.h,
+                  height: 24.h,
+                  color: Colors.white,
                 ),
+              ),
+            ),
           ),
           Row(
             children: [
-              SizedBox(height: 8.h), 
+              SizedBox(height: 8.h),
               Expanded(
                 child: TabBar(
                   controller: tabViewController,

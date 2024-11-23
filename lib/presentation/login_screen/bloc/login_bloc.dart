@@ -70,7 +70,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       requestData: postLoginGoogleReq.toJson(),
     ).then((value) async {
       postLoginResp = value;
-      await _onLoginSuccess(value, emit); 
+      await _onLoginSuccess(value, emit);
       event.onCreateLoginEventSuccess?.call();
     }).onError((error, stackTrace) {
       _onLoginError();

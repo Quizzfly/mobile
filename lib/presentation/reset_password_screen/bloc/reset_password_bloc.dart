@@ -17,7 +17,7 @@ class ResetPasswordBloc extends Bloc<ResetPasswordEvent, ResetPasswordState> {
     emit(
       state.copyWith(
         newPasswordController: TextEditingController(),
-        confirmNewPasswordController : TextEditingController(),
+        confirmNewPasswordController: TextEditingController(),
       ),
     );
   }

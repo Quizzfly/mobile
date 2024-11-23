@@ -76,7 +76,7 @@ class ListQuestionsData {
     updatedAt = json['updated_at'];
     deletedAt = json['deleted_at'];
     type = json['type'];
-    
+
     if (json['answers'] != null) {
       answers = <Answer>[];
       json['answers'].forEach((v) {
@@ -100,7 +100,7 @@ class ListQuestionsData {
     if (updatedAt != null) data['updated_at'] = updatedAt;
     if (deletedAt != null) data['deleted_at'] = deletedAt;
     if (type != null) data['type'] = type;
-    
+
     if (answers != null) {
       data['answers'] = answers!.map((v) => v.toJson()).toList();
     }
