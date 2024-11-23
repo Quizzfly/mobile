@@ -23,19 +23,18 @@ class QrCodeState extends Equatable {
         mobileScannerController
       ];
 
-  QrCodeState copyWith({
-    QrCodeTabModel? qrCodeTabModelObj,
-    QrCodeModel? qrCodeModelObj,
-    String? roomPin,
-    bool? isScanning,
-    MobileScannerController? mobileScannerController
-  }) {
+  QrCodeState copyWith(
+      {QrCodeTabModel? qrCodeTabModelObj,
+      QrCodeModel? qrCodeModelObj,
+      String? roomPin,
+      bool? isScanning,
+      MobileScannerController? mobileScannerController}) {
     return QrCodeState(
-      qrCodeTabModelObj: qrCodeTabModelObj ?? this.qrCodeTabModelObj,
-      qrCodeModelObj: qrCodeModelObj ?? this.qrCodeModelObj,
-      roomPin: roomPin ?? this.roomPin,
-      isScanning: isScanning ?? this.isScanning,
-      mobileScannerController : mobileScannerController ?? this.mobileScannerController
-    );
+        qrCodeTabModelObj: qrCodeTabModelObj ?? this.qrCodeTabModelObj,
+        qrCodeModelObj: qrCodeModelObj ?? this.qrCodeModelObj,
+        roomPin: roomPin ?? this.roomPin,
+        isScanning: isScanning ?? this.isScanning,
+        mobileScannerController:
+            mobileScannerController ?? this.mobileScannerController);
   }
 }

@@ -35,9 +35,11 @@ class DeleteVerifyDeleteEvent extends DeleteAccountEvent {
 
 // ignore_for_file: must_be_immutable
 class CreateLogoutEvent extends DeleteAccountEvent {
-  CreateLogoutEvent({this.onCreateLogoutEventSuccess, this.onCreateLogoutEventError});
+  CreateLogoutEvent(
+      {this.onCreateLogoutEventSuccess, this.onCreateLogoutEventError});
   Function? onCreateLogoutEventSuccess;
   Function? onCreateLogoutEventError;
   @override
-  List<Object?> get props => [onCreateLogoutEventSuccess,onCreateLogoutEventError];
+  List<Object?> get props =>
+      [onCreateLogoutEventSuccess, onCreateLogoutEventError];
 }

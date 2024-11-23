@@ -12,14 +12,12 @@ class QrCodeBloc extends Bloc<QrCodeEvent, QrCodeState> {
 
   QrCodeBloc(super.initialState) {
     on<QrCodeInitialEvent>(_onInitialize);
-  
   }
 
   _onInitialize(
     QrCodeInitialEvent event,
     Emitter<QrCodeState> emit,
   ) async {
-    emit(state.copyWith(
-    ));
+    emit(state.copyWith());
   }
 }

@@ -33,7 +33,9 @@ class QuizListItemWidget extends StatelessWidget {
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
               ),
-              SizedBox(width: 10.h,),
+              SizedBox(
+                width: 10.h,
+              ),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 8.h, vertical: 4.h),
                 decoration: BoxDecoration(

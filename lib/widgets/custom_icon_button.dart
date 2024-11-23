@@ -4,9 +4,9 @@ import 'package:quizzfly_application_flutter/core/app_export.dart';
 extension IconButtonStyleHelper on CustomIconButton {
   static BoxDecoration get none => BoxDecoration();
   static BoxDecoration get fillTeal => BoxDecoration(
-    color : appTheme.tea150,
-    borderRadius: BorderRadius.circular(28.h),
-  );
+        color: appTheme.tea150,
+        borderRadius: BorderRadius.circular(28.h),
+      );
 }
 
 class CustomIconButton extends StatelessWidget {

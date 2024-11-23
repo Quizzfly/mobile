@@ -22,7 +22,7 @@ class PostRegisterReq {
     if (password != null) {
       data['password'] = password;
     }
-    
+
     if (confirmPassword != null) {
       data['confirm_password'] = confirmPassword;
     }

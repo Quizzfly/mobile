@@ -477,7 +477,8 @@ class ApiClient {
       rethrow;
     }
   }
-   Future<PostLoginResp> loginWithGoogle({
+
+  Future<PostLoginResp> loginWithGoogle({
     Map<String, String> headers = const {},
     Map requestData = const {},
   }) async {
@@ -506,5 +507,4 @@ class ApiClient {
       rethrow;
     }
   }
-  
 }

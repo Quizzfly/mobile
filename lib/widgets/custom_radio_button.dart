@@ -151,7 +151,8 @@ class CustomRadioButton extends StatelessWidget {
               if (states.contains(MaterialState.selected)) {
                 return theme.colorScheme.primary;
               }
-              return unselectedColor ?? appTheme.blueGray100; // Màu mặc định khi không được chọn
+              return unselectedColor ??
+                  appTheme.blueGray100; // Màu mặc định khi không được chọn
             },
           ),
           onChanged: (value) {

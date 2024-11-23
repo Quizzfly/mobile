@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore_for_file: must_be_immutable
@@ -13,7 +14,7 @@ class PrefUtils {
   static SharedPreferences? _sharedPreferences;
   Future<void> init() async {
     _sharedPreferences ??= await SharedPreferences.getInstance();
-    print('SharedPreference Initialized');
+    debugPrint('SharedPreference Initialized');
   }
 
   ///will clear all the data stored in preference

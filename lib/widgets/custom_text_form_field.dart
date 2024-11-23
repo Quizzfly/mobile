@@ -109,7 +109,7 @@ class CustomTextFormField extends StatelessWidget {
             }
           },
           autofocus: autofocus!,
-          style: textStyle ?? CustomTextStyles.bodyMediumRobotoBluegray30001,
+          style: textStyle ?? CustomTextStyles.bodyMediumRobotoBlueGray30001,
           obscureText: obscureText!,
           readOnly: readonly!,
           onTap: () {
@@ -126,7 +126,7 @@ class CustomTextFormField extends StatelessWidget {
 
   InputDecoration get decoration => InputDecoration(
         hintText: hintText ?? "",
-        hintStyle: hintStyle ?? CustomTextStyles.bodyMediumRobotoBluegray30001,
+        hintStyle: hintStyle ?? CustomTextStyles.bodyMediumRobotoBlueGray30001,
         prefixIcon: prefix,
         prefixIconConstraints: prefixConstraints,
         suffixIcon: suffix,

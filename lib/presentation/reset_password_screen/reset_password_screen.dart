@@ -64,7 +64,7 @@ class ResetPasswordScreen extends StatelessWidget {
             "msg_an_email_with_password".tr,
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
-            style: CustomTextStyles.bodyMediumInterBluegray800.copyWith(
+            style: CustomTextStyles.bodyMediumInterBlueGray800.copyWith(
               height: 1.60,
             ),
           ),

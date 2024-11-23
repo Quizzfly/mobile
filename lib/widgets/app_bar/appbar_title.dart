@@ -7,15 +7,15 @@ class AppBarTitle extends StatelessWidget {
     required this.text,
     this.onTap,
     this.padding,
-    this.textColor, 
-    this.textStyle, 
+    this.textColor,
+    this.textStyle,
   });
 
   final String text;
   final Function? onTap;
   final EdgeInsetsGeometry? padding;
-  final Color? textColor; 
-  final TextStyle? textStyle; 
+  final Color? textColor;
+  final TextStyle? textStyle;
 
   @override
   Widget build(BuildContext context) {

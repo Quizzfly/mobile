@@ -122,7 +122,7 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
     UpdateProfileEvent event,
     Emitter<EditProfileState> emit,
   ) async {
-    String accessToken =  await PrefUtils().getAccessToken();
+    String accessToken = await PrefUtils().getAccessToken();
     String? avatarUrl;
 
     if (state.imageFile != null && state.imageFile is File) {
