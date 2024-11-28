@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quizzfly_application_flutter/presentation/community_screen/community_screen.dart';
 import '../presentation/enter_pin_screen/enter_pin_screen.dart';
 import '../presentation/input_nickname_screen/input_nick_name_screen.dart';
 import '../presentation/quizzfly_setting_screen/quizzfly_setting_screen.dart';
@@ -209,6 +210,13 @@ class AppRoutes {
     return navigateWithSlide(
       context,
       RoomQuizScreen.builder, replace: false, // Will replace current screen
+    );
+  }
+
+  static Future<void> navigateToCommunityScreen(BuildContext context) {
+    return navigateWithSlide(
+      context,
+      CommunityScreen.builder, replace: false, // Will replace current screen
     );
   }
 }
