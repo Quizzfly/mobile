@@ -59,11 +59,9 @@ class SocketService {
       });
 
       socket.onConnect((_) {
-        print('Connected to socket server');
       });
 
       socket.onDisconnect((_) {
-        print('Disconnected from socket server');
       });
 
       // Listen for quizStarted events
@@ -73,8 +71,8 @@ class SocketService {
             final quizData = QuizStartedData.fromJson(data);
             _lastQuizData = quizData;
             _quizStartedController.add(quizData);
+          // ignore: empty_catches
           } catch (e) {
-            print('Error parsing quiz data: $e');
           }
         }
       });

@@ -6,7 +6,7 @@ import 'quiz_list_item_model.dart';
 /// and is typically used to hold data that is passed between different parts of the application.
 // ignore_for_file: must_be_immutable
 class QuizzflyDetailModel extends Equatable {
-  QuizzflyDetailModel({
+  const QuizzflyDetailModel({
     this.overviewQuizzflyItemList = const [],
     this.quizListItemList = const [],
     this.username,

@@ -26,7 +26,6 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
     try {
       add(CreateGetLibraryEvent(
         onGetLibrarySuccess: () {
-          print('Library data fetched successfully');
         },
       ));
 
@@ -45,7 +44,7 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
     Emitter<LibraryState> emit,
   ) async {
     try {
-      String? accessToken = await PrefUtils().getAccessToken();
+      String? accessToken = PrefUtils().getAccessToken();
 
       await _repository.getLibraryQuizzfly(
         headers: {
@@ -118,7 +117,7 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
     DeleteQuizzflyEvent event,
     Emitter<LibraryState> emit,
   ) async {
-    String? accessToken = await PrefUtils().getAccessToken();
+    String? accessToken = PrefUtils().getAccessToken();
 
     try {
       bool success = await _repository.deleteQuizzfly(

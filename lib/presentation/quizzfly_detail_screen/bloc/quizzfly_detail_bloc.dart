@@ -1,9 +1,8 @@
 import 'dart:async';
-
 import 'package:equatable/equatable.dart';
-import 'package:quizzfly_application_flutter/data/models/detail_quizzfly/get_detail_quizzfly_resp.dart';
-import 'package:quizzfly_application_flutter/data/models/list_question/get_list_question_resp.dart';
-import 'package:quizzfly_application_flutter/data/repository/repository.dart';
+import '../../../data/models/detail_quizzfly/get_detail_quizzfly_resp.dart';
+import '../../../data/models/list_question/get_list_question_resp.dart';
+import '../../../data/repository/repository.dart';
 import '../../../core/app_export.dart';
 import '../models/overview_quizzfly_item_model.dart';
 import '../models/quiz_list_item_model.dart';
@@ -70,9 +69,9 @@ class QuizzflyDetailBloc
       state.copyWith(
         quizzflyDetailModelObj: state.quizzflyDetailModelObj?.copyWith(
           overviewQuizzflyItemList: fillOverviewItemList(),
-          title: resp.data?.title ?? '',
-          description: resp.data?.description ?? '',
-          coverImage: resp.data?.coverImage ?? '',
+          title: resp.data?.title ?? 'Untitled',
+          description: resp.data?.description ?? 'No description',
+          coverImage: resp.data?.coverImage ?? ImageConstant.imgNotFound,
         ),
       ),
     );
@@ -94,7 +93,7 @@ class QuizzflyDetailBloc
     Emitter<QuizzflyDetailState> emit,
   ) async {
     try {
-      String? accessToken = await PrefUtils().getAccessToken();
+      String? accessToken = PrefUtils().getAccessToken();
 
       await _repository.listQuestions(headers: {
         'Authorization': 'Bearer $accessToken',
@@ -105,7 +104,6 @@ class QuizzflyDetailBloc
         _onGetListQuestionError();
       });
     } catch (e) {
-      print('Error loading list question: $e');
       _onGetListQuestionError();
     }
   }
@@ -129,12 +127,10 @@ class QuizzflyDetailBloc
         ),
       ));
     } catch (e) {
-      print('Error processing question data: $e');
       _onGetListQuestionError();
     }
   }
 
   void _onGetListQuestionError() {
-    print('Error fetching question list');
   }
 }

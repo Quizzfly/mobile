@@ -10,7 +10,7 @@ class ResetPasswordScreen extends StatelessWidget {
   static Widget builder(BuildContext context) {
     return BlocProvider<ResetPasswordBloc>(
       create: (context) => ResetPasswordBloc(ResetPasswordState(
-        resetPasswordModelObj: ResetPasswordModel(),
+        resetPasswordModelObj: const ResetPasswordModel(),
       ))
         ..add(ResetPasswordInitialEvent()),
       child: const ResetPasswordScreen(),

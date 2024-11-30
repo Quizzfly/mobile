@@ -2,9 +2,9 @@ import 'package:equatable/equatable.dart';
 
 /// This class is used in the [qrcodescanqr_tab_page] screen.
 class QrCodeTabModel extends Equatable {
-  QrCodeTabModel();
+  const QrCodeTabModel();
   QrCodeTabModel copyWith() {
-    return QrCodeTabModel();
+    return const QrCodeTabModel();
   }
 
   @override

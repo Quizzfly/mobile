@@ -20,7 +20,7 @@ class CommunityListItemModel extends Equatable {
     name = name ?? "Aarav Sharma";
     host = host ?? "Host";
     description = description ?? "This is what i learned...";
-    image = image ?? ImageConstant.imageBackToSchool;
+    image = image ?? ImageConstant.imgNotFound;
     likeCount = likeCount ?? 16;
     commentCount = commentCount ?? 24;
     share = share ?? "Share";
@@ -42,7 +42,7 @@ class CommunityListItemModel extends Equatable {
   String? id;
 
   CommunityListItemModel copyWith({
-    String? aaravsharma,
+    String? name,
     String? host,
     String? description,
     String? image,

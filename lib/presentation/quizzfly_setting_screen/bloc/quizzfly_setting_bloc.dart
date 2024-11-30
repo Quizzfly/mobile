@@ -107,7 +107,7 @@ class QuizzflySettingBloc
   ) {
     emit(
       state.copyWith(
-        coverImage: resp.data?.coverImage ?? '',
+        coverImage: resp.data?.coverImage ?? ImageConstant.imgNotFound,
         titleController: TextEditingController(text: resp.data?.title ?? ''),
         descriptionController:
             TextEditingController(text: resp.data?.description ?? ''),

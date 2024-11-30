@@ -68,4 +68,12 @@ class ImageConstant {
   static String imgLoadingPlay = "$imagePath/loadingPlay.svg";
 
   static String riveLoadingPlay = "$imagePath/loadingPlay.riv";
+
+  static String imgNotFound = "$imagePath/image_not_found.png";
+
+  static String imgCreate = "$imagePath/imageCreate.png";
+
+  static String imgGroup = "$imagePath/imageGroup.png";
+
+  static String imgLogo = "$imagePath/imageLogo.jpg";
 }

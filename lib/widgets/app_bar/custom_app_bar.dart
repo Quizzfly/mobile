@@ -4,7 +4,7 @@ import '../../core/app_export.dart';
 enum Style { bgFillonErrorContainer, bgFillonPurple, bgTransparent }
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  CustomAppBar(
+  const CustomAppBar(
       {super.key,
       this.height,
       this.leadingWidth,

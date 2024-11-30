@@ -6,4 +6,5 @@ class NavigationArgs {
   static String description = "description";
   static String coverImage = "coverImage";
   static String roomPin = "roomPin";
+  static const String heroTag = 'heroTag';
 }

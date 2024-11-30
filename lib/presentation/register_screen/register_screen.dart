@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../../core/app_export.dart';
 import '../../core/utils/validation_functions.dart';
 import '../../domain/googleAuth/google_auth_helper.dart';
@@ -16,7 +17,7 @@ class RegisterScreen extends StatelessWidget {
   static Widget builder(BuildContext context) {
     return BlocProvider<RegisterBloc>(
       create: (context) => RegisterBloc(RegisterState(
-        registerModelObj: RegisterModel(),
+        registerModelObj: const RegisterModel(),
       ))
         ..add(RegisterInitialEvent()),
       child: RegisterScreen(),
@@ -118,7 +119,7 @@ class RegisterScreen extends StatelessWidget {
                   text: "lbl_register_account".tr,
                   style: CustomTextStyles.headlineSmallSFProRoundedGray90003,
                 ),
-                WidgetSpan(
+                const WidgetSpan(
                   child:
                       SizedBox(width: 10), // Add a SizedBox to simulate padding
                 ),
@@ -235,7 +236,7 @@ class RegisterScreen extends StatelessWidget {
 
   //Section widget
   Widget _buildPasswordInputSection(BuildContext context) {
-    bool _obscureText = true; // Variable to track password visibility
+    bool obscureText = true; // Variable to track password visibility
 
     return StatefulBuilder(
       builder: (context, setState) {
@@ -258,19 +259,19 @@ class RegisterScreen extends StatelessWidget {
                     textInputAction: TextInputAction.done,
                     textInputType: TextInputType.visiblePassword,
                     obscureText:
-                        _obscureText, // Use the boolean to toggle visibility
+                        obscureText, // Use the boolean to toggle visibility
                     contentPadding: EdgeInsets.symmetric(
                       horizontal: 14.h,
                       vertical: 12.h,
                     ),
                     suffix: IconButton(
                       icon: Icon(
-                        _obscureText ? Icons.visibility_off : Icons.visibility,
+                        obscureText ? Icons.visibility_off : Icons.visibility,
                       ),
                       onPressed: () {
                         // Toggle password visibility
                         setState(() {
-                          _obscureText = !_obscureText;
+                          obscureText = !obscureText;
                         });
                       },
                     ),
@@ -296,7 +297,7 @@ class RegisterScreen extends StatelessWidget {
 
   //Section widget
   Widget _buildConfirmPasswordInputSection(BuildContext context) {
-    bool _obscureText = true; // Variable to track password visibility
+    bool obscureText = true; // Variable to track password visibility
 
     return StatefulBuilder(
       builder: (context, setState) {
@@ -319,19 +320,19 @@ class RegisterScreen extends StatelessWidget {
                     textInputAction: TextInputAction.done,
                     textInputType: TextInputType.visiblePassword,
                     obscureText:
-                        _obscureText, // Use the boolean to toggle visibility
+                        obscureText, // Use the boolean to toggle visibility
                     contentPadding: EdgeInsets.symmetric(
                       horizontal: 14.h,
                       vertical: 12.h,
                     ),
                     suffix: IconButton(
                       icon: Icon(
-                        _obscureText ? Icons.visibility_off : Icons.visibility,
+                        obscureText ? Icons.visibility_off : Icons.visibility,
                       ),
                       onPressed: () {
                         // Toggle password visibility
                         setState(() {
-                          _obscureText = !_obscureText;
+                          obscureText = !obscureText;
                         });
                       },
                     ),
@@ -414,7 +415,7 @@ class RegisterScreen extends StatelessWidget {
                   text: "msg_don_t_you_have_an2".tr,
                   style: CustomTextStyles.bodyLargeErrorContainer,
                 ),
-                WidgetSpan(
+                const WidgetSpan(
                   child:
                       SizedBox(width: 10), // Add a SizedBox to simulate padding
                 ),
@@ -466,8 +467,11 @@ class RegisterScreen extends StatelessWidget {
 
   /// Displays a toast message using the Fluttertoast library.
   void _onRegisterEventError(BuildContext context) {
-    Fluttertoast.showToast(
-      msg: "User accounts already exist",
+    showTopSnackBar(
+      Overlay.of(context),
+      const CustomSnackBar.success(
+        message: 'User accounts already exist',
+      ),
     );
   }
 
@@ -476,7 +480,7 @@ class RegisterScreen extends StatelessWidget {
       if (googleUser != null) {
       } else {
         ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('user data is empty')));
+            .showSnackBar(const SnackBar(content: Text('user data is empty')));
       }
     }).catchError((onError) {
       ScaffoldMessenger.of(context)

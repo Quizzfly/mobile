@@ -1,7 +1,7 @@
 part of 'qr_code_bloc.dart';
 
 class QrCodeState extends Equatable {
-  QrCodeState(
+  const QrCodeState(
       {this.qrCodeTabModelObj,
       this.qrCodeModelObj,
       this.isScanning = true,

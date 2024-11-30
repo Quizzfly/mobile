@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:quizzfly_application_flutter/core/app_export.dart';
-import '../../../theme/custom_text_style.dart';
 import '../models/quiz_list_item_model.dart';
 
 class QuizListItemWidget extends StatelessWidget {
@@ -27,11 +26,14 @@ class QuizListItemWidget extends StatelessWidget {
                 "${model.questionNumber} - ",
                 style: CustomTextStyles.titleMediumRobotoBlack900,
               ),
-              Text(
-                model.questionContent ?? "lbl_untitled".tr,
-                style: CustomTextStyles.titleMediumRobotoBlack900,
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
+              SizedBox(
+                width: 200,
+                child: Text(
+                  model.questionContent ?? "lbl_untitled".tr,
+                  style: CustomTextStyles.titleMediumRobotoBlack900,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
               SizedBox(
                 width: 10.h,

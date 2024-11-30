@@ -12,17 +12,14 @@ import '../library_screen/library_screen.dart';
 import 'models/library_collections_model.dart';
 
 class LibraryCollectionsScreen extends StatelessWidget {
-  const LibraryCollectionsScreen({Key? key})
-      : super(
-          key: key,
-        );
+  const LibraryCollectionsScreen({super.key});
   static Widget builder(BuildContext context) {
     return BlocProvider<LibraryCollectionsBloc>(
       create: (context) => LibraryCollectionsBloc(LibraryCollectionsState(
         libraryCollectionsModelObj: LibraryCollectionsModel(),
       ))
         ..add(LibraryCollectionsInitialEvent()),
-      child: LibraryCollectionsScreen(),
+      child: const LibraryCollectionsScreen(),
     );
   }
 
@@ -112,7 +109,7 @@ class LibraryCollectionsScreen extends StatelessWidget {
             builder: (context, items) => ListView(
               shrinkWrap: true,
               padding: EdgeInsets.zero,
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               children: items,
             ),
             gridItems: List.generate(

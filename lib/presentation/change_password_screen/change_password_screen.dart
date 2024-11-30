@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../../core/app_export.dart';
 import '../../theme/custom_button_style.dart';
 import '../../widgets/custom_elevated_button.dart';
@@ -15,7 +16,7 @@ class ChangePasswordScreen extends StatelessWidget {
   static Widget builder(BuildContext context) {
     return BlocProvider<ChangePasswordBloc>(
       create: (context) => ChangePasswordBloc(ChangePasswordState(
-        changePasswordModelObj: ChangePasswordModel(),
+        changePasswordModelObj: const ChangePasswordModel(),
       ))
         ..add(ChangePasswordInitialEvent()),
       child: ChangePasswordScreen(),
@@ -72,7 +73,7 @@ class ChangePasswordScreen extends StatelessWidget {
   }
 
   Widget _buildOldPasswordSection(BuildContext context) {
-    bool _obscureText = true;
+    bool obscureText = true;
     return StatefulBuilder(
       builder: (context, setState) {
         return Column(
@@ -91,18 +92,18 @@ class ChangePasswordScreen extends StatelessWidget {
                   controller: oldPasswordController,
                   hintText: "msg_at_least_8_characters".tr,
                   textInputType: TextInputType.visiblePassword,
-                  obscureText: _obscureText,
+                  obscureText: obscureText,
                   contentPadding: EdgeInsets.symmetric(
                     horizontal: 14.h,
                     vertical: 12.h,
                   ),
                   suffix: IconButton(
                     icon: Icon(
-                      _obscureText ? Icons.visibility_off : Icons.visibility,
+                      obscureText ? Icons.visibility_off : Icons.visibility,
                     ),
                     onPressed: () {
                       setState(() {
-                        _obscureText = !_obscureText;
+                        obscureText = !obscureText;
                       });
                     },
                   ),
@@ -124,7 +125,7 @@ class ChangePasswordScreen extends StatelessWidget {
   }
 
   Widget _buildNewPasswordSection(BuildContext context) {
-    bool _obscureText = true;
+    bool obscureText = true;
     return StatefulBuilder(
       builder: (context, setState) {
         return Column(
@@ -143,18 +144,18 @@ class ChangePasswordScreen extends StatelessWidget {
                   controller: newPasswordController,
                   hintText: "msg_at_least_8_characters".tr,
                   textInputType: TextInputType.visiblePassword,
-                  obscureText: _obscureText,
+                  obscureText: obscureText,
                   contentPadding: EdgeInsets.symmetric(
                     horizontal: 14.h,
                     vertical: 12.h,
                   ),
                   suffix: IconButton(
                     icon: Icon(
-                      _obscureText ? Icons.visibility_off : Icons.visibility,
+                      obscureText ? Icons.visibility_off : Icons.visibility,
                     ),
                     onPressed: () {
                       setState(() {
-                        _obscureText = !_obscureText;
+                        obscureText = !obscureText;
                       });
                     },
                   ),
@@ -176,7 +177,7 @@ class ChangePasswordScreen extends StatelessWidget {
   }
 
   Widget _buildConfirmPasswordSection(BuildContext context) {
-    bool _obscureText = true;
+    bool obscureText = true;
     return StatefulBuilder(
       builder: (context, setState) {
         return Column(
@@ -196,18 +197,18 @@ class ChangePasswordScreen extends StatelessWidget {
                   hintText: "msg_at_least_8_characters".tr,
                   textInputAction: TextInputAction.done,
                   textInputType: TextInputType.visiblePassword,
-                  obscureText: _obscureText,
+                  obscureText: obscureText,
                   contentPadding: EdgeInsets.symmetric(
                     horizontal: 14.h,
                     vertical: 12.h,
                   ),
                   suffix: IconButton(
                     icon: Icon(
-                      _obscureText ? Icons.visibility_off : Icons.visibility,
+                      obscureText ? Icons.visibility_off : Icons.visibility,
                     ),
                     onPressed: () {
                       setState(() {
-                        _obscureText = !_obscureText;
+                        obscureText = !obscureText;
                       });
                     },
                   ),
@@ -250,8 +251,11 @@ class ChangePasswordScreen extends StatelessWidget {
   }
 
   void _onChangePasswordEventSuccess(BuildContext context) {
-    Fluttertoast.showToast(
-      msg: "Change password succeed",
+    showTopSnackBar(
+      Overlay.of(context),
+      const CustomSnackBar.success(
+        message: 'Change password succeed',
+      ),
     );
   }
 }

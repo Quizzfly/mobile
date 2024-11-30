@@ -9,7 +9,7 @@ class PrivacyScreen extends StatelessWidget {
   static Widget builder(BuildContext context) {
     return BlocProvider<PrivacyBloc>(
       create: (context) => PrivacyBloc(PrivacyState(
-        privacyModelObj: PrivacyModel(),
+        privacyModelObj: const PrivacyModel(),
       ))
         ..add(PrivacyInitialEvent()),
       child: const PrivacyScreen(),
@@ -42,7 +42,7 @@ class PrivacyScreen extends StatelessWidget {
                           color: appTheme.gray10001.withOpacity(0.8),
                           spreadRadius: 2.h,
                           blurRadius: 2.h,
-                          offset: Offset(
+                          offset: const Offset(
                             0,
                             4,
                           ),
@@ -239,7 +239,7 @@ class PrivacyScreen extends StatelessWidget {
             color: appTheme.gray10001.withOpacity(0.8),
             spreadRadius: 2.h,
             blurRadius: 2.h,
-            offset: Offset(
+            offset: const Offset(
               0,
               4,
             ),

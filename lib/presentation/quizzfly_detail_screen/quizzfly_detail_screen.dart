@@ -17,7 +17,7 @@ class QuizzflyDetailScreen extends StatelessWidget {
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
     return BlocProvider<QuizzflyDetailBloc>(
       create: (context) => QuizzflyDetailBloc(QuizzflyDetailState(
-        quizzflyDetailModelObj: QuizzflyDetailModel(),
+        quizzflyDetailModelObj: const QuizzflyDetailModel(),
         id: arg[NavigationArgs.id],
       ))
         ..add(QuizzflyDetailInitialEvent()),
@@ -30,7 +30,7 @@ class QuizzflyDetailScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         backgroundColor: appTheme.whiteA700,
-        body: Container(
+        body: SizedBox(
           width: double.maxFinite,
           child: SingleChildScrollView(
             child: Container(
@@ -60,13 +60,24 @@ class QuizzflyDetailScreen extends StatelessWidget {
                         child: Column(
                           children: [
                             // Cover Image
-                            CustomImageView(
-                              imagePath:
-                                  model?.coverImage ?? ImageConstant.imageLogo,
-                              height: 210.h,
-                              width: double.maxFinite,
-                              radius: BorderRadius.circular(15.h),
-                              fit: BoxFit.cover,
+                            Hero(
+                              tag: ModalRoute.of(context)?.settings.arguments
+                                      is Map<String, dynamic>
+                                  ? (ModalRoute.of(context)?.settings.arguments
+                                          as Map<String, dynamic>)[
+                                      NavigationArgs.heroTag]
+                                  : null,
+                              child: Material(
+                                type: MaterialType.transparency,
+                                child: CustomImageView(
+                                  imagePath: model?.coverImage ??
+                                      ImageConstant.imgNotFound,
+                                  height: 210.h,
+                                  width: double.maxFinite,
+                                  radius: BorderRadius.circular(15.h),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
                             ),
                             SizedBox(height: 14.h),
 
@@ -206,7 +217,7 @@ class QuizzflyDetailScreen extends StatelessWidget {
             ),
           ),
           SizedBox(height: 10.h),
-          Container(
+          SizedBox(
             height: 70.h,
             // padding: EdgeInsets.symmetric(horizontal: 10.h),
             child: BlocSelector<QuizzflyDetailBloc, QuizzflyDetailState,
@@ -270,18 +281,6 @@ class QuizzflyDetailScreen extends StatelessWidget {
               navigateToQuizzfflySetting(context);
             },
           ),
-          AppBarLeadingImage(
-            imagePath: ImageConstant.imgHeart,
-            margin: EdgeInsets.only(right: 16.h),
-            onTap: () {
-              // Handle favorite action
-            },
-          ),
-          AppBarLeadingImage(
-            imagePath: ImageConstant.imgMore,
-            margin: EdgeInsets.only(right: 2.h),
-            onTap: () {},
-          ),
         ],
         styleType: Style.bgFillonErrorContainer,
       ),
@@ -335,7 +334,7 @@ class QuizzflyDetailScreen extends StatelessWidget {
         builder: (context, quizzflyDetailModelObj) {
           return ListView.separated(
             padding: EdgeInsets.zero,
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             separatorBuilder: (context, index) {
               return SizedBox(
@@ -346,7 +345,7 @@ class QuizzflyDetailScreen extends StatelessWidget {
             itemBuilder: (context, index) {
               QuizListItemModel model =
                   quizzflyDetailModelObj?.quizListItemList[index] ??
-                      QuizListItemModel();
+                      const QuizListItemModel();
               return QuizListItemWidget(
                 model,
               );

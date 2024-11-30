@@ -381,7 +381,7 @@ class RoomQuizScreen extends StatelessWidget {
       leading: AppBarLeadingImage(
         imagePath: ImageConstant.imgTurnBack,
         color: appTheme.whiteA700,
-        onTap: () => AppRoutes.navigateToLogin(context),
+        onTap: () => AppRoutes.navigateToHomeScreen(context),
       ),
       centerTitle: true,
       title: AppBarTitle(

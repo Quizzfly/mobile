@@ -5,7 +5,7 @@ class EnterPinState extends Equatable {
   final EnterPinTabModel? enterPinTabModelObj;
   final TextEditingController? pinController;
 
-  EnterPinState({
+  const EnterPinState({
     this.enterPinModelObj,
     this.enterPinTabModelObj,
     this.pinController,
