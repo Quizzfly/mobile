@@ -14,7 +14,7 @@ extension CustomRadioButtonStyleHelper on CustomRadioButton {
             color: appTheme.blueGray10002.withOpacity(0.25),
             spreadRadius: 2.h,
             blurRadius: 2.h,
-            offset: Offset(4, 4),
+            offset: const Offset(4, 4),
           ),
         ],
       );
@@ -39,8 +39,8 @@ extension CustomRadioButtonStyleHelper on CustomRadioButton {
 }
 
 class CustomRadioButton extends StatelessWidget {
-  CustomRadioButton({
-    Key? key,
+  const CustomRadioButton({
+    super.key,
     required this.onChange,
     this.decoration,
     this.alignment,
@@ -59,7 +59,7 @@ class CustomRadioButton extends StatelessWidget {
     this.height,
     this.unselectedColor,
     this.isExpandedText = false,
-  }) : super(key: key);
+  });
 
   final BoxDecoration? decoration;
   final Alignment? alignment;
@@ -146,13 +146,13 @@ class CustomRadioButton extends StatelessWidget {
           value: value ?? "",
           groupValue: groupValue,
           activeColor: theme.colorScheme.primary,
-          fillColor: MaterialStateProperty.resolveWith<Color>(
-            (Set<MaterialState> states) {
-              if (states.contains(MaterialState.selected)) {
+          fillColor: WidgetStateProperty.resolveWith<Color>(
+            (Set<WidgetState> states) {
+              if (states.contains(WidgetState.selected)) {
                 return theme.colorScheme.primary;
               }
               return unselectedColor ??
-                  appTheme.blueGray100; // Màu mặc định khi không được chọn
+                  appTheme.blueGray100; 
             },
           ),
           onChanged: (value) {

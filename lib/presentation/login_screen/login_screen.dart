@@ -7,7 +7,6 @@ import '../../domain/googleAuth/google_auth_helper.dart';
 import '../../theme/custom_button_style.dart';
 import '../../widgets/custom_elevated_button.dart';
 import '../../widgets/custom_text_form_field.dart';
-import '../enter_pin_screen/enter_pin_screen.dart';
 import 'bloc/login_bloc.dart';
 import 'models/login_model.dart';
 
@@ -128,7 +127,7 @@ class LoginScreen extends StatelessWidget {
                   text: "msg_welcome_back".tr,
                   style: CustomTextStyles.headlineSmallSFProRoundedGray90003,
                 ),
-                WidgetSpan(
+                const WidgetSpan(
                   child:
                       SizedBox(width: 10), // Add a SizedBox to simulate padding
                 ),
@@ -306,7 +305,7 @@ class LoginScreen extends StatelessWidget {
           InkWell(
             onTap: () {
               // _showEnterPinBottomSheet(context);
-              AppRoutes.navigateToCommunityScreen(context);
+              AppRoutes.navigateToRegisterScreen(context);
             },
             child: RichText(
               text: TextSpan(
@@ -370,7 +369,7 @@ class LoginScreen extends StatelessWidget {
       ),
     );
     NavigatorService.pushNamed(
-      AppRoutes.libraryScreen,
+      AppRoutes.homeScreen,
     );
   }
 
@@ -412,24 +411,4 @@ class LoginScreen extends StatelessWidget {
     });
   }
 
-  void _showEnterPinBottomSheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      backgroundColor: Colors.transparent,
-      builder: (BuildContext context) {
-        return Container(
-          height: MediaQuery.of(context).size.height * 0.9,
-          decoration: BoxDecoration(
-            color: Colors.transparent,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20.h),
-              topRight: Radius.circular(20.h),
-            ),
-          ),
-          child: EnterPinScreen.builder(context),
-        );
-      },
-    );
-  }
 }

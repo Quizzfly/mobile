@@ -10,7 +10,7 @@ class WaitingRoomScreen extends StatefulWidget {
   static Widget builder(BuildContext context) {
     return BlocProvider<WaitingRoomBloc>(
       create: (context) => WaitingRoomBloc(WaitingRoomState(
-        inputNicknameModelObj: WaitingRoomModel(),
+        inputNicknameModelObj: const WaitingRoomModel(),
       ))
         ..add(WaitingRoomInitialEvent()),
       child: const WaitingRoomScreen(),

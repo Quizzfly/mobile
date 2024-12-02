@@ -3,6 +3,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../../core/app_export.dart';
 import '../../theme/custom_button_style.dart';
 import '../../widgets/custom_drop_down.dart';
@@ -174,7 +176,7 @@ class EditProfileScreen extends StatelessWidget {
             color: appTheme.gray10001.withOpacity(0.8),
             spreadRadius: 2.h,
             blurRadius: 2.h,
-            offset: Offset(
+            offset: const Offset(
               0,
               4,
             ),
@@ -262,22 +264,6 @@ class EditProfileScreen extends StatelessWidget {
   }
 
   /// Section Widget
-  Widget _buildOrganizationInput(BuildContext context) {
-    return BlocSelector<EditProfileBloc, EditProfileState,
-        TextEditingController?>(
-      selector: (state) => state.organizationInputController,
-      builder: (context, organizationInputController) {
-        return CustomTextFormField(
-          width: 126.h,
-          controller: organizationInputController,
-          textInputAction: TextInputAction.done,
-          contentPadding: EdgeInsets.all(12.h),
-        );
-      },
-    );
-  }
-
-  /// Section Widget
   Widget _buildAccountDetailsForm(BuildContext context) {
     return Container(
       width: double.maxFinite,
@@ -290,7 +276,7 @@ class EditProfileScreen extends StatelessWidget {
             color: appTheme.gray10001.withOpacity(0.8),
             spreadRadius: 2.h,
             blurRadius: 2.h,
-            offset: Offset(
+            offset: const Offset(
               0,
               4,
             ),
@@ -374,9 +360,9 @@ class EditProfileScreen extends StatelessWidget {
             color: appTheme.black900,
             padding: EdgeInsets.all(0.5.h),
             strokeWidth: 0.5.h,
-            radius: Radius.circular(5),
+            radius: const Radius.circular(5),
             borderType: BorderType.RRect,
-            dashPattern: [1, 1],
+            dashPattern: const [1, 1],
             child: Container(
               padding: EdgeInsets.symmetric(
                 horizontal: 18.h,
@@ -458,8 +444,21 @@ class EditProfileScreen extends StatelessWidget {
             MaterialPageRoute(
                 builder: (context) => ProfileSettingScreen.builder(context)),
           );
+          showTopSnackBar(
+            Overlay.of(context),
+            const CustomSnackBar.success(
+              message: 'Update succeed',
+            ),
+          );
         },
-        onError: (errorMessage) {},
+        onError: (errorMessage) {
+          showTopSnackBar(
+            Overlay.of(context),
+            const CustomSnackBar.error(
+              message: 'Update failed',
+            ),
+          );
+        },
       ),
     );
   }

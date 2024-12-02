@@ -26,8 +26,8 @@ extension TextFormFieldStyleHelper on CustomTextFormField {
 }
 
 class CustomTextFormField extends StatelessWidget {
-  CustomTextFormField({
-    Key? key,
+  const CustomTextFormField({
+    super.key,
     this.alignment,
     this.width,
     this.boxDecoration,
@@ -54,7 +54,7 @@ class CustomTextFormField extends StatelessWidget {
     this.fillcolor,
     this.filled = true,
     this.validator,
-  }) : super(key: key);
+  });
 
   final Alignment? alignment;
   final double? width;

@@ -16,7 +16,7 @@ class LibraryListItemWidget extends StatelessWidget {
   Function(String)? onDelete;
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
+    return InkWell(
       onTap: () {
         callDetail?.call();
       },
@@ -39,12 +39,18 @@ class LibraryListItemWidget extends StatelessWidget {
                 child: Stack(
                   alignment: Alignment.center,
                   children: [
-                    CustomImageView(
-                      imagePath: libraryListItemModelObj.displayImage,
-                      height: 120.h,
-                      width: double.maxFinite,
-                      radius: BorderRadius.circular(5.h),
-                      fit: BoxFit.cover,
+                    Hero(
+                      tag: 'library_cover_image_${libraryListItemModelObj.id}',
+                      child: Material(
+                        type: MaterialType.transparency,
+                        child: CustomImageView(
+                          imagePath: libraryListItemModelObj.displayImage,
+                          height: 120.h,
+                          width: double.maxFinite,
+                          radius: BorderRadius.circular(5.h),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                     ),
                     _buildQuestionsButton(context)
                   ],

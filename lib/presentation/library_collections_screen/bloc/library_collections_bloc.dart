@@ -8,8 +8,7 @@ part 'library_collections_state.dart';
 /// A bloc that manages the state of a LibraryCollections according to the event that is dispatched to it.
 class LibraryCollectionsBloc
     extends Bloc<LibraryCollectionsEvent, LibraryCollectionsState> {
-  LibraryCollectionsBloc(LibraryCollectionsState initialstate)
-      : super(initialstate) {
+  LibraryCollectionsBloc(super.initialState) {
     on<LibraryCollectionsInitialEvent>(_onInitialize);
   }
   _onInitialize(

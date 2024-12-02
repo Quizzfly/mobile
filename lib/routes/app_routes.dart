@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quizzfly_application_flutter/presentation/community_screen/community_screen.dart';
+import 'package:quizzfly_application_flutter/presentation/home_screen/home_initial_page.dart';
+import 'package:quizzfly_application_flutter/presentation/home_screen/home_screen.dart';
 import '../presentation/enter_pin_screen/enter_pin_screen.dart';
 import '../presentation/input_nickname_screen/input_nick_name_screen.dart';
 import '../presentation/quizzfly_setting_screen/quizzfly_setting_screen.dart';
@@ -34,6 +36,10 @@ class AppRoutes {
   static const String inputNickname = "/input_nickname_screen";
   static const String waitingRoom = "/waiting_room_screen";
   static const String leaderBoardScreen = "/leader_board_screen";
+  static const String homeInitialPage = "/home_initial_page";
+  static const String communityScreen = "/community_screen";
+  static const String homeScreen = "/home_screen";
+
   static Map<String, WidgetBuilder> get routes => {
         loginScreen: LoginScreen.builder,
         registerScreen: RegisterScreen.builder,
@@ -49,6 +55,9 @@ class AppRoutes {
         initialRoute: LoginScreen.builder,
         inputNickname: InputNicknameScreen.builder,
         waitingRoom: WaitingRoomScreen.builder,
+        communityScreen: CommunityScreen.builder,
+        homeInitialPage: HomeInitialPage.builder,
+        homeScreen: HomeScreen.builder,
       };
   // static Route<dynamic> generateRoute(RouteSettings settings) {
   //   switch (settings.name) {
@@ -94,7 +103,7 @@ class AppRoutes {
       transitionDuration: duration,
       pageBuilder: (context, animation, secondaryAnimation) => builder(context),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        final end = Offset.zero;
+        const end = Offset.zero;
         final tween =
             Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
         final offsetAnimation = animation.drive(tween);
@@ -217,6 +226,13 @@ class AppRoutes {
     return navigateWithSlide(
       context,
       CommunityScreen.builder, replace: false, // Will replace current screen
+    );
+  }
+
+  static Future<void> navigateToHomeScreen(BuildContext context) {
+    return navigateWithSlide(
+      context,
+      HomeScreen.builder, replace: false, // Will replace current screen
     );
   }
 }

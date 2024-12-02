@@ -3,8 +3,8 @@ import '../core/app_export.dart';
 import '../data/models/selectionPopupModel/selection_popup_model.dart';
 
 class CustomDropDown extends StatelessWidget {
-  CustomDropDown(
-      {Key? key,
+  const CustomDropDown(
+      {super.key,
       this.alignment,
       this.width,
       this.boxDecoration,
@@ -23,10 +23,7 @@ class CustomDropDown extends StatelessWidget {
       this.fillColor,
       this.filled = true,
       this.validator,
-      this.onChanged})
-      : super(
-          key: key,
-        );
+      this.onChanged});
   final Alignment? alignment;
   final double? width;
   final BoxDecoration? boxDecoration;

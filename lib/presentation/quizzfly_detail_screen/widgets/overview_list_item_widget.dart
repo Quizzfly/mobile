@@ -4,10 +4,7 @@ import '../models/overview_quizzfly_item_model.dart';
 
 // ignore: must_be_immutable
 class OverviewListItemWidget extends StatelessWidget {
-  OverviewListItemWidget(this.overviewQuizzflyItemModelObj, {Key? key})
-      : super(
-          key: key,
-        );
+  OverviewListItemWidget(this.overviewQuizzflyItemModelObj, {super.key});
 
   OverviewQuizzflyItemModel overviewQuizzflyItemModelObj;
 

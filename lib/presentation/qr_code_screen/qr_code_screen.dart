@@ -11,7 +11,7 @@ class QrCodeScreen extends StatefulWidget {
   QrCodeScreenState createState() => QrCodeScreenState();
   static Widget builder(BuildContext context) {
     return BlocProvider<QrCodeBloc>(
-      create: (context) => QrCodeBloc(QrCodeState(
+      create: (context) => QrCodeBloc(const QrCodeState(
         qrCodeModelObj: QrCodeModel(),
       ))
         ..add(QrCodeInitialEvent()),
@@ -54,14 +54,12 @@ class QrCodeScreenState extends State<QrCodeScreen>
                   SizedBox(height: 26.h),
                   _buildTabView(context),
                   Expanded(
-                    child: Container(
-                      child: TabBarView(
-                        controller: tabViewController,
-                        children: [
-                          QrCodeTabPage.builder(context),
-                          EnterPinTabPage.builder(context)
-                        ],
-                      ),
+                    child: TabBarView(
+                      controller: tabViewController,
+                      children: [
+                        QrCodeTabPage.builder(context),
+                        EnterPinTabPage.builder(context)
+                      ],
                     ),
                   )
                 ],

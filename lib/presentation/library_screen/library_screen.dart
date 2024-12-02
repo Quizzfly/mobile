@@ -62,7 +62,7 @@ class LibraryScreen extends StatelessWidget {
       builder: (context, libraryModelObj) {
         return ListView.separated(
           padding: EdgeInsets.zero,
-          physics: BouncingScrollPhysics(),
+          physics: const BouncingScrollPhysics(),
           separatorBuilder: (context, index) {
             return SizedBox(
               height: 15.h,
@@ -72,7 +72,7 @@ class LibraryScreen extends StatelessWidget {
           itemBuilder: (context, index) {
             LibraryListItemModel model =
                 libraryModelObj?.libraryListItemList[index] ??
-                    LibraryListItemModel();
+                    const LibraryListItemModel();
             return LibraryListItemWidget(
               model,
               callDetail: () {
@@ -95,6 +95,8 @@ class LibraryScreen extends StatelessWidget {
       arguments: {
         NavigationArgs.id:
             context.read<LibraryBloc>().getLibraryResp.data?[index].id,
+        NavigationArgs.heroTag:
+            'library_cover_image_${context.read<LibraryBloc>().getLibraryResp.data?[index].id}', // Thêm heroTag
       },
     );
 
@@ -102,14 +104,8 @@ class LibraryScreen extends StatelessWidget {
     if (refreshRequired == true) {
       context.read<LibraryBloc>().add(
             CreateGetLibraryEvent(
-              onGetLibrarySuccess: () {
-                // Optional: Show a loading indicator or success message
-                print('Library refreshed successfully');
-              },
-              onGetLibraryError: () {
-                // Optional: Handle refresh error
-                print('Error refreshing library');
-              },
+              onGetLibrarySuccess: () {},
+              onGetLibraryError: () {},
             ),
           );
     }

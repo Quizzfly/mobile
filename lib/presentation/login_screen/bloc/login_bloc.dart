@@ -12,7 +12,7 @@ part 'login_event.dart';
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-  LoginBloc(super.initialstate) {
+  LoginBloc(super.initialState) {
     on<LoginInitialEvent>(_onInitialize);
     on<CreateLoginEvent>(_callLogin);
     on<CreateLoginGoogleEvent>(_callLoginWithGoogle);
@@ -50,7 +50,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       requestData: postLoginReq.toJson(),
     ).then((value) async {
       postLoginResp = value;
-      await _onLoginSuccess(value, emit); // Add await here
+      _onLoginSuccess(value, emit); 
       event.onCreateLoginEventSuccess?.call();
     }).onError((error, stackTrace) {
       _onLoginError();
@@ -70,7 +70,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       requestData: postLoginGoogleReq.toJson(),
     ).then((value) async {
       postLoginResp = value;
-      await _onLoginSuccess(value, emit);
+      _onLoginSuccess(value, emit);
       event.onCreateLoginEventSuccess?.call();
     }).onError((error, stackTrace) {
       _onLoginError();
@@ -97,7 +97,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     FetchMeEvent event,
     Emitter<LoginState> emit,
   ) async {
-    String accessToken = await PrefUtils().getAccessToken();
+    String accessToken = PrefUtils().getAccessToken();
     await _repository.getMyUser(
       headers: {'Authorization': 'Bearer $accessToken'},
     ).then((value) async {

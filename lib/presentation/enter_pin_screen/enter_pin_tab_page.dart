@@ -15,7 +15,7 @@ class EnterPinTabPage extends StatefulWidget {
 
   static Widget builder(BuildContext context) {
     return BlocProvider<EnterPinBloc>(
-      create: (context) => EnterPinBloc(EnterPinState(
+      create: (context) => EnterPinBloc(const EnterPinState(
         enterPinTabModelObj: EnterPinTabModel(),
       ))
         ..add(EnterPinInitialEvent()),
