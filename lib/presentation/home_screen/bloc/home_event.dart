@@ -14,3 +14,18 @@ class HomeInitialEvent extends HomeEvent {
   @override
   List<Object?> get props => [];
 }
+
+class CreateGetRecentActivitiesEvent extends HomeEvent {
+  final Function? onGetRecentActivitiesSuccess;
+  final Function? onGetRecentActivitiesError;
+  final String? id;
+  CreateGetRecentActivitiesEvent({
+    this.onGetRecentActivitiesSuccess,
+    this.onGetRecentActivitiesError,
+    this.id,
+  });
+
+  @override
+  List<Object?> get props =>
+      [onGetRecentActivitiesSuccess, onGetRecentActivitiesError, id];
+}

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:quizzfly_application_flutter/widgets/custom_outlined_button.dart';
 import 'package:responsive_grid_list/responsive_grid_list.dart';
 import '../../core/app_export.dart';
+import '../../routes/navigation_args.dart';
 import '../../theme/custom_button_style.dart';
 import '../../widgets/custom_elevated_button.dart';
 import 'bloc/home_bloc.dart';
@@ -58,21 +58,28 @@ class HomeInitialPageState extends State<HomeInitialPage> {
                         width: 118.h,
                         text: "lbl_join_game".tr,
                         margin: EdgeInsets.only(left: 4.h),
-                        buttonStyle: CustomButtonStyles.fillPrimaryRadius20,
+                        gradientColors: const [
+                          Color(0xFF37d2c0),
+                          Color(0xFF7286ff)
+                        ],
+                        gradientBegin: Alignment.topLeft,
+                        gradientEnd: Alignment.bottomRight,
                         buttonTextStyle:
                             CustomTextStyles.bodyMediumRobotoWhiteA700,
                       ),
                       const SizedBox(
                         width: 10,
                       ),
-                      CustomOutlinedButton(
+                      CustomElevatedButton(
                         width: 118.h,
                         text: "lbl_create_group".tr,
                         margin: EdgeInsets.only(left: 4.h),
                         buttonStyle: CustomButtonStyles.outlineDeepPurple20,
-                        borderColor: appTheme.deppPurplePrimary,
-                        buttonTextStyle:
-                            CustomTextStyles.bodyMediumRobotoPrimary,
+                        buttonTextStyle: CustomTextStyles.bodyMediumBlack900_1,
+                        borderColors: const [
+                          Color(0xFF37D2C0),
+                          Color(0xFF7286FF)
+                        ],
                       ),
                     ]),
                     SizedBox(height: 42.h),
@@ -109,21 +116,23 @@ class HomeInitialPageState extends State<HomeInitialPage> {
             children: [
               Row(
                 children: [
-                  const Text(
+                  Text(
                     'Hello, ',
-                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        fontSize: 23,
+                        fontWeight: FontWeight.bold,
+                        color: appTheme.black900.withOpacity(0.7)),
                   ),
                   Text(
                     PrefUtils().getName(),
-                    style: const TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blue,
-                    ),
+                    style: TextStyle(
+                        fontSize: 23,
+                        fontWeight: FontWeight.bold,
+                        color: appTheme.black900.withOpacity(0.7)),
                   ),
                   const Text(
                     ' 👋',
-                    style: TextStyle(fontSize: 18),
+                    style: TextStyle(fontSize: 23),
                   ),
                 ],
               ),
@@ -132,7 +141,15 @@ class HomeInitialPageState extends State<HomeInitialPage> {
               ),
               Text(
                 'How are you today?',
-                style: TextStyle(fontSize: 14, color: Colors.grey[700]),
+                style: TextStyle(
+                    fontSize: 16,
+                    foreground: Paint()
+                      ..shader = const LinearGradient(
+                        colors: [Color(0xFF37d2c0), Color(0xFF7286ff)],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ).createShader(
+                          const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0))),
               ),
             ],
           ),
@@ -252,14 +269,36 @@ class HomeInitialPageState extends State<HomeInitialPage> {
                 RecentActivitiesGridItemModel model =
                     homeInitialModelObj?.recentActivitiesGridItemList[index] ??
                         RecentActivitiesGridItemModel();
-                return RecentActivitiesGridItemWidget(
-                  model,
-                );
+                return RecentActivitiesGridItemWidget(model, callDetail: () {
+                  callDetail(context, index);
+                });
               },
             ),
           );
         },
       ),
     );
+  }
+
+  callDetail(BuildContext context, int index) async {
+    final refreshRequired = await NavigatorService.pushNamed(
+      AppRoutes.quizzflyDetailScreen,
+      arguments: {
+        NavigationArgs.id:
+            context.read<HomeBloc>().getRecentActivitiesResp.data?[index].id,
+        NavigationArgs.heroTag:
+            'library_cover_image_${context.read<HomeBloc>().getRecentActivitiesResp.data?[index].id}',
+      },
+    );
+
+    // If returned value is true, refresh the library data
+    if (refreshRequired == true) {
+      context.read<HomeBloc>().add(
+            CreateGetRecentActivitiesEvent(
+              onGetRecentActivitiesError: () {},
+              onGetRecentActivitiesSuccess: () {},
+            ),
+          );
+    }
   }
 }

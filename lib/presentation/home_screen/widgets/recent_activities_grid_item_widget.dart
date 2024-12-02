@@ -5,8 +5,10 @@ import '../models/recent_activities_grid_item_model.dart';
 // ignore_for_file: must_be_immutable
 class RecentActivitiesGridItemWidget extends StatelessWidget {
   RecentActivitiesGridItemWidget(this.recentActivitiesGridItemModelObj,
-      {super.key});
+      {this.callDetail, super.key});
   RecentActivitiesGridItemModel recentActivitiesGridItemModelObj;
+  VoidCallback? callDetail;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -28,6 +30,7 @@ class RecentActivitiesGridItemWidget extends StatelessWidget {
             radius: BorderRadius.vertical(
               top: Radius.circular(10.h),
             ),
+            fit: BoxFit.cover,
           ),
           SizedBox(height: 8.h),
           Align(
@@ -36,7 +39,9 @@ class RecentActivitiesGridItemWidget extends StatelessWidget {
               padding: EdgeInsets.only(left: 6.h),
               child: Text(
                 recentActivitiesGridItemModelObj.title!,
-                style: CustomTextStyles.bodyMediumBlack900_1,
+                style: CustomTextStyles.bodyMediumBlack900_1.copyWith(
+                  fontWeight : FontWeight.w600
+                ),
               ),
             ),
           ),
@@ -52,20 +57,44 @@ class RecentActivitiesGridItemWidget extends StatelessWidget {
                   style: CustomTextStyles.bodySmallGray90001,
                 ),
                 const Spacer(),
-                Icon(
-                  Icons.visibility,
-                  color: appTheme.blueGray300,
+                Hero(
+                  tag:
+                      'library_cover_image_${recentActivitiesGridItemModelObj.id}',
+                  child: Material(
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(20.h),
+                      onTap: () {
+                        callDetail?.call();
+                      },
+                      highlightColor: appTheme.deppPurplePrimary,
+                      splashColor: appTheme.deppPurplePrimary,
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 8.h, vertical: 4.h),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20.h),
+                        ),
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.edit,
+                              color: appTheme.blueGray300,
+                              size: 15.h,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(left: 2.h),
+                              child: Text(
+                                'Edit',
+                                style: CustomTextStyles.bodySmallGray90001,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    left: 2.h,
-                    right: 8.h,
-                  ),
-                  child: Text(
-                    'View',
-                    style: CustomTextStyles.bodySmallGray90001,
-                  ),
-                )
               ],
             ),
           ),
