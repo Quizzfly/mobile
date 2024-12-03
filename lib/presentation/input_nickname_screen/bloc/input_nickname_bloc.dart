@@ -9,7 +9,7 @@ part 'input_nickname_state.dart';
 class InputNicknameBloc extends Bloc<InputNicknameEvent, InputNicknameState> {
   final SocketService _socketService = SocketService();
 
-  InputNicknameBloc(InputNicknameState initialState) : super(initialState) {
+  InputNicknameBloc(super.initialState) {
     on<InputNicknameInitialEvent>(_onInitialize);
     on<JoinRoomEvent>(_onJoinRoom);
     on<SocketErrorEvent>(_onSocketError);
@@ -33,8 +33,7 @@ class InputNicknameBloc extends Bloc<InputNicknameEvent, InputNicknameState> {
     Emitter<InputNicknameState> emit,
   ) async {
     emit(state.copyWith(
-      connectionStatus: ConnectionStatus.connecting,
-    ));
+        connectionStatus: ConnectionStatus.connecting, error: null));
     PrefUtils().setRoomPin(state.roomPin ?? '');
 
     _socketService.socket.emit('joinRoom', {

@@ -10,17 +10,14 @@ import 'models/input_nickname_model.dart';
 
 // ignore_for_file: must_be_immutable
 class InputNicknameScreen extends StatelessWidget {
-  InputNicknameScreen({Key? key})
-      : super(
-          key: key,
-        );
+  InputNicknameScreen({super.key});
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   static Widget builder(BuildContext context) {
     var arg =
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
     return BlocProvider<InputNicknameBloc>(
       create: (context) => InputNicknameBloc(InputNicknameState(
-        inputNicknameModelObj: InputNicknameModel(),
+        inputNicknameModelObj: const InputNicknameModel(),
         roomPin: arg[NavigationArgs.roomPin],
       ))
         ..add(InputNicknameInitialEvent()),
@@ -92,7 +89,7 @@ class InputNicknameScreen extends StatelessWidget {
           backgroundColor: isError ? appTheme.red900 : Colors.green,
           duration: Duration(seconds: isError ? 3 : 2),
           behavior: SnackBarBehavior.floating,
-          margin: EdgeInsets.all(16),
+          margin: const EdgeInsets.all(16),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
           ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../../core/app_export.dart';
 import '../../routes/navigation_args.dart';
 import '../../theme/custom_button_style.dart';
@@ -21,7 +22,7 @@ class QuizzflySettingScreen extends StatelessWidget {
         ModalRoute.of(context)?.settings.arguments as Map<String, dynamic>;
     return BlocProvider<QuizzflySettingBloc>(
       create: (context) => QuizzflySettingBloc(QuizzflySettingState(
-        quizzflySettingModelObj: QuizzflySettingModel(),
+        quizzflySettingModelObj: const QuizzflySettingModel(),
         id: arg[NavigationArgs.id],
         isPublic: arg[NavigationArgs.isPublic],
         title: arg[NavigationArgs.title],
@@ -79,6 +80,7 @@ class QuizzflySettingScreen extends StatelessWidget {
         AppBarLeadingImage(
           imagePath: ImageConstant.imgClose,
           height: 22.h,
+          containerPadding: EdgeInsets.only(right: 20.h),
           margin: EdgeInsets.only(right: 21.h),
           onTap: () => Navigator.pop(context, true),
         ),
@@ -115,29 +117,81 @@ class QuizzflySettingScreen extends StatelessWidget {
   }
 
   Widget _buildImageWidget(dynamic coverImage) {
-    if (coverImage is File) {
-      return ClipRRect(
-        borderRadius: BorderRadius.circular(20.h),
-        child: Image.file(
-          coverImage,
-          height: 200.h,
-          width: double.maxFinite,
-          fit: BoxFit.cover,
-        ),
-      );
-    } else if (coverImage is String) {
-      return ClipRRect(
-        borderRadius: BorderRadius.circular(20.h),
-        child: Image.network(
-          coverImage,
-          height: 200.h,
-          width: double.maxFinite,
-          fit: BoxFit.cover,
-        ),
-      );
-    } else {
+    try {
+      if (coverImage is File) {
+        return ClipRRect(
+          borderRadius: BorderRadius.circular(20.h),
+          child: Image.file(
+            coverImage,
+            height: 200.h,
+            width: double.maxFinite,
+            fit: BoxFit.cover,
+            errorBuilder: (context, error, stackTrace) {
+              return CustomImageView(
+                imagePath: ImageConstant.imgNotFound,
+                height: 250.h,
+                width: double.maxFinite,
+                radius: BorderRadius.circular(20.h),
+              );
+            },
+          ),
+        );
+      } else if (coverImage is String) {
+        // Check if it's a local asset
+        if (coverImage.startsWith('assets/') ||
+            coverImage.startsWith('images/')) {
+          return ClipRRect(
+            borderRadius: BorderRadius.circular(20.h),
+            child: Image.asset(
+              coverImage,
+              height: 200.h,
+              width: double.maxFinite,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) {
+                return CustomImageView(
+                  imagePath: ImageConstant.imgNotFound,
+                  height: 250.h,
+                  width: double.maxFinite,
+                  radius: BorderRadius.circular(20.h),
+                );
+              },
+            ),
+          );
+        }
+        // Check if it's a network image
+        else if (coverImage.startsWith('http://') ||
+            coverImage.startsWith('https://')) {
+          return ClipRRect(
+            borderRadius: BorderRadius.circular(20.h),
+            child: Image.network(
+              coverImage,
+              height: 200.h,
+              width: double.maxFinite,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) {
+                return CustomImageView(
+                  imagePath: ImageConstant.imgNotFound,
+                  height: 250.h,
+                  width: double.maxFinite,
+                  radius: BorderRadius.circular(20.h),
+                );
+              },
+            ),
+          );
+        }
+      }
+
+      // Default to not found image if no conditions are met
       return CustomImageView(
-        imagePath: ImageConstant.imageBackToSchool,
+        imagePath: ImageConstant.imgNotFound,
+        height: 250.h,
+        width: double.maxFinite,
+        radius: BorderRadius.circular(20.h),
+      );
+    } catch (e) {
+      // Fallback error handling
+      return CustomImageView(
+        imagePath: ImageConstant.imgNotFound,
         height: 250.h,
         width: double.maxFinite,
         radius: BorderRadius.circular(20.h),
@@ -290,8 +344,11 @@ class QuizzflySettingScreen extends StatelessWidget {
 
   /// Displays a toast message using the Fluttertoast library.
   void _onUpdateQuizzflySettingsEventSuccess(BuildContext context) {
-    Fluttertoast.showToast(
-      msg: "Succeed",
+    showTopSnackBar(
+      Overlay.of(context),
+      const CustomSnackBar.success(
+        message: 'Update succeed',
+      ),
     );
   }
 }

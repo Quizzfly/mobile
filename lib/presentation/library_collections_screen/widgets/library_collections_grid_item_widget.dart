@@ -5,14 +5,11 @@ import '../../library_collections_screen/models/library_collections_grid_item_mo
 // ignore_for_file: must_be_immutable
 class LibraryCollectionsGridItemWidget extends StatelessWidget {
   LibraryCollectionsGridItemWidget(this.libraryCollectionsGridItemModelObj,
-      {Key? key})
-      : super(
-          key: key,
-        );
+      {super.key});
   LibraryCollectionsGridItemModel libraryCollectionsGridItemModelObj;
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 106.h,
       child: Stack(
         alignment: Alignment.center,

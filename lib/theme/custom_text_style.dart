@@ -20,12 +20,6 @@ extension on TextStyle {
     );
   }
 
-  TextStyle get plusJakartaSans {
-    return copyWith(
-      fontFamily: 'Plus Jakarta Sans',
-    );
-  }
-
   TextStyle get sFProDisplay {
     return copyWith(
       fontFamily: 'SF Pro Display',

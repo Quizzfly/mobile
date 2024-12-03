@@ -13,7 +13,7 @@ class QrCodeTabPage extends StatefulWidget {
 
   static Widget builder(BuildContext context) {
     return BlocProvider<QrCodeBloc>(
-      create: (context) => QrCodeBloc(QrCodeState(
+      create: (context) => QrCodeBloc(const QrCodeState(
         qrCodeTabModelObj: QrCodeTabModel(),
       ))
         ..add(QrCodeInitialEvent()),

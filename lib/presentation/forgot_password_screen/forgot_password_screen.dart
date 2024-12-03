@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../../core/app_export.dart';
 import '../../core/utils/validation_functions.dart';
 import '../../theme/custom_button_style.dart';
@@ -11,14 +12,11 @@ import 'models/forgot_password_model.dart';
 class ForgotPasswordScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
 
-  ForgotPasswordScreen({Key? key})
-      : super(
-          key: key,
-        );
+  ForgotPasswordScreen({super.key});
   static Widget builder(BuildContext context) {
     return BlocProvider<ForgotPasswordBloc>(
       create: (context) => ForgotPasswordBloc(ForgotPasswordState(
-        forgotPasswordModelObj: ForgotPasswordModel(),
+        forgotPasswordModelObj: const ForgotPasswordModel(),
       ))
         ..add(ForgotPasswordInitialEvent()),
       child: ForgotPasswordScreen(),
@@ -94,7 +92,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                   text: "title_forgot_password".tr,
                   style: CustomTextStyles.headlineSmallSFProRoundedGray90003,
                 ),
-                WidgetSpan(
+                const WidgetSpan(
                   child:
                       SizedBox(width: 10), // Add a SizedBox to simulate padding
                 ),
@@ -124,11 +122,11 @@ class ForgotPasswordScreen extends StatelessWidget {
 
   /// Section Widget
   Widget _buildEmailInputSection(BuildContext context) {
-    final _formKey = GlobalKey<FormState>();
+    final formKey = GlobalKey<FormState>();
     return SizedBox(
         width: double.maxFinite,
         child: Form(
-          key: _formKey,
+          key: formKey,
           autovalidateMode: AutovalidateMode.onUserInteraction,
           child: Column(
             children: [
@@ -196,8 +194,11 @@ class ForgotPasswordScreen extends StatelessWidget {
 
   /// Displays a toast message using the Fluttertoast library.
   void onPostForgotPasswordEventError(BuildContext context) {
-    Fluttertoast.showToast(
-      msg: "Email does not exist",
+    showTopSnackBar(
+      Overlay.of(context),
+      const CustomSnackBar.error(
+        message: 'Email does not exist',
+      ),
     );
   }
 }

@@ -44,9 +44,7 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
     Emitter<EditProfileState> emit,
   ) async {
     try {
-      add(CreateLGetUserEvent(onCreateLoginEventSuccess: () {
-        print('User data fetched successfully');
-      }));
+      add(CreateLGetUserEvent(onCreateLoginEventSuccess: () {}));
       // Update state with the fetched data
       emit(state.copyWith(
         usernameInputController: TextEditingController(),
@@ -57,9 +55,8 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
           editProfileModelObj: state.editProfileModelObj?.copyWith(
         dropdownItemList: fillDropdownItemList(),
       )));
-    } catch (e) {
-      print('Error initializing profile data: $e');
-    }
+      // ignore: empty_catches
+    } catch (e) {}
   }
 
   _onTextFieldChanged(
@@ -78,7 +75,7 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
     CreateLGetUserEvent event,
     Emitter<EditProfileState> emit,
   ) async {
-    String accessToken = await PrefUtils().getAccessToken();
+    String accessToken = PrefUtils().getAccessToken();
     // Retrieve access token from SharedPreferences
     await _repository.getMyUser(
       headers: {'Authorization': 'Bearer $accessToken'},
@@ -122,7 +119,7 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
     UpdateProfileEvent event,
     Emitter<EditProfileState> emit,
   ) async {
-    String accessToken = await PrefUtils().getAccessToken();
+    String accessToken = PrefUtils().getAccessToken();
     String? avatarUrl;
 
     if (state.imageFile != null && state.imageFile is File) {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import '../../core/app_export.dart';
 
 class AppBarTitle extends StatelessWidget {
-  AppBarTitle({
+  const AppBarTitle({
     super.key,
     required this.text,
     this.onTap,

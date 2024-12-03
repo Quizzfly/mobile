@@ -22,7 +22,7 @@ class LibraryListItemModel extends Equatable {
   final String? publicIcon; // Icon for public/private status
   final String? publicText; // Text for public/private status
 
-  LibraryListItemModel({
+  const LibraryListItemModel({
     this.id,
     this.title,
     this.coverImage,
@@ -89,8 +89,7 @@ class LibraryListItemModel extends Equatable {
       userId: json['user_id'] as String?,
       username: json['username'] as String?,
       avatar: json['avatar'] as String?,
-      // UI-specific fields
-      displayImage: json['cover_image'] ?? ImageConstant.imageLogo,
+      displayImage: json['cover_image'] ?? ImageConstant.imgNotFound,
       displayTitle: json['title'] ?? "Untitled",
       displayDate: formattedDate,
       publicIcon:

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quizzfly_application_flutter/core/app_export.dart';
 
 extension IconButtonStyleHelper on CustomIconButton {
-  static BoxDecoration get none => BoxDecoration();
+  static BoxDecoration get none => const BoxDecoration();
   static BoxDecoration get fillTeal => BoxDecoration(
         color: appTheme.tea150,
         borderRadius: BorderRadius.circular(28.h),
@@ -10,18 +10,15 @@ extension IconButtonStyleHelper on CustomIconButton {
 }
 
 class CustomIconButton extends StatelessWidget {
-  CustomIconButton(
-      {Key? key,
+  const CustomIconButton(
+      {super.key,
       this.alignment,
       this.height,
       this.width,
       this.decoration,
       this.padding,
       this.onTap,
-      this.child})
-      : super(
-          key: key,
-        );
+      this.child});
   final Alignment? alignment;
   final double? height;
   final double? width;
@@ -41,7 +38,7 @@ class CustomIconButton extends StatelessWidget {
         height: height ?? 0,
         width: width ?? 0,
         child: DecoratedBox(
-          decoration: decoration ?? BoxDecoration(),
+          decoration: decoration ?? const BoxDecoration(),
           child: IconButton(
             padding: padding ?? EdgeInsets.zero,
             onPressed: onTap,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../../core/app_export.dart';
 import '../../theme/custom_button_style.dart';
 import '../../widgets/custom_elevated_button.dart';
@@ -12,7 +13,7 @@ class DeleteAccountScreen extends StatelessWidget {
   static Widget builder(BuildContext context) {
     return BlocProvider<DeleteAccountBloc>(
       create: (context) => DeleteAccountBloc(DeleteAccountState(
-        deleteAccountModelObj: DeleteAccountModel(),
+        deleteAccountModelObj: const DeleteAccountModel(),
       ))
         ..add(DeleteAccountInitialEvent()),
       child: const DeleteAccountScreen(),
@@ -56,7 +57,7 @@ class DeleteAccountScreen extends StatelessWidget {
                           color: appTheme.gray10001,
                           spreadRadius: 2.h,
                           blurRadius: 2.h,
-                          offset: Offset(
+                          offset: const Offset(
                             0,
                             4,
                           ),
@@ -278,8 +279,11 @@ class DeleteAccountScreen extends StatelessWidget {
 
   /// Displays a toast message using the Fluttertoast library.
   void _onRequestDeleteUserEventSuccess(BuildContext context) {
-    Fluttertoast.showToast(
-      msg: "Code will expire in 5 minutes",
+    showTopSnackBar(
+      Overlay.of(context),
+      const CustomSnackBar.info(
+        message: 'Code will expire in 5 minutes',
+      ),
     );
   }
 

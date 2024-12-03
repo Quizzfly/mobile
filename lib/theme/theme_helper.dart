@@ -201,7 +201,7 @@ class LightCodeColors {
 // Gray
   Color get gray100 => const Color(0XFFFCF2F2);
   Color get gray10001 => const Color(0XFFF2F6FA);
-  Color get gray10002 => const Color(0XFD4D3D7);
+  Color get gray10002 => const Color(0XFFD4D3D7);
   Color get gray200 => const Color(0XFFECEBE7);
   Color get gray300 => const Color(0XFFE6E6E6);
   Color get gray30001 => const Color(0XFFE1E1E2);
@@ -229,7 +229,7 @@ class LightCodeColors {
 //Pink
   Color get pink100 => const Color(0XFFFFC2CC);
   Color get pink10001 => const Color(0XFFFFB2BF);
-  Color get pink10002 => const Color(0XFFFFCCC);
+  Color get pink10002 => const Color(0XFFFFCCCC);
   Color get pink300 => const Color(0XFFFF6B84);
   Color get pink900 => const Color(0XFF660011);
   Color get pinkA100 => const Color(0XFFFF8FA2);

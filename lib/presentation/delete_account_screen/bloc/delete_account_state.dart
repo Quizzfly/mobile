@@ -11,7 +11,7 @@ class DeleteAccountState extends Equatable {
   List<Object?> get props => [codeInputFieldController, deleteAccountModelObj];
   DeleteAccountState copyWith({
     TextEditingController? codeInputFieldController,
-    DeleteAccountModel? deleteAccountModelobj,
+    DeleteAccountModel? deleteAccountModelObj,
   }) {
     return DeleteAccountState(
       codeInputFieldController:

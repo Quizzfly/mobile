@@ -11,7 +11,7 @@ class EnterPinScreen extends StatefulWidget {
   EnterPinScreenState createState() => EnterPinScreenState();
   static Widget builder(BuildContext context) {
     return BlocProvider<EnterPinBloc>(
-      create: (context) => EnterPinBloc(EnterPinState(
+      create: (context) => EnterPinBloc(const EnterPinState(
         enterPinModelObj: EnterPinModel(),
       ))
         ..add(EnterPinInitialEvent()),

@@ -4,7 +4,7 @@ import '../../../widgets/custom_text_form_field.dart';
 import '../models/community_list_item_model.dart';
 
 class CommunityListItemWidget extends StatelessWidget {
-  CommunityListItemWidget(this.communityListItemModelObj, {super.key});
+  const CommunityListItemWidget(this.communityListItemModelObj, {super.key});
   final CommunityListItemModel communityListItemModelObj;
 
   @override
