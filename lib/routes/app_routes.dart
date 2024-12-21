@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:quizzfly_application_flutter/presentation/community_screen/community_screen.dart';
-import 'package:quizzfly_application_flutter/presentation/home_screen/home_initial_page.dart';
-import 'package:quizzfly_application_flutter/presentation/home_screen/home_screen.dart';
-import 'package:quizzfly_application_flutter/presentation/my_group_screen/my_group_screen.dart';
-import '../presentation/enter_pin_screen/enter_pin_screen.dart';
-import '../presentation/input_nickname_screen/input_nick_name_screen.dart';
-import '../presentation/quizzfly_setting_screen/quizzfly_setting_screen.dart';
-import '../presentation/room_quiz_screen/room_quiz_screen.dart';
-import '../presentation/waiting_room_screen/waiting_room_screen.dart';
-import '../presentation/delete_account_screen/delete_account_screen.dart';
-import '../presentation/edit_profile_screen/edit_profile_screen.dart';
-import '../presentation/quizzfly_detail_screen/quizzfly_detail_screen.dart';
-import '../presentation/library_screen/library_screen.dart';
-import '../presentation/reset_password_screen/reset_password_screen.dart';
-import '../presentation/change_password_screen/change_password_screen.dart';
-import '../presentation/profile_setting_screen/profile_setting_screen.dart';
-import '../presentation/forgot_password_screen/forgot_password_screen.dart';
-import '../presentation/login_screen/login_screen.dart';
-import '../presentation/register_screen/register_screen.dart';
+import 'package:quizzfly_application_flutter/presentation/group/detail_post_screen.dart/detail_post_screen.dart';
+import '../presentation/authentication/delete_account_screen/delete_account_screen.dart';
+import '../presentation/authentication/login_screen/login_screen.dart';
+import '../presentation/authentication/register_screen/register_screen.dart';
+import '../presentation/group/community_screen/community_screen.dart';
+import '../presentation/group/my_group_screen/my_group_screen.dart';
+import '../presentation/personalization/home_screen/home_initial_page.dart';
+import '../presentation/personalization/home_screen/home_screen.dart';
+import '../presentation/personalization/profile_setting_screen/profile_setting_screen.dart';
+import '../presentation/play_game/enter_pin_screen/enter_pin_screen.dart';
+import '../presentation/play_game/input_nickname_screen/input_nick_name_screen.dart';
+import '../presentation/personalization/quizzfly_setting_screen/quizzfly_setting_screen.dart';
+import '../presentation/play_game/room_quiz_screen/room_quiz_screen.dart';
+import '../presentation/play_game/waiting_room_screen/waiting_room_screen.dart';
+import '../presentation/personalization/edit_profile_screen/edit_profile_screen.dart';
+import '../presentation/personalization/quizzfly_detail_screen/quizzfly_detail_screen.dart';
+import '../presentation/personalization/library_screen/library_screen.dart';
+import '../presentation/authentication/reset_password_screen/reset_password_screen.dart';
+import '../presentation/authentication/change_password_screen/change_password_screen.dart';
+import '../presentation/authentication/forgot_password_screen/forgot_password_screen.dart';
 
 class AppRoutes {
   static const String loginScreen = '/login_screen';
@@ -41,6 +42,7 @@ class AppRoutes {
   static const String communityScreen = "/community_screen";
   static const String homeScreen = "/home_screen";
   static const String myGroupScreen = "/my_group_screen";
+  static const String detailPostScreen = "/detail_post_screen";
 
   static Map<String, WidgetBuilder> get routes => {
         loginScreen: LoginScreen.builder,
@@ -60,7 +62,8 @@ class AppRoutes {
         communityScreen: CommunityScreen.builder,
         homeInitialPage: HomeInitialPage.builder,
         homeScreen: HomeScreen.builder,
-        myGroupScreen: MyGroupScreen.builder
+        myGroupScreen: MyGroupScreen.builder,
+        detailPostScreen: DetailPostScreen.builder
       };
   // static Route<dynamic> generateRoute(RouteSettings settings) {
   //   switch (settings.name) {

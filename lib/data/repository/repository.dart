@@ -1,4 +1,8 @@
 import 'dart:io';
+import 'package:quizzfly_application_flutter/data/models/detail_post/get_detail_post_resp.dart';
+import 'package:quizzfly_application_flutter/data/models/list_comment/get_list_comment_resp.dart';
+import 'package:quizzfly_application_flutter/data/models/list_post/get_list_post_group_resp.dart';
+
 import '../../data/models/my_group/get_my_group_resp.dart';
 import '../../data/models/change_password/post_change_password_resp.dart';
 import '../../data/models/detail_quizzfly/get_detail_quizzfly_resp.dart';
@@ -207,5 +211,24 @@ class Repository {
   Future<bool> deleteMyGroup(
       {Map<String, String> headers = const {}, String? id}) async {
     return await _apiClient.deleteMyGroup(headers: headers, id: id);
+  }
+
+  Future<GetListPostGroupResp> getListPostGroup(
+      {Map<String, String> headers = const {}, String? id}) async {
+    return await _apiClient.getListPostGroup(headers: headers, id: id);
+  }
+
+  Future<GetDetailPostResp> getDetailPost(
+      {Map<String, String> headers = const {},
+      String? groupId,
+      String? postId}) async {
+    return await _apiClient.getDetailPost(
+        headers: headers, groupId: groupId, postId: postId);
+  }
+
+  Future<GetListCommentResp> getListCommentPost(
+      {Map<String, String> headers = const {}, String? postId}) async {
+    return await _apiClient.getListCommentPost(
+        headers: headers, postId: postId);
   }
 }

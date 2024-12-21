@@ -129,4 +129,16 @@ class PrefUtils {
       return '';
     }
   }
+
+  Future<void> setParticipantId(String value) {
+    return _sharedPreferences!.setString('participantId', value);
+  }
+
+  String getParticipantId() {
+    try {
+      return _sharedPreferences!.getString('participantId') ?? '';
+    } catch (e) {
+      return '';
+    }
+  }
 }

@@ -56,7 +56,7 @@ final Map<String, String> enUs = {
   "msg_you_have_played": "You have played a total 24 quizzes this month!",
   "msg_you_have_played2": "You have played a total",
   "lbl_enter": "Enter",
-
+  "msg_write_your_comment": "Write your comment",
 // Leaderboard Screen
   "lbl_06d_23h 00m": "06d 23h 00m",
   "lbl_1_053_qp": "1,053 QP",
