@@ -31,3 +31,21 @@ class CreateGetCommunityPostsEvent extends CommunityEvent {
   List<Object?> get props =>
       [groupId, onGetCommunityPostsSuccess, onGetCommunityPostsError];
 }
+
+class ReactPostEvent extends CommunityEvent {
+  ReactPostEvent({
+    required this.postId,
+    required this.postIndex,
+    this.onReactPostSuccess,
+    this.onReactPostError,
+  });
+
+  final String postId;
+  final int postIndex;
+  final Function? onReactPostSuccess;
+  final Function? onReactPostError;
+
+  @override
+  List<Object?> get props =>
+      [postId, postIndex, onReactPostSuccess, onReactPostError];
+}

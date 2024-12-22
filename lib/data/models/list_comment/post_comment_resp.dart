@@ -1,22 +1,18 @@
-// get_list_comment_resp.dart
+// post_comment_resp.dart
 
-class GetListCommentResp {
+class PostCommentResp {
   String? status;
-  List<CommentData>? data;
+  CommentData? data;
 
-  GetListCommentResp({
+  PostCommentResp({
     this.status,
     this.data,
   });
 
-  GetListCommentResp.fromJson(Map<String, dynamic> json) {
+  PostCommentResp.fromJson(Map<String, dynamic> json) {
     status = json['status'];
     if (json['data'] != null) {
-      data = <CommentData>[];
-      // Fix: Explicitly cast the list to List<dynamic> before mapping
-      (json['data'] as List<dynamic>).forEach((v) {
-        data!.add(CommentData.fromJson(v as Map<String, dynamic>));
-      });
+      data = CommentData.fromJson(json['data'] as Map<String, dynamic>);
     }
   }
 
@@ -26,7 +22,7 @@ class GetListCommentResp {
       data['status'] = status;
     }
     if (this.data != null) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
+      data['data'] = this.data!.toJson();
     }
     return data;
   }
@@ -36,26 +32,30 @@ class CommentData {
   String? id;
   String? createdAt;
   String? updatedAt;
+  String? deletedAt;
   String? content;
   List<FileData>? files;
   MemberData? member;
   int? countReplies;
   String? parentCommentId;
 
-  CommentData(
-      {this.id,
-      this.createdAt,
-      this.updatedAt,
-      this.content,
-      this.files,
-      this.member,
-      this.countReplies,
-      this.parentCommentId});
+  CommentData({
+    this.id,
+    this.createdAt,
+    this.updatedAt,
+    this.deletedAt,
+    this.content,
+    this.files,
+    this.member,
+    this.countReplies,
+    this.parentCommentId,
+  });
 
   CommentData.fromJson(Map<String, dynamic> json) {
     id = json['id']?.toString();
     createdAt = json['created_at']?.toString();
     updatedAt = json['updated_at']?.toString();
+    deletedAt = json['deleted_at']?.toString();
     content = json['content']?.toString();
 
     if (json['files'] != null) {
@@ -77,6 +77,7 @@ class CommentData {
     if (id != null) data['id'] = id;
     if (createdAt != null) data['created_at'] = createdAt;
     if (updatedAt != null) data['updated_at'] = updatedAt;
+    if (deletedAt != null) data['deleted_at'] = deletedAt;
     if (content != null) data['content'] = content;
     if (files != null) {
       data['files'] = files!.map((v) => v.toJson()).toList();

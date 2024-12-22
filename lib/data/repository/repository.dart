@@ -12,6 +12,8 @@ import '../apiClient/api_client.dart';
 import '../models/create_group/post_create_group_resp.dart';
 import '../models/delete_user/post_request_delete_user_req.dart';
 import '../models/library_quizzfly/get_library_quizzfly_resp.dart';
+import '../models/list_comment/post_comment_resp.dart';
+import '../models/list_comment/post_react_post_resp.dart';
 import '../models/login/post_login_resp.dart';
 import '../models/my_user/get_my_user_resp.dart';
 import '../models/register/post_register_resp.dart';
@@ -230,5 +232,18 @@ class Repository {
       {Map<String, String> headers = const {}, String? postId}) async {
     return await _apiClient.getListCommentPost(
         headers: headers, postId: postId);
+  }
+
+  Future<PostCommentResp> postComment(
+      {Map<String, String> headers = const {},
+      Map requestData = const {},
+      String? postId}) async {
+    return await _apiClient.postComment(
+        headers: headers, requestData: requestData, postId: postId);
+  }
+
+  Future<PostReactPostResp> reactPost(
+      {Map<String, String> headers = const {}, String? postId}) async {
+    return await _apiClient.reactPost(headers: headers, postId: postId);
   }
 }

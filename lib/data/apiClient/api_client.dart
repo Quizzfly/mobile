@@ -4,12 +4,14 @@ import 'package:quizzfly_application_flutter/data/models/create_group/post_creat
 import 'package:quizzfly_application_flutter/data/models/detail_post/get_detail_post_resp.dart';
 import 'package:quizzfly_application_flutter/data/models/detail_quizzfly/get_detail_quizzfly_resp.dart';
 import 'package:quizzfly_application_flutter/data/models/list_comment/get_list_comment_resp.dart';
+import 'package:quizzfly_application_flutter/data/models/list_comment/post_comment_resp.dart';
 import 'package:quizzfly_application_flutter/data/models/list_post/get_list_post_group_resp.dart';
 import 'package:quizzfly_application_flutter/data/models/list_question/get_list_question_resp.dart';
 import '../../core/app_export.dart';
 import '../models/change_password/post_change_password_resp.dart';
 import '../models/delete_user/post_request_delete_user_req.dart';
 import '../models/library_quizzfly/get_library_quizzfly_resp.dart';
+import '../models/list_comment/post_react_post_resp.dart';
 import '../models/login/post_login_resp.dart';
 import '../models/my_group/get_my_group_resp.dart';
 import '../models/register/post_register_resp.dart';
@@ -619,8 +621,11 @@ class ApiClient {
       rethrow;
     }
   }
+
   Future<GetDetailPostResp> getDetailPost(
-      {Map<String, String> headers = const {}, String? groupId,String? postId}) async {
+      {Map<String, String> headers = const {},
+      String? groupId,
+      String? postId}) async {
     ProgressDialogUtils.showProgressDialog();
     try {
       await isNetworkConnected();
@@ -645,6 +650,7 @@ class ApiClient {
       rethrow;
     }
   }
+
   Future<GetListCommentResp> getListCommentPost(
       {Map<String, String> headers = const {}, String? postId}) async {
     ProgressDialogUtils.showProgressDialog();
@@ -660,6 +666,63 @@ class ApiClient {
       } else {
         throw response.data != null
             ? GetListCommentResp.fromJson(response.data)
+            : 'Something Went Wrong!';
+      }
+    } catch (error, stackTrace) {
+      ProgressDialogUtils.hideProgressDialog();
+      Logger.log(
+        error,
+        stackTrace: stackTrace,
+      );
+      rethrow;
+    }
+  }
+
+  Future<PostCommentResp> postComment(
+      {Map<String, String> headers = const {},
+      Map requestData = const {},
+      String? postId}) async {
+    ProgressDialogUtils.showProgressDialog();
+    try {
+      await isNetworkConnected();
+      Response response = await _dio.post(
+        '$url/api/v1/posts/$postId/comments',
+        data: requestData,
+        options: Options(headers: headers),
+      );
+      ProgressDialogUtils.hideProgressDialog();
+      if (isSuccessCall(response)) {
+        return PostCommentResp.fromJson(response.data);
+      } else {
+        throw response.data != null
+            ? PostCommentResp.fromJson(response.data)
+            : 'Something Went Wrong!';
+      }
+    } catch (error, stackTrace) {
+      ProgressDialogUtils.hideProgressDialog();
+      Logger.log(
+        error,
+        stackTrace: stackTrace,
+      );
+      rethrow;
+    }
+  }
+  Future<PostReactPostResp> reactPost(
+      {Map<String, String> headers = const {},
+      String? postId}) async {
+    ProgressDialogUtils.showProgressDialog();
+    try {
+      await isNetworkConnected();
+      Response response = await _dio.post(
+        '$url/api/v1/posts/$postId/reacts',
+        options: Options(headers: headers),
+      );
+      ProgressDialogUtils.hideProgressDialog();
+      if (isSuccessCall(response)) {
+        return PostReactPostResp.fromJson(response.data);
+      } else {
+        throw response.data != null
+            ? PostReactPostResp.fromJson(response.data)
             : 'Something Went Wrong!';
       }
     } catch (error, stackTrace) {

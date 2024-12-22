@@ -3,9 +3,12 @@ import "package:quizzfly_application_flutter/presentation/group/detail_post_scre
 import "package:quizzfly_application_flutter/presentation/group/detail_post_screen.dart/models/detail_post_model.dart";
 import "package:quizzfly_application_flutter/presentation/group/detail_post_screen.dart/widget/detail_post_comment_item_widget.dart";
 import "package:quizzfly_application_flutter/routes/navigation_args.dart";
+import "package:top_snackbar_flutter/custom_snack_bar.dart";
+import "package:top_snackbar_flutter/top_snack_bar.dart";
 import "../../../core/app_export.dart";
 import "../../../widgets/custom_text_form_field.dart";
 import "bloc/detail_post_bloc.dart";
+import 'package:like_button/like_button.dart';
 
 class DetailPostScreen extends StatelessWidget {
   const DetailPostScreen({super.key});
@@ -43,7 +46,7 @@ class DetailPostScreen extends StatelessWidget {
                   padding: EdgeInsets.zero,
                   constraints: const BoxConstraints(),
                   icon: const Icon(Icons.arrow_back, color: Colors.black),
-                  onPressed: () => Navigator.of(context).pop(),
+                  onPressed: () => Navigator.of(context).pop(true),
                 ),
               ),
               titleSpacing: 15.h,
@@ -105,7 +108,7 @@ class DetailPostScreen extends StatelessWidget {
                         SizedBox(height: 16.h),
                         _buildDescriptionSection(context),
                         SizedBox(height: 14.h),
-                        _buildInteractionBar(),
+                        _buildInteractionBar(context),
                         SizedBox(height: 14.h),
                         SizedBox(
                           width: double.maxFinite,
@@ -448,20 +451,88 @@ class DetailPostScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildInteractionBar() {
+  Widget _buildInteractionButton(
+      BuildContext context, IconData icon, int count, bool isLike) {
+    if (!isLike) {
+      return Row(
+        children: [
+          Icon(
+            icon,
+            size: 20.h,
+            color: appTheme.gray500,
+          ),
+          SizedBox(width: 8.h),
+          Text(
+            count.toString(),
+            style: CustomTextStyles.bodyMediumGraphik,
+          ),
+        ],
+      );
+    }
+
+    return BlocBuilder<DetailPostBloc, DetailPostState>(
+      builder: (context, state) {
+        return LikeButton(
+          size: 20.h,
+          isLiked: state.detailPostModelObj?.isLiked ?? false,
+          likeCount: count,
+          countBuilder: (int? count, bool isLiked, String text) {
+            return Padding(
+              padding: EdgeInsets.only(left: 8.h),
+              child: Text(
+                count.toString(),
+                style: CustomTextStyles.bodyMediumGraphik,
+              ),
+            );
+          },
+          likeBuilder: (bool isLiked) {
+            return Icon(
+              Icons.thumb_up,
+              color: isLiked ? appTheme.deppPurplePrimary : appTheme.gray500,
+              size: 20.h,
+            );
+          },
+          onTap: (isLiked) async {
+            context.read<DetailPostBloc>().add(
+                  ReactPostEvent(
+                    postId: state.postId!,
+                    onReactPostSuccess: () {},
+                    onReactPostError: () {
+                      showTopSnackBar(
+                        Overlay.of(context),
+                        const CustomSnackBar.error(
+                          message: 'Failed to update reaction',
+                        ),
+                      );
+                    },
+                  ),
+                );
+            return !isLiked;
+          },
+        );
+      },
+    );
+  }
+
+// Update the _buildInteractionBar method
+  Widget _buildInteractionBar(BuildContext context) {
     return BlocSelector<DetailPostBloc, DetailPostState, DetailPostModel?>(
       selector: (state) => state.detailPostModelObj,
       builder: (context, detailPostModelObj) {
         return Row(
           children: [
             _buildInteractionButton(
+              context,
               Icons.thumb_up_off_alt_outlined,
               detailPostModelObj!.reactCount!,
+              true, // This is a like button
             ),
             SizedBox(width: 15.h),
             _buildInteractionButton(
+              context,
               Icons.comment_outlined,
               detailPostModelObj.commentCount!,
+              false, // This is not a like button
             ),
             const Spacer(),
             Icon(
@@ -477,23 +548,6 @@ class DetailPostScreen extends StatelessWidget {
           ],
         );
       },
-    );
-  }
-
-  Widget _buildInteractionButton(IconData icon, int count) {
-    return Row(
-      children: [
-        Icon(
-          icon,
-          size: 20.h,
-          color: appTheme.gray500,
-        ),
-        SizedBox(width: 8.h),
-        Text(
-          count.toString(),
-          style: CustomTextStyles.bodyMediumGraphik,
-        ),
-      ],
     );
   }
 
@@ -533,27 +587,30 @@ class DetailPostScreen extends StatelessWidget {
               }),
         ),
         SizedBox(width: 8.h),
-        _buildActionButton(Icons.attach_file, appTheme.gray500),
+        _buildActionButton(context, Icons.attach_file, appTheme.gray500),
         SizedBox(width: 8.h),
-        _buildActionButton(Icons.send, appTheme.deppPurplePrimary),
+        _buildActionButton(context, Icons.send, appTheme.deppPurplePrimary),
       ],
     );
   }
 
-  Widget _buildActionButton(IconData icon, Color color) {
-    return Container(
-      padding: EdgeInsets.all(8.h),
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        border: Border.all(
-          color: color,
-          width: 1.5.h,
+  Widget _buildActionButton(BuildContext context, IconData icon, Color color) {
+    return GestureDetector(
+      onTap: icon == Icons.send ? () => _onTapSend(context) : null,
+      child: Container(
+        padding: EdgeInsets.all(8.h),
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          border: Border.all(
+            color: color,
+            width: 1.5.h,
+          ),
         ),
-      ),
-      child: Icon(
-        icon,
-        color: color,
-        size: 20.h,
+        child: Icon(
+          icon,
+          color: color,
+          size: 20.h,
+        ),
       ),
     );
   }
@@ -595,6 +652,47 @@ class DetailPostScreen extends StatelessWidget {
             ),
           )
         ],
+      ),
+    );
+  }
+
+  void _onTapSend(BuildContext context) {
+    if (context
+            .read<DetailPostBloc>()
+            .state
+            .commentController
+            ?.text
+            .trim()
+            .isNotEmpty ??
+        false) {
+      context.read<DetailPostBloc>().add(
+            PostCommentEvent(
+              postId: context.read<DetailPostBloc>().state.postId!,
+              onPostCommentSuccess: () {
+                _onPostCommentSuccess(context);
+              },
+              onPostCommentError: () {
+                _onPostCommentError(context);
+              },
+            ),
+          );
+    }
+  }
+
+  void _onPostCommentSuccess(BuildContext context) {
+    showTopSnackBar(
+      Overlay.of(context),
+      const CustomSnackBar.success(
+        message: 'Comment posted successfully',
+      ),
+    );
+  }
+
+  void _onPostCommentError(BuildContext context) {
+    showTopSnackBar(
+      Overlay.of(context),
+      const CustomSnackBar.error(
+        message: 'Failed to post comment',
       ),
     );
   }

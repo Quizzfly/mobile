@@ -104,6 +104,8 @@ class CommunityActivityTabPage extends StatelessWidget {
               CommunityListItemModel();
           return CommunityListItemWidget(
             model,
+            index: index, // Add this line
+
             callDetail: () {
               callDetail(context, index);
             },
@@ -114,7 +116,7 @@ class CommunityActivityTabPage extends StatelessWidget {
   }
 
   callDetail(BuildContext context, int index) async {
-    await NavigatorService.pushNamed(
+    final result = await NavigatorService.pushNamed(
       AppRoutes.detailPostScreen,
       arguments: {
         NavigationArgs.id:
@@ -122,5 +124,9 @@ class CommunityActivityTabPage extends StatelessWidget {
         NavigationArgs.groupId: context.read<CommunityBloc>().state.id
       },
     );
+
+    if (result == true) {
+      context.read<CommunityBloc>().add(CommunityInitialEvent());
+    }
   }
 }

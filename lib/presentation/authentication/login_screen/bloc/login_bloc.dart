@@ -50,7 +50,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       requestData: postLoginReq.toJson(),
     ).then((value) async {
       postLoginResp = value;
-      _onLoginSuccess(value, emit); 
+      _onLoginSuccess(value, emit);
       event.onCreateLoginEventSuccess?.call();
     }).onError((error, stackTrace) {
       _onLoginError();
@@ -115,6 +115,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     PrefUtils().setUsername(resp.data?.userInfo?.username ?? '');
     PrefUtils().setName(resp.data?.userInfo?.name ?? '');
     PrefUtils().setAvatar(resp.data?.userInfo?.avatar ?? '');
+    PrefUtils().setUserId(resp.data?.id ?? '');
     emit(
       state.copyWith(
         loginModelObj: state.loginModelObj?.copyWith(),

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:equatable/equatable.dart';
+import '../../../../data/models/list_comment/post_react_post_resp.dart';
 import '../../../../data/models/list_post/get_list_post_group_resp.dart';
 import '../../../../core/app_export.dart';
 import '../../../../data/repository/repository.dart';
@@ -15,9 +16,12 @@ part 'community_state.dart';
 class CommunityBloc extends Bloc<CommunityEvent, CommunityState> {
   final Repository _repository = Repository();
   var getListPostGroupResp = GetListPostGroupResp();
+  var postReactPostResp = PostReactPostResp();
+
   CommunityBloc(super.initialState) {
     on<CommunityInitialEvent>(_onInitialize);
     on<CreateGetCommunityPostsEvent>(_callGetCommunityPosts);
+    on<ReactPostEvent>(_callReactPost);
   }
 
   Future<void> _onInitialize(
@@ -96,5 +100,58 @@ class CommunityBloc extends Bloc<CommunityEvent, CommunityState> {
 
   void _onGetCommunityPostsError() {
     print('Error fetching community posts');
+  }
+
+  FutureOr<void> _callReactPost(
+    ReactPostEvent event,
+    Emitter<CommunityState> emit,
+  ) async {
+    try {
+      String? accessToken = PrefUtils().getAccessToken();
+
+      await _repository.reactPost(
+        headers: {
+          'Authorization': 'Bearer $accessToken',
+        },
+        postId: event.postId,
+      ).then((value) {
+        postReactPostResp = value;
+        _onReactPostSuccess(event.postIndex, emit);
+        event.onReactPostSuccess?.call();
+      }).onError((error, stackTrace) {
+        _onReactPostError();
+        event.onReactPostError?.call();
+      });
+    } catch (e) {
+      print('Error reacting to post: $e');
+      _onReactPostError();
+      event.onReactPostError?.call();
+    }
+  }
+
+  void _onReactPostSuccess(int postIndex, Emitter<CommunityState> emit) {
+    final currentList =
+        state.communityActivityTabModelObj?.communityListItemList ?? [];
+    if (currentList.isNotEmpty && postIndex < currentList.length) {
+      final updatedList = List<CommunityListItemModel>.from(currentList);
+      final currentPost = updatedList[postIndex];
+      final newIsLiked = !currentPost.isLiked;
+
+      updatedList[postIndex] = currentPost.copyWith(
+        isLiked: newIsLiked,
+        likeCount: (currentPost.likeCount ?? 0) + (newIsLiked ? 1 : -1),
+      );
+
+      emit(state.copyWith(
+        communityActivityTabModelObj:
+            state.communityActivityTabModelObj?.copyWith(
+          communityListItemList: updatedList,
+        ),
+      ));
+    }
+  }
+
+  void _onReactPostError() {
+    print('Error reacting to post');
   }
 }

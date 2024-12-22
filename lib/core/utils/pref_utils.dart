@@ -94,6 +94,18 @@ class PrefUtils {
     }
   }
 
+  Future<void> setUserId(String value) {
+    return _sharedPreferences!.setString('userId', value);
+  }
+
+  String getUserId() {
+    try {
+      return _sharedPreferences!.getString('userId') ?? '';
+    } catch (e) {
+      return '';
+    }
+  }
+
   Future<void> setAvatar(String value) {
     return _sharedPreferences!.setString('avatar', value);
   }

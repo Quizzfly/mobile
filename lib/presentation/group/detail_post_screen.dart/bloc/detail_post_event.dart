@@ -48,3 +48,42 @@ class GetListPostCommentEvent extends DetailPostEvent {
   List<Object?> get props =>
       [postId, onListPostCommentSuccess, onListPostCommentError];
 }
+class PostCommentEvent extends DetailPostEvent {
+  PostCommentEvent({
+    required this.postId,
+    this.onPostCommentSuccess,
+    this.onPostCommentError,
+  });
+
+  final String postId;
+  final Function? onPostCommentSuccess;
+  final Function? onPostCommentError;
+
+  @override
+  List<Object?> get props =>
+      [postId, onPostCommentSuccess, onPostCommentError];
+}
+class ReactPostEvent extends DetailPostEvent {
+  ReactPostEvent({
+    required this.postId,
+    this.onReactPostSuccess,
+    this.onReactPostError,
+  });
+
+  final String postId;
+  final Function? onReactPostSuccess;
+  final Function? onReactPostError;
+
+  @override
+  List<Object?> get props =>
+      [postId, onReactPostSuccess, onReactPostError];
+}
+
+class NewCommentReceivedEvent extends DetailPostEvent {
+  final DetailPostCommentItemModel comment;
+
+  NewCommentReceivedEvent(this.comment);
+
+  @override
+  List<Object?> get props => [comment];
+}
