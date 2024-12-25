@@ -1,19 +1,19 @@
 import 'package:equatable/equatable.dart';
 import 'package:quizzfly_application_flutter/core/app_export.dart';
 
-/// This class is used in the [detail_post_one_item_widget] screen.
-// ignore_for_file: must_be_immutable
+// ignore: must_be_immutable
 class DetailPostCommentItemModel extends Equatable {
-  DetailPostCommentItemModel({
-    this.id,
-    this.createdAt,
-    this.updatedAt,
-    this.content,
-    this.files,
-    this.memberName,
-    this.memberAvatar,
-    this.countReplies,
-  }) {
+  DetailPostCommentItemModel(
+      {this.id,
+      this.createdAt,
+      this.updatedAt,
+      this.content,
+      this.files,
+      this.memberName,
+      this.memberAvatar,
+      this.countReplies,
+      this.replies,
+      this.parentCommentId}) {
     id = id ?? "";
     createdAt = createdAt ?? "";
     updatedAt = updatedAt ?? "";
@@ -22,6 +22,8 @@ class DetailPostCommentItemModel extends Equatable {
     memberName = memberName ?? "Unknown";
     memberAvatar = memberAvatar ?? ImageConstant.imageAvatar;
     countReplies = countReplies ?? 0;
+    replies = replies ?? [];
+    parentCommentId = parentCommentId ?? "";
   }
 
   String? id;
@@ -32,27 +34,30 @@ class DetailPostCommentItemModel extends Equatable {
   String? memberName;
   String? memberAvatar;
   int? countReplies;
-
-  DetailPostCommentItemModel copyWith({
-    String? id,
-    String? createdAt,
-    String? updatedAt,
-    String? content,
-    List<String>? files,
-    String? memberName,
-    String? memberAvatar,
-    int? countReplies,
-  }) {
+  List<DetailPostCommentItemModel>? replies;
+  String? parentCommentId;
+  DetailPostCommentItemModel copyWith(
+      {String? id,
+      String? createdAt,
+      String? updatedAt,
+      String? content,
+      List<String>? files,
+      String? memberName,
+      String? memberAvatar,
+      int? countReplies,
+      List<DetailPostCommentItemModel>? replies,
+      String? parentCommentId}) {
     return DetailPostCommentItemModel(
-      id: id ?? this.id,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
-      content: content ?? this.content,
-      files: files ?? this.files,
-      memberName: memberName ?? this.memberName,
-      memberAvatar: memberAvatar ?? this.memberAvatar,
-      countReplies: countReplies ?? this.countReplies,
-    );
+        id: id ?? this.id,
+        createdAt: createdAt ?? this.createdAt,
+        updatedAt: updatedAt ?? this.updatedAt,
+        content: content ?? this.content,
+        files: files ?? this.files,
+        memberName: memberName ?? this.memberName,
+        memberAvatar: memberAvatar ?? this.memberAvatar,
+        countReplies: countReplies ?? this.countReplies,
+        replies: replies ?? this.replies,
+        parentCommentId: parentCommentId ?? this.parentCommentId);
   }
 
   factory DetailPostCommentItemModel.fromCommentData(
@@ -69,6 +74,7 @@ class DetailPostCommentItemModel extends Equatable {
       memberName: json['member']?['name'] ?? 'Unknown',
       memberAvatar: json['member']?['avatar'] ?? ImageConstant.imageAvatar,
       countReplies: json['count_replies'] as int?,
+      replies: const [],
     );
   }
 
@@ -82,5 +88,7 @@ class DetailPostCommentItemModel extends Equatable {
         memberName,
         memberAvatar,
         countReplies,
+        replies,
+        parentCommentId
       ];
 }

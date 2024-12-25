@@ -8,4 +8,5 @@ class NavigationArgs {
   static String coverImage = "coverImage";
   static String roomPin = "roomPin";
   static const String heroTag = 'heroTag';
+  static const String showJoinDialog = 'showJoinDialog';
 }

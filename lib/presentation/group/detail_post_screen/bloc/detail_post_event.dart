@@ -48,21 +48,41 @@ class GetListPostCommentEvent extends DetailPostEvent {
   List<Object?> get props =>
       [postId, onListPostCommentSuccess, onListPostCommentError];
 }
+
+class GetListPostCommentRepliesEvent extends DetailPostEvent {
+  GetListPostCommentRepliesEvent({
+    required this.postId,
+    this.onListPostCommentRepliesSuccess,
+    this.onListPostCommentRepliesError,
+  });
+
+  final String postId;
+  final Function? onListPostCommentRepliesSuccess;
+  final Function? onListPostCommentRepliesError;
+
+  @override
+  List<Object?> get props =>
+      [postId, onListPostCommentRepliesSuccess, onListPostCommentRepliesError];
+}
+
 class PostCommentEvent extends DetailPostEvent {
   PostCommentEvent({
     required this.postId,
+    required this.parentCommentId,
     this.onPostCommentSuccess,
     this.onPostCommentError,
   });
 
   final String postId;
+  final String parentCommentId;
   final Function? onPostCommentSuccess;
   final Function? onPostCommentError;
 
   @override
   List<Object?> get props =>
-      [postId, onPostCommentSuccess, onPostCommentError];
+      [postId, parentCommentId, onPostCommentSuccess, onPostCommentError];
 }
+
 class ReactPostEvent extends DetailPostEvent {
   ReactPostEvent({
     required this.postId,
@@ -75,14 +95,37 @@ class ReactPostEvent extends DetailPostEvent {
   final Function? onReactPostError;
 
   @override
-  List<Object?> get props =>
-      [postId, onReactPostSuccess, onReactPostError];
+  List<Object?> get props => [postId, onReactPostSuccess, onReactPostError];
 }
 
 class NewCommentReceivedEvent extends DetailPostEvent {
   final DetailPostCommentItemModel comment;
 
   NewCommentReceivedEvent(this.comment);
+
+  @override
+  List<Object?> get props => [comment];
+}
+
+class DeleteCommentEvent extends DetailPostEvent {
+  DeleteCommentEvent({
+    this.id,
+    this.onDeleteCommentEventSuccess,
+    this.onDeleteCommentEventError,
+  });
+
+  final Function? onDeleteCommentEventSuccess;
+  final Function? onDeleteCommentEventError;
+  final String? id;
+  @override
+  List<Object?> get props =>
+      [onDeleteCommentEventSuccess, onDeleteCommentEventError, id];
+}
+
+class CommentDeletedEvent extends DetailPostEvent {
+  final DetailPostCommentItemModel comment;
+
+  CommentDeletedEvent(this.comment);
 
   @override
   List<Object?> get props => [comment];

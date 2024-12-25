@@ -524,7 +524,7 @@ class ApiClient {
         options: Options(headers: headers),
       );
       ProgressDialogUtils.hideProgressDialog();
-      return response.statusCode == 204;
+      return response.statusCode == 200;
     } catch (error, stackTrace) {
       ProgressDialogUtils.hideProgressDialog();
       Logger.log(
@@ -678,6 +678,33 @@ class ApiClient {
     }
   }
 
+  Future<GetListCommentResp> getListCommentReplies(
+      {Map<String, String> headers = const {}, String? postId}) async {
+    ProgressDialogUtils.showProgressDialog();
+    try {
+      await isNetworkConnected();
+      Response response = await _dio.get(
+        '$url/api/v1/comments/$postId/replies',
+        options: Options(headers: headers),
+      );
+      ProgressDialogUtils.hideProgressDialog();
+      if (isSuccessCall(response)) {
+        return GetListCommentResp.fromJson(response.data);
+      } else {
+        throw response.data != null
+            ? GetListCommentResp.fromJson(response.data)
+            : 'Something Went Wrong!';
+      }
+    } catch (error, stackTrace) {
+      ProgressDialogUtils.hideProgressDialog();
+      Logger.log(
+        error,
+        stackTrace: stackTrace,
+      );
+      rethrow;
+    }
+  }
+
   Future<PostCommentResp> postComment(
       {Map<String, String> headers = const {},
       Map requestData = const {},
@@ -707,9 +734,9 @@ class ApiClient {
       rethrow;
     }
   }
+
   Future<PostReactPostResp> reactPost(
-      {Map<String, String> headers = const {},
-      String? postId}) async {
+      {Map<String, String> headers = const {}, String? postId}) async {
     ProgressDialogUtils.showProgressDialog();
     try {
       await isNetworkConnected();
@@ -725,6 +752,72 @@ class ApiClient {
             ? PostReactPostResp.fromJson(response.data)
             : 'Something Went Wrong!';
       }
+    } catch (error, stackTrace) {
+      ProgressDialogUtils.hideProgressDialog();
+      Logger.log(
+        error,
+        stackTrace: stackTrace,
+      );
+      rethrow;
+    }
+  }
+
+  Future<bool> deleteComment(
+      {Map<String, String> headers = const {}, String? id}) async {
+    ProgressDialogUtils.showProgressDialog();
+    try {
+      await isNetworkConnected();
+      Response response = await _dio.delete(
+        '$url/api/v1/comments/$id',
+        options: Options(headers: headers),
+      );
+      ProgressDialogUtils.hideProgressDialog();
+      return response.statusCode == 200;
+    } catch (error, stackTrace) {
+      ProgressDialogUtils.hideProgressDialog();
+      Logger.log(
+        error,
+        stackTrace: stackTrace,
+      );
+      rethrow;
+    }
+  }
+
+  Future<bool> joinGroup(
+      {Map<String, String> headers = const {}, String? id}) async {
+    ProgressDialogUtils.showProgressDialog();
+    try {
+      await isNetworkConnected();
+      Response response = await _dio.post(
+        '$url/api/v1/groups/$id/members/joins',
+        options: Options(headers: headers),
+      );
+      ProgressDialogUtils.hideProgressDialog();
+      return response.statusCode == 200;
+    } catch (error, stackTrace) {
+      ProgressDialogUtils.hideProgressDialog();
+      Logger.log(
+        error,
+        stackTrace: stackTrace,
+      );
+      rethrow;
+    }
+  }
+
+  Future<bool> inviteMember(
+      {Map<String, String> headers = const {},
+      String? id,
+      Map requestData = const {}}) async {
+    ProgressDialogUtils.showProgressDialog();
+    try {
+      await isNetworkConnected();
+      Response response = await _dio.post(
+        '$url/api/v1/groups/$id/members',
+        options: Options(headers: headers),
+        data: requestData,
+      );
+      ProgressDialogUtils.hideProgressDialog();
+      return response.statusCode == 200;
     } catch (error, stackTrace) {
       ProgressDialogUtils.hideProgressDialog();
       Logger.log(

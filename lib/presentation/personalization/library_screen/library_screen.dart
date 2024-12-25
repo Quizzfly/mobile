@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../../../../core/app_export.dart';
 import '../../../../routes/navigation_args.dart';
 import 'bloc/library_bloc.dart';
@@ -24,6 +25,31 @@ class LibraryScreen extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
         backgroundColor: appTheme.whiteA700,
+        resizeToAvoidBottomInset: false,
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(kToolbarHeight),
+          child: Container(
+            padding: EdgeInsets.only(left: 5.h, top: 16.h),
+            color: appTheme.whiteA700,
+            child: AppBar(
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              leading: Padding(
+                  padding: EdgeInsets.only(left: 16.h),
+                  child: const Icon(Icons.grid_view_rounded)),
+              leadingWidth: 25.h,
+              titleSpacing: 25.h,
+              title: const Text(
+                'Library',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 25,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          ),
+        ),
         body: Container(
           width: double.maxFinite,
           margin: EdgeInsets.only(top: 20.h),
@@ -96,7 +122,7 @@ class LibraryScreen extends StatelessWidget {
         NavigationArgs.id:
             context.read<LibraryBloc>().getLibraryResp.data?[index].id,
         NavigationArgs.heroTag:
-            'library_cover_image_${context.read<LibraryBloc>().getLibraryResp.data?[index].id}', 
+            'library_cover_image_${context.read<LibraryBloc>().getLibraryResp.data?[index].id}',
       },
     );
 
@@ -126,18 +152,24 @@ class LibraryScreen extends StatelessWidget {
   }
 
   void _onDeleteQuizzflyApiEventSuccess(BuildContext context) {
-    Fluttertoast.showToast(msg: "Delete succeed");
-    // Refresh the list after successful deletion
     context.read<LibraryBloc>().add(CreateGetLibraryEvent(
       onGetLibrarySuccess: () {
-        Fluttertoast.showToast(
-          msg: "Delete succeed",
+        showTopSnackBar(
+          Overlay.of(context),
+          const CustomSnackBar.success(
+            message: 'Delete succeed',
+          ),
         );
       },
     ));
   }
 
   void _onDeleteQuizzflyApiEventError(BuildContext context) {
-    Fluttertoast.showToast(msg: "Delete failed");
+    showTopSnackBar(
+      Overlay.of(context),
+      const CustomSnackBar.error(
+        message: 'Delete failed',
+      ),
+    );
   }
 }

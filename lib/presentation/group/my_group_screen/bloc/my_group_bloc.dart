@@ -17,6 +17,7 @@ class MyGroupBloc extends Bloc<MyGroupEvent, MyGroupState> {
     on<MyGroupInitialEvent>(_onInitialize);
     on<CreateGetMyGroupEvent>(_callGetMyGroup);
     on<DeleteMyGroupEvent>(_callDeleteMyGroupApi);
+    on<JoinGroupEvent>(_callJoinGroup);
   }
 
   Future<void> _onInitialize(
@@ -128,6 +129,26 @@ class MyGroupBloc extends Bloc<MyGroupEvent, MyGroupState> {
       }
     } catch (error) {
       event.onDeleteMyGroupEventError?.call();
+    }
+  }
+
+  FutureOr<void> _callJoinGroup(
+    JoinGroupEvent event,
+    Emitter<MyGroupState> emit,
+  ) async {
+    try {
+      String? accessToken = PrefUtils().getAccessToken();
+      bool success = await _repository.joinGroup(
+        headers: {'Authorization': 'Bearer $accessToken'},
+        id: event.groupId,
+      );
+      if (success) {
+        event.onJoinSuccess?.call();
+      } else {
+        event.onJoinError?.call();
+      }
+    } catch (e) {
+      event.onJoinError?.call();
     }
   }
 }

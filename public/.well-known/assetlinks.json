@@ -1,0 +1,5 @@
+[{
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target" : { "namespace": "android_app", "package_name": "com.example.quizzfly_application_flutter",
+                 "sha256_cert_fingerprints": ["95:F7:70:D4:4D:72:5B:86:09:5E:02:F5:60:6F:3A:95:19:78:33:DE:07:57:6B:FD:F5:73:C6:FB:3C:1C:79:FA"] }
+  }]

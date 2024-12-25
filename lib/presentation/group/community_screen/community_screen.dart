@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../../../../core/app_export.dart';
 import '../../../../theme/custom_button_style.dart';
 import '../../../../widgets/custom_elevated_button.dart';
@@ -6,6 +8,7 @@ import '../../../routes/navigation_args.dart';
 import 'bloc/community_bloc.dart';
 import 'community_activity_tab_page.dart';
 import 'models/community_model.dart';
+import 'widgets/show_dialog_widget.dart';
 
 class CommunityScreen extends StatefulWidget {
   const CommunityScreen({super.key});
@@ -79,6 +82,7 @@ class CommunityScreenState extends State<CommunityScreen>
                     buttonStyle: CustomButtonStyles.fillPrimaryRadius20,
                     buttonTextStyle:
                         CustomTextStyles.titleSmallOnErrorContainer,
+                    onPressed: () => _showInviteDialog(context),
                   ),
                 ),
               ],
@@ -131,5 +135,37 @@ class CommunityScreenState extends State<CommunityScreen>
         tabs: const [Tab(text: "Activity"), Tab(text: "Share")],
       ),
     );
+  }
+
+  Future<void> _showInviteDialog(BuildContext context) async {
+    final emails = await showDialog<List<String>>(
+      context: context,
+      builder: (context) => const ShowDialogWidget(),
+    );
+
+    if (emails != null && emails.isNotEmpty) {
+      context.read<CommunityBloc>().add(
+            InviteMemberEvent(
+              groupId: context.read<CommunityBloc>().state.id ?? '',
+              emails: emails,
+              onInviteMemberSuccess: () {
+                showTopSnackBar(
+                  Overlay.of(context),
+                  const CustomSnackBar.success(
+                    message: 'Invites sent successfully',
+                  ),
+                );
+              },
+              onInviteMemberError: () {
+                showTopSnackBar(
+                  Overlay.of(context),
+                  const CustomSnackBar.error(
+                    message: 'Failed to send invites',
+                  ),
+                );
+              },
+            ),
+          );
+    }
   }
 }

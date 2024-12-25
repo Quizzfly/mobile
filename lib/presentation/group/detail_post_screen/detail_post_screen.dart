@@ -1,7 +1,7 @@
 import "package:flutter/material.dart";
-import "package:quizzfly_application_flutter/presentation/group/detail_post_screen.dart/models/detail_post_comment_item_model.dart";
-import "package:quizzfly_application_flutter/presentation/group/detail_post_screen.dart/models/detail_post_model.dart";
-import "package:quizzfly_application_flutter/presentation/group/detail_post_screen.dart/widget/detail_post_comment_item_widget.dart";
+import "models/detail_post_model.dart";
+import "widget/comment_shimmer_loading.dart";
+import "widget/detail_post_comment_item_widget.dart";
 import "package:quizzfly_application_flutter/routes/navigation_args.dart";
 import "package:top_snackbar_flutter/custom_snack_bar.dart";
 import "package:top_snackbar_flutter/top_snack_bar.dart";
@@ -622,35 +622,27 @@ class DetailPostScreen extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: EdgeInsets.only(right: 22.h),
-            child:
-                BlocSelector<DetailPostBloc, DetailPostState, DetailPostModel?>(
-              selector: (state) => state.detailPostModelObj,
-              builder: (context, detailPostModelObj) {
-                return ListView.separated(
-                  padding: EdgeInsets.zero,
-                  physics: NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  separatorBuilder: (context, index) {
-                    return SizedBox(
-                      height: 26.h,
-                    );
-                  },
-                  itemCount:
-                      detailPostModelObj?.detailPostCommentItemList.length ?? 0,
-                  itemBuilder: (context, index) {
-                    DetailPostCommentItemModel model =
-                        detailPostModelObj?.detailPostCommentItemList[index] ??
-                            DetailPostCommentItemModel();
-                    return DetailPostCommentItemWidget(
-                      model,
-                    );
-                  },
-                );
-              },
-            ),
-          )
+          BlocBuilder<DetailPostBloc, DetailPostState>(
+            builder: (context, state) {
+              if (state.isLoading) {
+                return const CommentShimmerLoading();
+              }
+
+              final comments =
+                  state.detailPostModelObj?.detailPostCommentItemList ?? [];
+
+              return ListView.separated(
+                padding: EdgeInsets.zero,
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                separatorBuilder: (context, index) => SizedBox(height: 26.h),
+                itemCount: comments.length,
+                itemBuilder: (context, index) {
+                  return DetailPostCommentItemWidget(comments[index]);
+                },
+              );
+            },
+          ),
         ],
       ),
     );
@@ -668,6 +660,7 @@ class DetailPostScreen extends StatelessWidget {
       context.read<DetailPostBloc>().add(
             PostCommentEvent(
               postId: context.read<DetailPostBloc>().state.postId!,
+              parentCommentId: '',
               onPostCommentSuccess: () {
                 _onPostCommentSuccess(context);
               },

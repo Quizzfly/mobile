@@ -74,7 +74,8 @@ class CommunityListItemWidget extends StatelessWidget {
       children: [
         CircleAvatar(
           radius: 24,
-          backgroundImage: NetworkImage(PrefUtils().getAvatar()),
+          backgroundImage:
+              NetworkImage(communityListItemModelObj.memberAvatar!),
           backgroundColor: Colors.transparent,
           // ignore: unnecessary_null_comparison
           child: PrefUtils().getAvatar() == null

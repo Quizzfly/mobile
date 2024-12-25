@@ -44,22 +44,16 @@ class ProfileSettingScreenState extends State<ProfileSettingScreen>
             child: AppBar(
               backgroundColor: Colors.transparent,
               elevation: 0,
-              leadingWidth: 40.h,
+              leadingWidth: 25.h,
               leading: Padding(
-                padding: EdgeInsets.only(left: 16.h),
-                child: IconButton(
-                  padding: EdgeInsets.zero,
-                  constraints: const BoxConstraints(),
-                  icon: const Icon(Icons.arrow_back, color: Colors.black),
-                  onPressed: () => Navigator.of(context).pop(),
-                ),
-              ),
-              titleSpacing: 15.h,
+                  padding: EdgeInsets.only(left: 16.h),
+                  child: const Icon(Icons.person)),
+              titleSpacing: 25.h,
               title: const Text(
                 'Profile Settings',
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: 20,
+                  fontSize: 25,
                   fontWeight: FontWeight.w600,
                 ),
               ),

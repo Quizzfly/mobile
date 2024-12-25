@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import '../../../../../core/app_export.dart';
 import '../../../../../theme/custom_button_style.dart';
@@ -120,25 +121,28 @@ class LibraryListItemWidget extends StatelessWidget {
                       ],
                     ),
                   ),
-                  // Container(
-                  //     width: double.maxFinite,
-                  //     alignment: Alignment.topRight,
-                  //     padding: EdgeInsets.only(right: 20.h),
-                  //     child: CustomIconButton(
-                  //       height: 32.h,
-                  //       width: 40.h,
-                  //       padding: EdgeInsets.all(2.h),
-                  //       decoration: IconButtonStyleHelper.none,
-                  //       child: CustomImageView(
-                  //         imagePath: ImageConstant.imgDelete,
-                  //       ),
-                  //       onTap: () {
-                  //         if (onDelete != null &&
-                  //             libraryListItemModelObj.id != null) {
-                  //           onDelete!(libraryListItemModelObj.id!);
-                  //         }
-                  //       },
-                  //     ))
+                  Container(
+                    width: double.maxFinite,
+                    alignment: Alignment.bottomRight,
+                    padding: EdgeInsets.only(right: 20.h),
+                    child: PopupMenuButton<String>(
+                      icon: const Icon(Icons.more_vert),
+                      itemBuilder: (BuildContext context) => [
+                        PopupMenuItem<String>(
+                          value: 'delete',
+                          child: Text(
+                            'Delete',
+                            style: TextStyle(color: appTheme.red900),
+                          ),
+                        ),
+                      ],
+                      onSelected: (String value) {
+                        if (value == 'delete') {
+                          _showDeleteConfirmationDialog(context);
+                        }
+                      },
+                    ),
+                  )
                 ],
               ),
             )
@@ -174,5 +178,26 @@ class LibraryListItemWidget extends StatelessWidget {
       buttonTextStyle: CustomTextStyles.titleSmallWhiteA700,
       alignment: Alignment.bottomRight,
     );
+  }
+
+  void _showDeleteConfirmationDialog(BuildContext context) {
+    AwesomeDialog(
+      context: context,
+      dialogType: DialogType.warning,
+      animType: AnimType.bottomSlide,
+      title: 'Delete Confirmation',
+      desc: 'Are you sure you want to delete this item?',
+      btnCancelOnPress: () {},
+      btnOkOnPress: () {
+        if (onDelete != null && libraryListItemModelObj.id != null) {
+          onDelete!(libraryListItemModelObj.id!);
+        }
+      },
+      btnCancelText: 'Cancel',
+      btnCancelColor: appTheme.gray500,
+      btnOkText: 'Delete',
+      btnOkColor: appTheme.red900,
+      buttonsTextStyle: const TextStyle(color: Colors.white),
+    ).show();
   }
 }

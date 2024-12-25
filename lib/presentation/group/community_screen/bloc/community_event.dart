@@ -49,3 +49,25 @@ class ReactPostEvent extends CommunityEvent {
   List<Object?> get props =>
       [postId, postIndex, onReactPostSuccess, onReactPostError];
 }
+
+class InviteMemberEvent extends CommunityEvent {
+  final String groupId;
+  final List<String> emails;
+  final Function? onInviteMemberSuccess;
+  final Function? onInviteMemberError;
+
+  InviteMemberEvent({
+    required this.groupId,
+    required this.emails,
+    this.onInviteMemberSuccess,
+    this.onInviteMemberError,
+  });
+
+  @override
+  List<Object?> get props => [
+        groupId,
+        emails,
+        onInviteMemberSuccess,
+        onInviteMemberError,
+      ];
+}

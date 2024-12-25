@@ -469,7 +469,7 @@ class RegisterScreen extends StatelessWidget {
   void _onRegisterEventError(BuildContext context) {
     showTopSnackBar(
       Overlay.of(context),
-      const CustomSnackBar.success(
+      const CustomSnackBar.error(
         message: 'User accounts already exist',
       ),
     );

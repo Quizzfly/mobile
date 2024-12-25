@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:equatable/equatable.dart';
+import 'package:quizzfly_application_flutter/data/models/invite_member/post_invite_member_req.dart';
 import '../../../../data/models/list_comment/post_react_post_resp.dart';
 import '../../../../data/models/list_post/get_list_post_group_resp.dart';
 import '../../../../core/app_export.dart';
@@ -22,6 +23,7 @@ class CommunityBloc extends Bloc<CommunityEvent, CommunityState> {
     on<CommunityInitialEvent>(_onInitialize);
     on<CreateGetCommunityPostsEvent>(_callGetCommunityPosts);
     on<ReactPostEvent>(_callReactPost);
+    on<InviteMemberEvent>(_callInviteMember);
   }
 
   Future<void> _onInitialize(
@@ -56,8 +58,11 @@ class CommunityBloc extends Bloc<CommunityEvent, CommunityState> {
     CreateGetCommunityPostsEvent event,
     Emitter<CommunityState> emit,
   ) async {
+    emit(state.copyWith(isLoading: true));
+
     try {
       String? accessToken = PrefUtils().getAccessToken();
+      await Future.delayed(const Duration(seconds: 1));
 
       await _repository.getListPostGroup(
         headers: {
@@ -69,12 +74,12 @@ class CommunityBloc extends Bloc<CommunityEvent, CommunityState> {
         _onGetCommunityPostsSuccess(value, emit);
         event.onGetCommunityPostsSuccess?.call();
       }).onError((error, stackTrace) {
-        _onGetCommunityPostsError();
+        _onGetCommunityPostsError(emit);
         event.onGetCommunityPostsError?.call();
       });
     } catch (e) {
       print('Error loading community posts: $e');
-      _onGetCommunityPostsError();
+      _onGetCommunityPostsError(emit);
       event.onGetCommunityPostsError?.call();
     }
   }
@@ -91,6 +96,7 @@ class CommunityBloc extends Bloc<CommunityEvent, CommunityState> {
         [];
 
     emit(state.copyWith(
+      isLoading: false,
       communityActivityTabModelObj:
           state.communityActivityTabModelObj?.copyWith(
         communityListItemList: communityItems,
@@ -98,7 +104,8 @@ class CommunityBloc extends Bloc<CommunityEvent, CommunityState> {
     ));
   }
 
-  void _onGetCommunityPostsError() {
+  void _onGetCommunityPostsError(Emitter<CommunityState> emit) {
+    emit(state.copyWith(isLoading: false));
     print('Error fetching community posts');
   }
 
@@ -153,5 +160,26 @@ class CommunityBloc extends Bloc<CommunityEvent, CommunityState> {
 
   void _onReactPostError() {
     print('Error reacting to post');
+  }
+
+  FutureOr<void> _callInviteMember(
+    InviteMemberEvent event,
+    Emitter<CommunityState> emit,
+  ) async {
+    String? accessToken = PrefUtils().getAccessToken();
+    var postInviteMemberReq = PostInviteMemberReq(emails: event.emails);
+    try {
+      bool success = await _repository.inviteMember(
+          headers: {'Authorization': 'Bearer $accessToken '},
+          id: event.groupId,
+          requestData: postInviteMemberReq.toJson());
+      if (success) {
+        event.onInviteMemberSuccess?.call();
+      } else {
+        event.onInviteMemberError?.call();
+      }
+    } catch (error) {
+      event.onInviteMemberError?.call();
+    }
   }
 }

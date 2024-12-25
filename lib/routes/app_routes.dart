@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:quizzfly_application_flutter/presentation/group/detail_post_screen.dart/detail_post_screen.dart';
+import 'package:quizzfly_application_flutter/presentation/group/detail_post_screen/detail_post_screen.dart';
+import '../core/app_export.dart';
 import '../presentation/authentication/delete_account_screen/delete_account_screen.dart';
 import '../presentation/authentication/login_screen/login_screen.dart';
 import '../presentation/authentication/register_screen/register_screen.dart';
@@ -56,7 +57,6 @@ class AppRoutes {
         deleteAccountScreen: DeleteAccountScreen.builder,
         quizzflySetting: QuizzflySettingScreen.builder,
         enterPinScreen: EnterPinScreen.builder,
-        initialRoute: LoginScreen.builder,
         inputNickname: InputNicknameScreen.builder,
         waitingRoom: WaitingRoomScreen.builder,
         communityScreen: CommunityScreen.builder,
@@ -65,36 +65,52 @@ class AppRoutes {
         myGroupScreen: MyGroupScreen.builder,
         detailPostScreen: DetailPostScreen.builder
       };
-  // static Route<dynamic> generateRoute(RouteSettings settings) {
-  //   switch (settings.name) {
-  //     case initialRoute:
-  //       return MaterialPageRoute(
-  //         builder: (context) => initialRouteWidget(context),
-  //       );
-  //     // Add cases for other routes if needed
-  //     default:
-  //       return MaterialPageRoute(
-  //         builder: (_) => const Scaffold(
-  //           body: Center(child: Text('Route not found!')),
-  //         ),
-  //       );
-  //   }
-  // }
-  // static Route<dynamic> generateRoute(RouteSettings settings) {
-  //   switch (settings.name) {
-  //     case initialRoute:
-  //       return MaterialPageRoute(
-  //         builder: (context) => initialRouteWidget(context),
-  //       );
-  //     // Add cases for other routes if needed
-  //     default:
-  //       return MaterialPageRoute(
-  //         builder: (_) => const Scaffold(
-  //           body: Center(child: Text('Route not found!')),
-  //         ),
-  //       );
-  //   }
-  // }
+
+  static Route<dynamic>? generateRoute(RouteSettings settings) {
+    if (settings.name == '/') {
+      final int tokenExpires = PrefUtils().getTokenExpires();
+      final int currentTime = DateTime.now().millisecondsSinceEpoch;
+
+      if (tokenExpires > currentTime) {
+        return MaterialPageRoute(
+            builder: routes[homeScreen]!,
+            settings: const RouteSettings(name: homeScreen));
+      }
+
+      return MaterialPageRoute(
+          builder: routes[loginScreen]!,
+          settings: const RouteSettings(name: loginScreen));
+    }
+
+    // Get the route builder
+    final routeBuilder = routes[settings.name];
+    if (routeBuilder == null) return null;
+
+    // Check token expiry for protected routes
+    if (_isProtectedRoute(settings.name!)) {
+      final tokenExpires = PrefUtils().getTokenExpires();
+      final currentTime = DateTime.now().millisecondsSinceEpoch;
+
+      if (tokenExpires <= currentTime) {
+        return MaterialPageRoute(
+            builder: routes[loginScreen]!,
+            settings: const RouteSettings(name: loginScreen));
+      }
+    }
+
+    // Return the original route
+    return MaterialPageRoute(builder: routeBuilder, settings: settings);
+  }
+
+  static bool _isProtectedRoute(String routeName) {
+    final publicRoutes = [
+      loginScreen,
+      registerScreen,
+      forgotPasswordScreen,
+      resetPassWordScreen,
+    ];
+    return !publicRoutes.contains(routeName);
+  }
 
   // Custom method to handle slide transition navigation for specific routes
   static Future<T?> navigateWithSlide<T>(

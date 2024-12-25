@@ -234,6 +234,12 @@ class Repository {
         headers: headers, postId: postId);
   }
 
+  Future<GetListCommentResp> getListCommentReplies(
+      {Map<String, String> headers = const {}, String? postId}) async {
+    return await _apiClient.getListCommentReplies(
+        headers: headers, postId: postId);
+  }
+
   Future<PostCommentResp> postComment(
       {Map<String, String> headers = const {},
       Map requestData = const {},
@@ -245,5 +251,23 @@ class Repository {
   Future<PostReactPostResp> reactPost(
       {Map<String, String> headers = const {}, String? postId}) async {
     return await _apiClient.reactPost(headers: headers, postId: postId);
+  }
+
+  Future<bool> deleteComment(
+      {Map<String, String> headers = const {}, String? id}) async {
+    return await _apiClient.deleteComment(headers: headers, id: id);
+  }
+
+  Future<bool> joinGroup(
+      {Map<String, String> headers = const {}, String? id}) async {
+    return await _apiClient.joinGroup(headers: headers, id: id);
+  }
+
+  Future<bool> inviteMember(
+      {Map<String, String> headers = const {},
+      String? id,
+      Map requestData = const {}}) async {
+    return await _apiClient.inviteMember(
+        headers: headers, id: id, requestData: requestData);
   }
 }

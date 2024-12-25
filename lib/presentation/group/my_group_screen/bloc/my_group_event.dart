@@ -46,3 +46,21 @@ class DeleteMyGroupEvent extends MyGroupEvent {
   List<Object?> get props =>
       [onDeleteMyGroupEventSuccess, onDeleteMyGroupEventError, id];
 }
+
+class JoinGroupEvent extends MyGroupEvent {
+  final String groupId;
+  final Function? onJoinSuccess;
+  final Function? onJoinError;
+
+  JoinGroupEvent({
+    required this.groupId,
+    this.onJoinSuccess,
+    this.onJoinError,
+  });
+  @override
+  List<Object?> get props => [
+        groupId,
+        onJoinSuccess,
+        onJoinError,
+      ];
+}

@@ -153,4 +153,8 @@ class PrefUtils {
       return '';
     }
   }
+
+  getUserName() {}
+
+  getUserAvatar() {}
 }

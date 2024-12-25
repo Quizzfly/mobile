@@ -84,7 +84,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   ) async {
     PrefUtils().setAccessToken(resp.data?.accessToken ?? '');
     PrefUtils().setRefreshToken(resp.data?.refreshToken ?? '');
-
+    PrefUtils().setTokenExpires(resp.data?.tokenExpires ?? 0);
     emit(state.copyWith(
       loginModelObj: state.loginModelObj?.copyWith(),
     ));
