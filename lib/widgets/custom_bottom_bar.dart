@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../core/app_export.dart';
-import '../presentation/enter_pin_screen/enter_pin_screen.dart';
+import '../presentation/play_game/enter_pin_screen/enter_pin_screen.dart';
 
 // ignore: constant_identifier_names
 enum BottomBarEnum { Home, Library, Group, Account }

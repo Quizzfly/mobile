@@ -6,17 +6,18 @@ class QuizStartedData {
   final List<Map<String, String>> answers;
   final String quizType;
   final int timeLimit;
-  final int numberQuestion;
+  // final int numberQuestion;
   QuizStartedData(
       {required this.questionId,
       required this.answers,
       required this.quizType,
       required this.timeLimit,
-      required this.numberQuestion});
+      // required this.numberQuestion
+      });
 
   factory QuizStartedData.fromJson(Map<String, dynamic> json) {
     final question = json['question'] as Map<String, dynamic>;
-    final questions = json['questions'] as List;
+    // final questions = json['questions'] as List;
     final answers = (question['answers'] as List)
         .map((answer) => {
               'id': answer['id'] as String,
@@ -29,7 +30,7 @@ class QuizStartedData {
       answers: answers,
       quizType: question['quiz_type'] as String,
       timeLimit: question['time_limit'] as int,
-      numberQuestion: questions.length,
+      // numberQuestion: questions.length,
     );
   }
 }

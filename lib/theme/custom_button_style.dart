@@ -60,6 +60,14 @@ class CustomButtonStyles {
         elevation: 0,
         padding: EdgeInsets.zero,
       );
+  static ButtonStyle get fillErrorRadius20 => ElevatedButton.styleFrom(
+        backgroundColor: appTheme.red600,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.h),
+        ),
+        elevation: 0,
+        padding: EdgeInsets.zero,
+      );
   static ButtonStyle get fillPrimaryRadius20 => ElevatedButton.styleFrom(
         backgroundColor: theme.colorScheme.primary,
         shape: RoundedRectangleBorder(

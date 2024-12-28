@@ -56,7 +56,7 @@ final Map<String, String> enUs = {
   "msg_you_have_played": "You have played a total 24 quizzes this month!",
   "msg_you_have_played2": "You have played a total",
   "lbl_enter": "Enter",
-
+  "msg_write_your_comment": "Write your comment",
 // Leaderboard Screen
   "lbl_06d_23h 00m": "06d 23h 00m",
   "lbl_1_053_qp": "1,053 QP",
@@ -244,6 +244,10 @@ final Map<String, String> enUs = {
   "lbl_create_group": "Create group",
   "msg_this_is_a_back_to": "No description",
   "lbl_hello": "Untitled",
+  "lbl_add_image": "Add image here +",
+  "lbl_create": "Create",
+  "lbl_enter_description": "Enter description ...",
+  "lbl_enter_name": "Enter name ...",
   //Network error
   "msg_newtwork_err": "Network Error",
   "msg_something_went wrong": "Something went wrong",
