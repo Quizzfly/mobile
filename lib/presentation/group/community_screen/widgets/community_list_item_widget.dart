@@ -1,7 +1,7 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
 import '../../../../../core/app_export.dart';
-import '../../../../../widgets/custom_text_form_field.dart';
 import '../../../../routes/navigation_args.dart';
 import '../bloc/community_bloc.dart';
 import '../models/community_list_item_model.dart';
@@ -13,10 +13,12 @@ class CommunityListItemWidget extends StatelessWidget {
     super.key,
     this.callDetail,
     required this.index,
+    this.onDelete,
   });
   final CommunityListItemModel communityListItemModelObj;
   VoidCallback? callDetail;
   final int index;
+  Function(String)? onDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -48,13 +50,13 @@ class CommunityListItemWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.max,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildHeader(),
+            _buildHeader(context),
             SizedBox(height: 12.h),
             Divider(
               color: appTheme.gray100,
             ),
             SizedBox(height: 12.h),
-            _buildContent(),
+            _buildDescriptionSection(context),
             SizedBox(height: 20.h),
             _buildInteractionBar(),
             SizedBox(height: 16.h),
@@ -69,7 +71,7 @@ class CommunityListItemWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(BuildContext context) {
     return Row(
       children: [
         CircleAvatar(
@@ -99,30 +101,44 @@ class CommunityListItemWidget extends StatelessWidget {
             ],
           ),
         ),
+        Container(
+          alignment: Alignment.centerRight,
+          child: PopupMenuButton<String>(
+            icon: Icon(
+              Icons.more_vert,
+              color: appTheme.gray500,
+            ),
+            itemBuilder: (BuildContext context) => [
+              PopupMenuItem<String>(
+                value: 'delete',
+                child: Text('Delete', style: TextStyle(color: appTheme.red900)),
+              ),
+            ],
+            onSelected: (String value) {
+              if (value == 'delete') {
+                _showDeleteConfirmationDialog(context);
+              }
+            },
+          ),
+        )
       ],
     );
   }
 
-  Widget _buildContent() {
+  Widget _buildDescriptionSection(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          communityListItemModelObj.description!,
+          communityListItemModelObj.description ?? '',
           style:
               CustomTextStyles.bodyMediumRobotoGray90003.copyWith(height: 1.5),
         ),
         SizedBox(height: 12.h),
-        if (communityListItemModelObj.image!.contains('http'))
-          ClipRRect(
-            borderRadius: BorderRadius.circular(8.h),
-            child: Image.network(
-              communityListItemModelObj.image!,
-              width: double.infinity,
-              height: 200.h,
-              fit: BoxFit.cover,
-            ),
-          ),
+        if (communityListItemModelObj.images != null &&
+            communityListItemModelObj.images!.isNotEmpty)
+          _buildImageGrid(communityListItemModelObj.images),
+        SizedBox(height: 12.h),
         if (communityListItemModelObj.quizzflyId != null &&
             communityListItemModelObj.quizzflyId!.isNotEmpty) ...[
           InkWell(
@@ -235,6 +251,133 @@ class CommunityListItemWidget extends StatelessWidget {
     );
   }
 
+  Widget _buildImageGrid(List<String>? imageUrls) {
+    if (imageUrls == null || imageUrls.isEmpty) return const SizedBox.shrink();
+
+    final int imageCount = imageUrls.length;
+
+    if (imageCount == 1) {
+      return AspectRatio(
+        aspectRatio: 16 / 9,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(8.h),
+          child: Image.network(
+            imageUrls[0],
+            fit: BoxFit.cover,
+          ),
+        ),
+      );
+    }
+
+    // If two images, show them side by side
+    if (imageCount == 2) {
+      return Row(
+        children: [
+          for (var i = 0; i < 2; i++)
+            Expanded(
+              child: Padding(
+                padding: EdgeInsets.only(left: i == 0 ? 0 : 8.h),
+                child: AspectRatio(
+                  aspectRatio: 1,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8.h),
+                    child: Image.network(
+                      imageUrls[i],
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+        ],
+      );
+    }
+
+    // If three images, show one large and two small
+    if (imageCount == 3) {
+      return Row(
+        children: [
+          Expanded(
+            flex: 2,
+            child: AspectRatio(
+              aspectRatio: 1,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8.h),
+                child: Image.network(
+                  imageUrls[0],
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ),
+          SizedBox(width: 8.h),
+          Expanded(
+            child: Column(
+              children: [
+                for (var i = 1; i < 3; i++) ...[
+                  if (i > 1) SizedBox(height: 8.h),
+                  AspectRatio(
+                    aspectRatio: 1,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8.h),
+                      child: Image.network(
+                        imageUrls[i],
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ],
+              ],
+            ),
+          ),
+        ],
+      );
+    }
+
+    // For 4 or more images, show grid with "more" overlay on last image if needed
+    return GridView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 2,
+        crossAxisSpacing: 8.h,
+        mainAxisSpacing: 8.h,
+      ),
+      itemCount: imageCount > 4 ? 4 : imageCount,
+      itemBuilder: (context, index) {
+        return Stack(
+          fit: StackFit.expand,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(8.h),
+              child: Image.network(
+                imageUrls[index],
+                fit: BoxFit.cover,
+              ),
+            ),
+            if (index == 3 && imageCount > 4)
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8.h),
+                child: Container(
+                  color: Colors.black.withOpacity(0.5),
+                  child: Center(
+                    child: Text(
+                      '+${imageCount - 4}',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20.h,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+          ],
+        );
+      },
+    );
+  }
+
   Widget _buildInteractionBar() {
     return Row(
       children: [
@@ -319,59 +462,24 @@ class CommunityListItemWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildCommentSection(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 32.h,
-          height: 32.h,
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            image: DecorationImage(
-              image: NetworkImage(PrefUtils().getAvatar()),
-              fit: BoxFit.cover,
-            ),
-          ),
-        ),
-        SizedBox(width: 12.h),
-        Expanded(
-          child: CustomTextFormField(
-            controller: communityListItemModelObj.commentInputFieldController,
-            hintText: "msg_write_your_comment".tr,
-            contentPadding: EdgeInsets.symmetric(
-              horizontal: 16.h,
-              vertical: 8.h,
-            ),
-            borderDecoration:
-                TextFormFieldStyleHelper.outlineBlueGrayTL82.copyWith(
-              borderRadius: BorderRadius.circular(20.h),
-            ),
-            fillcolor: appTheme.gray50,
-          ),
-        ),
-        SizedBox(width: 8.h),
-        _buildActionButton(Icons.attach_file, appTheme.gray500),
-        SizedBox(width: 8.h),
-        _buildActionButton(Icons.send, appTheme.deppPurplePrimary),
-      ],
-    );
-  }
-
-  Widget _buildActionButton(IconData icon, Color color) {
-    return Container(
-      padding: EdgeInsets.all(8.h),
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        border: Border.all(
-          color: color,
-          width: 1.5.h,
-        ),
-      ),
-      child: Icon(
-        icon,
-        color: color,
-        size: 20.h,
-      ),
-    );
+  void _showDeleteConfirmationDialog(BuildContext context) {
+    AwesomeDialog(
+      context: context,
+      dialogType: DialogType.warning,
+      animType: AnimType.bottomSlide,
+      title: 'Delete Confirmation',
+      desc: 'Are you sure you want to delete this item?',
+      btnCancelOnPress: () {},
+      btnOkOnPress: () {
+        if (onDelete != null && communityListItemModelObj.id != null) {
+          onDelete!(communityListItemModelObj.id!);
+        }
+      },
+      btnCancelText: 'Cancel',
+      btnCancelColor: appTheme.gray500,
+      btnOkText: 'Delete',
+      btnOkColor: appTheme.red900,
+      buttonsTextStyle: const TextStyle(color: Colors.white),
+    ).show();
   }
 }

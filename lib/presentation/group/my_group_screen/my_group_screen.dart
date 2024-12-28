@@ -119,6 +119,21 @@ class _MyGroupScreenState extends State<MyGroupScreen> {
     return BlocSelector<MyGroupBloc, MyGroupState, MyGroupModel?>(
       selector: (state) => state.myGroupModelObj,
       builder: (context, myGroupModelObj) {
+        if (myGroupModelObj!.myGroupListItemList.isEmpty) {
+          return Padding(
+            padding: EdgeInsets.only(top: 100.h, bottom: 100.h, left: 50.h),
+            child: Column(
+              children: [
+                Image.asset(
+                  ImageConstant.imgEmpty,
+                  width: 250,
+                  height: 250,
+                ),
+                const Text('No group found. Create one now!'),
+              ],
+            ),
+          );
+        }
         return ListView.separated(
           padding: EdgeInsets.zero,
           physics: const BouncingScrollPhysics(),
@@ -127,11 +142,10 @@ class _MyGroupScreenState extends State<MyGroupScreen> {
               height: 15.h,
             );
           },
-          itemCount: myGroupModelObj?.myGroupListItemList.length ?? 0,
+          itemCount: myGroupModelObj.myGroupListItemList.length,
           itemBuilder: (context, index) {
             MyGroupListItemModel model =
-                myGroupModelObj?.myGroupListItemList[index] ??
-                    const MyGroupListItemModel();
+                myGroupModelObj.myGroupListItemList[index];
             return MyGroupListItemWidget(
               model,
               callDetail: () {

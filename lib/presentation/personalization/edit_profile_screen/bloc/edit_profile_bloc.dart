@@ -3,10 +3,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:equatable/equatable.dart';
 import '../../../../core/app_export.dart';
+import '../../../../data/models/logout/post_logout_resp.dart';
 import '../../../../data/models/my_user/get_my_user_resp.dart';
 import '../../../../data/models/selectionPopupModel/selection_popup_model.dart';
 import '../../../../data/models/update_profile/patch_update_profile_req.dart';
-import '../../../../data/models/upload_file/post_upload_file.dart';
+import '../../../../data/models/upload_file/post_upload_file_resp.dart';
 import '../../../../data/repository/repository.dart';
 import '../models/edit_profile_model.dart';
 part 'edit_profile_event.dart';
@@ -20,6 +21,7 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
     on<CreateLGetUserEvent>(_callGetMyUser);
     on<ImagePickedEvent>(_onImagePicked);
     on<UpdateProfileEvent>(_onUpdateProfile);
+    on<CreateLogoutEvent>(_callLogoutPost);
   }
 
   final _repository = Repository();
@@ -149,4 +151,30 @@ class EditProfileBloc extends Bloc<EditProfileEvent, EditProfileState> {
       event.onError?.call();
     });
   }
+
+  FutureOr<void> _callLogoutPost(
+    CreateLogoutEvent event,
+    Emitter<EditProfileState> emit,
+  ) async {
+    try {
+      String accessToken = PrefUtils().getAccessToken();
+
+      bool success = await _repository.logoutPost(
+        headers: {'Authorization': 'Bearer $accessToken '},
+      );
+      if (success) {
+        event.onCreateLogoutEventSuccess?.call();
+      } else {
+        event.onCreateLogoutEventError?.call();
+      }
+    } catch (error) {
+      event.onCreateLogoutEventError?.call();
+    }
+  }
+
+  void onLogoutPostSuccess(
+    PostLogoutResp resp,
+    Emitter<EditProfileState> emit,
+  ) {}
+  void onLogoutPostError() {}
 }

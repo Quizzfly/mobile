@@ -7,7 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import '../../../../../core/app_export.dart';
 import '../../../../../data/models/update_quizzfly_setting/put_update_quizzfly_setting_req.dart';
 import '../../../../../data/models/update_quizzfly_setting/put_update_quizzfly_setting_resp.dart';
-import '../../../../../data/models/upload_file/post_upload_file.dart';
+import '../../../../data/models/upload_file/post_upload_file_resp.dart';
 import '../../../../../data/repository/repository.dart';
 import '../models/quizzfly_setting_model.dart';
 part 'quizzfly_setting_event.dart';

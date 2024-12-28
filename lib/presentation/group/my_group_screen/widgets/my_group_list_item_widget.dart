@@ -93,7 +93,10 @@ class MyGroupListItemWidget extends StatelessWidget {
                     alignment: Alignment.bottomRight,
                     padding: EdgeInsets.only(right: 20.h),
                     child: PopupMenuButton<String>(
-                      icon: const Icon(Icons.more_vert),
+                      icon: Icon(
+                        Icons.more_vert,
+                        color: appTheme.gray500,
+                      ),
                       itemBuilder: (BuildContext context) => [
                         PopupMenuItem<String>(
                           value: 'delete',

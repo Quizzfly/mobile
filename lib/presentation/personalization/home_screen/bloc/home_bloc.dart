@@ -4,7 +4,7 @@ import 'package:equatable/equatable.dart';
 import '../../../../data/models/create_group/post_create_group_req.dart';
 import '../../../../core/app_export.dart';
 import '../../../../data/models/library_quizzfly/get_library_quizzfly_resp.dart';
-import '../../../../data/models/upload_file/post_upload_file.dart';
+import '../../../../data/models/upload_file/post_upload_file_resp.dart';
 import '../../../../data/repository/repository.dart';
 import '../models/grid_label_item_model.dart';
 import '../models/home_initial_model.dart';

@@ -55,3 +55,13 @@ class UpdateProfileEvent extends EditProfileEvent {
   @override
   List<Object?> get props => [onSuccess, onError];
 }
+// ignore: must_be_immutable
+class CreateLogoutEvent extends EditProfileEvent {
+  CreateLogoutEvent(
+      {this.onCreateLogoutEventSuccess, this.onCreateLogoutEventError});
+  Function? onCreateLogoutEventSuccess;
+  Function? onCreateLogoutEventError;
+  @override
+  List<Object?> get props =>
+      [onCreateLogoutEventSuccess, onCreateLogoutEventError];
+}

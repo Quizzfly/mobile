@@ -103,6 +103,7 @@ class DetailPostScreen extends StatelessWidget {
                           child: Divider(
                             indent: 8.h,
                             endIndent: 8.h,
+                            color: appTheme.gray100,
                           ),
                         ),
                         SizedBox(height: 16.h),
@@ -209,6 +210,7 @@ class DetailPostScreen extends StatelessWidget {
             if (detailPostModelObj.files != null &&
                 detailPostModelObj.files!.isNotEmpty)
               _buildImageGrid(detailPostModelObj.files),
+            SizedBox(height: 12.h),
             if (detailPostModelObj.quizzflyId != null &&
                 detailPostModelObj.quizzflyId!.isNotEmpty) ...[
               InkWell(

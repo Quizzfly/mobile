@@ -3,7 +3,6 @@ import 'widgets/show_dialog_widget.dart';
 import 'package:responsive_grid_list/responsive_grid_list.dart';
 import '../../../../core/app_export.dart';
 import '../../../../routes/navigation_args.dart';
-import '../../../../theme/custom_button_style.dart';
 import '../../../../widgets/custom_elevated_button.dart';
 import 'bloc/home_bloc.dart';
 import 'models/grid_label_item_model.dart';
@@ -54,41 +53,32 @@ class HomeInitialPageState extends State<HomeInitialPage> {
                       child: _greetingWidget(),
                     ),
                     SizedBox(height: 12.h),
-                    Row(children: [
-                      CustomElevatedButton(
-                        width: 118.h,
-                        text: "lbl_join_game".tr,
-                        margin: EdgeInsets.only(left: 4.h),
-                        gradientColors: const [
-                          Color(0xFF37d2c0),
-                          Color(0xFF7286ff)
-                        ],
-                        gradientBegin: Alignment.topLeft,
-                        gradientEnd: Alignment.bottomRight,
-                        buttonTextStyle:
-                            CustomTextStyles.bodyMediumRobotoWhiteA700,
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      CustomElevatedButton(
-                        width: 118.h,
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (_) => ShowDialogWidget.builder(context),
-                          );
-                        },
-                        text: "lbl_create_group".tr,
-                        margin: EdgeInsets.only(left: 4.h),
-                        buttonStyle: CustomButtonStyles.outlineDeepPurple20,
-                        buttonTextStyle: CustomTextStyles.bodyMediumBlack900_1,
-                        borderColors: const [
-                          Color(0xFF37D2C0),
-                          Color(0xFF7286FF)
-                        ],
-                      ),
-                    ]),
+                    Row(
+                      children: [
+                        CustomElevatedButton(
+                          width: 130.h,
+                          text: "lbl_create_group".tr,
+                          margin: EdgeInsets.only(left: 4.h),
+                          gradientColors: const [
+                            Color(0xFF37d2c0),
+                            Color(0xFF7286ff)
+                          ],
+                          gradientBegin: Alignment.topLeft,
+                          gradientEnd: Alignment.bottomRight,
+                          buttonTextStyle:
+                              CustomTextStyles.bodyMediumRobotoWhiteA700,
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (_) => ShowDialogWidget.builder(context),
+                            );
+                          },
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                      ],
+                    ),
                     SizedBox(height: 42.h),
                     _buildJoinGameSection(context),
                     SizedBox(height: 56.h),
@@ -263,6 +253,21 @@ class HomeInitialPageState extends State<HomeInitialPage> {
       child: BlocSelector<HomeBloc, HomeState, HomeInitialModel?>(
         selector: (state) => state.homeInitialModelObj,
         builder: (context, homeInitialModelObj) {
+          if (homeInitialModelObj!.recentActivitiesGridItemList.isEmpty) {
+            return Padding(
+              padding: EdgeInsets.only(top: 50.h, bottom: 100.h, left: 50.h),
+              child: Column(
+                children: [
+                  Image.asset(
+                    ImageConstant.imgEmpty,
+                    width: 250,
+                    height: 250,
+                  ),
+                  const Text('No quizzfly found. Create one now!'),
+                ],
+              ),
+            );
+          }
           return ResponsiveGridListBuilder(
             minItemWidth: 1,
             minItemsPerRow: 2,
@@ -276,11 +281,10 @@ class HomeInitialPageState extends State<HomeInitialPage> {
               children: items,
             ),
             gridItems: List.generate(
-              homeInitialModelObj?.recentActivitiesGridItemList.length ?? 0,
+              homeInitialModelObj.recentActivitiesGridItemList.length,
               (index) {
                 RecentActivitiesGridItemModel model =
-                    homeInitialModelObj?.recentActivitiesGridItemList[index] ??
-                        RecentActivitiesGridItemModel();
+                    homeInitialModelObj.recentActivitiesGridItemList[index];
                 return RecentActivitiesGridItemWidget(model, callDetail: () {
                   callDetail(context, index);
                 });

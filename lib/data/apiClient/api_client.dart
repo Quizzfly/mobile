@@ -18,7 +18,8 @@ import '../models/register/post_register_resp.dart';
 import '../models/my_user/get_my_user_resp.dart';
 import '../models/update_profile/patch_update_profile_req.dart';
 import '../models/update_quizzfly_setting/put_update_quizzfly_setting_resp.dart';
-import '../models/upload_file/post_upload_file.dart';
+import '../models/upload_file/post_upload_file_resp.dart';
+import '../models/upload_file/post_upload_multiple_file_resp.dart';
 import '../models/verify_delete_user/delete_verify_delete_user_resp.dart';
 import 'network_interceptor.dart';
 
@@ -199,6 +200,49 @@ class ApiClient {
       } else {
         throw response.data != null
             ? UploadFileResp.fromJson(response.data)
+            : 'Something Went Wrong!';
+      }
+    } catch (error, stackTrace) {
+      ProgressDialogUtils.hideProgressDialog();
+      Logger.log(error, stackTrace: stackTrace);
+      rethrow;
+    }
+  }
+
+  Future<UploadMultipleFileResp> uploadMultipleFiles({
+    required List<File> files,
+    Map<String, String> headers = const {},
+  }) async {
+    ProgressDialogUtils.showProgressDialog();
+    try {
+      await isNetworkConnected();
+
+      List<MapEntry<String, MultipartFile>> multipartFiles = [];
+
+      for (var file in files) {
+        String fileName = file.path.split('/').last;
+        MultipartFile multipartFile = await MultipartFile.fromFile(
+          file.path,
+          filename: fileName,
+        );
+        multipartFiles.add(MapEntry("files", multipartFile));
+      }
+
+      FormData formData = FormData();
+      formData.files.addAll(multipartFiles);
+
+      var response = await _dio.post(
+        '$url/api/v1/files/multiple',
+        data: formData,
+        options: Options(headers: headers),
+      );
+
+      ProgressDialogUtils.hideProgressDialog();
+      if (isSuccessCall(response)) {
+        return UploadMultipleFileResp.fromJson(response.data);
+      } else {
+        throw response.data != null
+            ? UploadMultipleFileResp.fromJson(response.data)
             : 'Something Went Wrong!';
       }
     } catch (error, stackTrace) {
@@ -535,6 +579,27 @@ class ApiClient {
     }
   }
 
+  Future<bool> deletePost(
+      {Map<String, String> headers = const {}, String? id}) async {
+    ProgressDialogUtils.showProgressDialog();
+    try {
+      await isNetworkConnected();
+      Response response = await _dio.delete(
+        '$url/api/v1/posts/$id',
+        options: Options(headers: headers),
+      );
+      ProgressDialogUtils.hideProgressDialog();
+      return response.statusCode == 200;
+    } catch (error, stackTrace) {
+      ProgressDialogUtils.hideProgressDialog();
+      Logger.log(
+        error,
+        stackTrace: stackTrace,
+      );
+      rethrow;
+    }
+  }
+
   Future<PostLoginResp> loginWithGoogle({
     Map<String, String> headers = const {},
     Map requestData = const {},
@@ -818,6 +883,30 @@ class ApiClient {
       );
       ProgressDialogUtils.hideProgressDialog();
       return response.statusCode == 200;
+    } catch (error, stackTrace) {
+      ProgressDialogUtils.hideProgressDialog();
+      Logger.log(
+        error,
+        stackTrace: stackTrace,
+      );
+      rethrow;
+    }
+  }
+
+  Future<bool> postNewPost(
+      {Map<String, String> headers = const {},
+      String? id,
+      Map requestData = const {}}) async {
+    ProgressDialogUtils.showProgressDialog();
+    try {
+      await isNetworkConnected();
+      Response response = await _dio.post(
+        '$url/api/v1/groups/$id/posts',
+        options: Options(headers: headers),
+        data: requestData,
+      );
+      ProgressDialogUtils.hideProgressDialog();
+      return response.statusCode == 201;
     } catch (error, stackTrace) {
       ProgressDialogUtils.hideProgressDialog();
       Logger.log(

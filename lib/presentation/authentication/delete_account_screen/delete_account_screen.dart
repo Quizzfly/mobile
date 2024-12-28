@@ -314,7 +314,7 @@ class DeleteAccountScreen extends StatelessWidget {
   void _onLogoutPostEventSuccess(BuildContext context) {
     PrefUtils().clearPreferencesData();
 
-    NavigatorService.pushNamed(
+    NavigatorService.pushNamedAndRemoveUntil(
       AppRoutes.loginScreen,
     );
   }

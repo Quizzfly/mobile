@@ -44,6 +44,8 @@ class EditProfileScreen extends StatelessWidget {
                   SizedBox(height: 4.h),
                   _buildAccountDetailsForm(context),
                   SizedBox(height: 20.h),
+                  _buildLogoutButton(context),
+                  SizedBox(height: 20.h),
                   SizedBox(
                     width: 290.h,
                     child: RichText(
@@ -77,7 +79,7 @@ class EditProfileScreen extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                     ),
                   ),
-                  SizedBox(height: 104.h)
+                  SizedBox(height: 84.h)
                 ],
               ),
             ),
@@ -85,6 +87,37 @@ class EditProfileScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget _buildLogoutButton(BuildContext context) {
+    return CustomElevatedButton(
+      height: 40.h,
+      text: "Logout",
+      buttonStyle: CustomButtonStyles.fillErrorRadius20,
+      buttonTextStyle: CustomTextStyles.titleSmallOnErrorContainer,
+      onPressed: () => _handleLogoutButtonPress(context),
+    );
+  }
+
+  void _handleLogoutButtonPress(BuildContext context) {
+    context.read<EditProfileBloc>().add(
+          CreateLogoutEvent(
+            onCreateLogoutEventSuccess: () {
+              PrefUtils().clearPreferencesData();
+              NavigatorService.pushNamedAndRemoveUntil(
+                AppRoutes.loginScreen,
+              );
+            },
+            onCreateLogoutEventError: () {
+              showTopSnackBar(
+                Overlay.of(context),
+                const CustomSnackBar.error(
+                  message: 'Logout failed',
+                ),
+              );
+            },
+          ),
+        );
   }
 
   /// Section Widget

@@ -8,13 +8,16 @@ import '../models/library_list_item_model.dart';
 // ignore_for_file: must_be_immutable
 class LibraryListItemWidget extends StatelessWidget {
   LibraryListItemWidget(this.libraryListItemModelObj,
-      {super.key, this.callDetail, this.onDelete});
+      {super.key, this.callDetail, this.onDelete, this.check});
 
   LibraryListItemModel libraryListItemModelObj;
 
   VoidCallback? callDetail;
 
   Function(String)? onDelete;
+
+  bool? check;
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -121,28 +124,32 @@ class LibraryListItemWidget extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Container(
-                    width: double.maxFinite,
-                    alignment: Alignment.bottomRight,
-                    padding: EdgeInsets.only(right: 20.h),
-                    child: PopupMenuButton<String>(
-                      icon: const Icon(Icons.more_vert),
-                      itemBuilder: (BuildContext context) => [
-                        PopupMenuItem<String>(
-                          value: 'delete',
-                          child: Text(
-                            'Delete',
-                            style: TextStyle(color: appTheme.red900),
-                          ),
+                  if (check == true)
+                    Container(
+                      width: double.maxFinite,
+                      alignment: Alignment.bottomRight,
+                      padding: EdgeInsets.only(right: 20.h),
+                      child: PopupMenuButton<String>(
+                        icon: Icon(
+                          Icons.more_vert,
+                          color: appTheme.gray500,
                         ),
-                      ],
-                      onSelected: (String value) {
-                        if (value == 'delete') {
-                          _showDeleteConfirmationDialog(context);
-                        }
-                      },
-                    ),
-                  )
+                        itemBuilder: (BuildContext context) => [
+                          PopupMenuItem<String>(
+                            value: 'delete',
+                            child: Text(
+                              'Delete',
+                              style: TextStyle(color: appTheme.red900),
+                            ),
+                          ),
+                        ],
+                        onSelected: (String value) {
+                          if (value == 'delete') {
+                            _showDeleteConfirmationDialog(context);
+                          }
+                        },
+                      ),
+                    )
                 ],
               ),
             )

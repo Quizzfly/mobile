@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../../../../core/app_export.dart';
-import '../../../../theme/custom_button_style.dart';
-import '../../../../widgets/custom_elevated_button.dart';
-import '../../../../widgets/custom_text_form_field.dart';
 import '../../../routes/navigation_args.dart';
+import '../../../widgets/custom_outlined_button.dart';
 import 'bloc/community_bloc.dart';
 import 'models/community_list_item_model.dart';
 import 'widgets/community_list_item_widget.dart';
 import 'widgets/community_shimmer_loading.dart';
+import 'widgets/create_bottom_sheet.dart';
 
 class CommunityActivityTabPage extends StatelessWidget {
   const CommunityActivityTabPage({super.key});
@@ -24,7 +25,7 @@ class CommunityActivityTabPage extends StatelessWidget {
             SliverAppBar(
               floating: true,
               pinned: false,
-              expandedHeight: 140,
+              expandedHeight: 50,
               backgroundColor: Colors.white,
               automaticallyImplyLeading: false,
               flexibleSpace: LayoutBuilder(
@@ -36,7 +37,7 @@ class CommunityActivityTabPage extends StatelessWidget {
                         ? Container(
                             color: Colors.white,
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 16, vertical: 8),
+                                horizontal: 16, vertical: 5),
                             child: Row(
                               children: [
                                 CircleAvatar(
@@ -51,23 +52,24 @@ class CommunityActivityTabPage extends StatelessWidget {
                                 ),
                                 const SizedBox(width: 12),
                                 Expanded(
-                                  child: CustomTextFormField(
-                                    controller: state.postInputFieldController,
-                                    hintText: "Post something",
-                                    borderDecoration: TextFormFieldStyleHelper
-                                        .outlineBlueGrayTL82
-                                        .copyWith(
-                                            borderRadius:
-                                                BorderRadius.circular(20.h)),
+                                  child: CustomOutlinedButton(
+                                    text: "Post something....",
+                                    buttonStyle: OutlinedButton.styleFrom(
+                                      backgroundColor: Colors.grey[100],
+                                      alignment: Alignment.centerLeft,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      side: BorderSide(color: appTheme.gray200),
+                                    ),
+                                    buttonTextStyle: const TextStyle(
+                                      color: Colors.grey,
+                                      fontSize: 16,
+                                    ),
+                                    height: 40.h,
+                                    onPressed: () =>
+                                        _showPostBottomSheet(context),
                                   ),
-                                ),
-                                const SizedBox(width: 12),
-                                CustomElevatedButton(
-                                  height: 40,
-                                  width: 100,
-                                  text: "Post",
-                                  buttonStyle:
-                                      CustomButtonStyles.fillPrimaryRadius20,
                                 ),
                               ],
                             ),
@@ -89,7 +91,7 @@ class CommunityActivityTabPage extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 Padding(
-                                  padding: const EdgeInsets.all(12),
+                                  padding: const EdgeInsets.all(10),
                                   child: Row(
                                     children: [
                                       CircleAvatar(
@@ -104,29 +106,25 @@ class CommunityActivityTabPage extends StatelessWidget {
                                       ),
                                       const SizedBox(width: 16),
                                       Expanded(
-                                        child: CustomTextFormField(
-                                          controller:
-                                              state.postInputFieldController,
-                                          hintText: "Post something",
-                                          borderDecoration:
-                                              TextFormFieldStyleHelper
-                                                  .outlineBlueGrayTL82
-                                                  .copyWith(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              20.h)),
+                                        child: CustomOutlinedButton(
+                                          text: "Post something....",
+                                          buttonStyle: OutlinedButton.styleFrom(
+                                            backgroundColor: Colors.grey[100],
+                                            alignment: Alignment.centerLeft,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(20),
+                                            ),
+                                          ),
+                                          buttonTextStyle: const TextStyle(
+                                            color: Colors.grey,
+                                            fontSize: 16,
+                                          ),
+                                          onPressed: () =>
+                                              _showPostBottomSheet(context),
                                         ),
                                       ),
                                     ],
-                                  ),
-                                ),
-                                const Divider(),
-                                Padding(
-                                  padding: const EdgeInsets.all(12),
-                                  child: CustomElevatedButton(
-                                    text: "Add New Post",
-                                    buttonStyle:
-                                        CustomButtonStyles.fillPrimaryRadius20,
                                   ),
                                 ),
                               ],
@@ -137,7 +135,7 @@ class CommunityActivityTabPage extends StatelessWidget {
               ),
             ),
             SliverPadding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
+              padding: const EdgeInsets.symmetric(horizontal: 5),
               sliver: SliverList(
                 delegate: SliverChildBuilderDelegate(
                   (context, index) {
@@ -152,6 +150,9 @@ class CommunityActivityTabPage extends StatelessWidget {
                         index: index,
                         callDetail: () {
                           callDetail(context, index);
+                        },
+                        onDelete: (String id) {
+                          callAPIDelete(context, id);
                         },
                       ),
                     );
@@ -181,5 +182,60 @@ class CommunityActivityTabPage extends StatelessWidget {
     if (result == true) {
       context.read<CommunityBloc>().add(CommunityInitialEvent());
     }
+  }
+
+  void _showPostBottomSheet(BuildContext context) {
+    final communityBloc = context.read<CommunityBloc>();
+
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) => BlocProvider.value(
+        value: communityBloc,
+        child: const CreatePostBottomSheet(),
+      ),
+    );
+  }
+
+  callAPIDelete(BuildContext context, String id) {
+    context.read<CommunityBloc>().add(
+          DeletePostEvent(
+            id: id,
+            onDeletePostEventSuccess: () {
+              _onDeletePostEventSuccess(context);
+            },
+            onDeletePostEventError: () {
+              _onDeletePostEventError(context);
+            },
+          ),
+        );
+  }
+
+  void _onDeletePostEventSuccess(BuildContext context) {
+    context.read<CommunityBloc>().add(
+          CreateGetCommunityPostsEvent(
+            groupId: context.read<CommunityBloc>().state.id,
+            onGetCommunityPostsSuccess: () {
+              showTopSnackBar(
+                Overlay.of(context),
+                const CustomSnackBar.success(
+                  message: 'Delete succeed',
+                ),
+              );
+            },
+          ),
+        );
+  }
+
+  void _onDeletePostEventError(BuildContext context) {
+    showTopSnackBar(
+      Overlay.of(context),
+      const CustomSnackBar.error(
+        message: 'Delete failed',
+      ),
+    );
   }
 }

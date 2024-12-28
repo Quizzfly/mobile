@@ -71,3 +71,68 @@ class InviteMemberEvent extends CommunityEvent {
         onInviteMemberError,
       ];
 }
+
+class ImagePickedEvent extends CommunityEvent {
+  final List<dynamic> imageFile;
+
+  ImagePickedEvent(this.imageFile);
+
+  @override
+  List<Object> get props => [imageFile];
+}
+
+// ignore: must_be_immutable
+class CreatePostNewPostEvent extends CommunityEvent {
+  CreatePostNewPostEvent({
+    this.groupId,
+    this.onPostNewPostSuccess,
+    this.onPostNewPostError,
+  });
+
+  String? groupId;
+  Function? onPostNewPostSuccess;
+  Function? onPostNewPostError;
+
+  @override
+  List<Object?> get props =>
+      [groupId, onPostNewPostSuccess, onPostNewPostSuccess];
+}
+
+// ignore: must_be_immutable
+class CreateGetLibraryEvent extends CommunityEvent {
+  CreateGetLibraryEvent({
+    this.id,
+    this.onGetLibrarySuccess,
+    this.onGetLibraryError,
+  });
+
+  Function? onGetLibrarySuccess;
+  Function? onGetLibraryError;
+  String? id;
+  @override
+  List<Object?> get props => [onGetLibrarySuccess, onGetLibraryError, id];
+}
+
+class SelectQuizzflyEvent extends CommunityEvent {
+  final LibraryListItemModel? quizzfly;
+  final bool? forceUpdateSelectedQuizzfly;
+  SelectQuizzflyEvent({this.quizzfly, this.forceUpdateSelectedQuizzfly});
+
+  @override
+  List<Object?> get props => [quizzfly, forceUpdateSelectedQuizzfly];
+}
+
+class DeletePostEvent extends CommunityEvent {
+  DeletePostEvent({
+    this.id,
+    this.onDeletePostEventSuccess,
+    this.onDeletePostEventError,
+  });
+
+  final Function? onDeletePostEventSuccess;
+  final Function? onDeletePostEventError;
+  final String? id;
+  @override
+  List<Object?> get props =>
+      [onDeletePostEventSuccess, onDeletePostEventError, id];
+}

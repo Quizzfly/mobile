@@ -10,7 +10,7 @@ class CommunityListItemModel extends Equatable {
     this.memberAvatar,
     this.host,
     this.description,
-    this.image,
+    this.images,
     this.likeCount,
     this.commentCount,
     this.commentInputFieldController,
@@ -26,7 +26,7 @@ class CommunityListItemModel extends Equatable {
     memberAvatar = memberAvatar ?? ImageConstant.imageAvatar;
     host = host ?? "Host";
     description = description ?? "This is what i learned...";
-    image = image ?? ImageConstant.imgNotFound;
+    images = images ?? [];
     likeCount = likeCount ?? 16;
     commentCount = commentCount ?? 24;
     commentInputFieldController =
@@ -44,7 +44,7 @@ class CommunityListItemModel extends Equatable {
   String? memberAvatar;
   String? host;
   String? description;
-  String? image;
+  List<String>? images;
   int? likeCount;
   int? commentCount;
   TextEditingController? commentInputFieldController;
@@ -60,7 +60,7 @@ class CommunityListItemModel extends Equatable {
     String? memberAvatar,
     String? host,
     String? description,
-    String? image,
+    List<String>? images,
     int? likeCount,
     int? commentCount,
     String? type,
@@ -76,7 +76,7 @@ class CommunityListItemModel extends Equatable {
       likeCount: likeCount ?? this.likeCount,
       commentCount: commentCount ?? this.commentCount,
       type: type ?? this.type,
-      image: image ?? this.image,
+      images: images ?? this.images,
       commentInputFieldController:
           commentInputFieldController ?? this.commentInputFieldController,
       isLiked: isLiked ?? this.isLiked,
@@ -98,9 +98,10 @@ class CommunityListItemModel extends Equatable {
       likeCount: json['react_count'] ?? 0,
       commentCount: json['comment_count'] ?? 0,
       type: json['type'] ?? '',
-      image: (json['files'] != null && json['files'].isNotEmpty)
-          ? json['files'][0]['url']
-          : null,
+      images: json['files'] != null
+          ? List<String>.from(
+              json['files'].map((file) => file['url'] as String))
+          : [],
       isLiked: json['is_liked'] ?? false,
       quizzflyId: (json['quizzfly'] != null && json['quizzfly'].isNotEmpty)
           ? json['quizzfly']['id']
@@ -125,7 +126,7 @@ class CommunityListItemModel extends Equatable {
         memberAvatar,
         host,
         description,
-        image,
+        images,
         likeCount,
         commentCount,
         commentInputFieldController,

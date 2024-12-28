@@ -86,6 +86,21 @@ class LibraryScreen extends StatelessWidget {
     return BlocSelector<LibraryBloc, LibraryState, LibraryModel?>(
       selector: (state) => state.libraryModelObj,
       builder: (context, libraryModelObj) {
+        if (libraryModelObj!.libraryListItemList.isEmpty) {
+          return Padding(
+            padding: EdgeInsets.only(top: 100.h, bottom: 100.h, left: 50.h),
+            child: Column(
+              children: [
+                Image.asset(
+                  ImageConstant.imgEmpty,
+                  width: 250,
+                  height: 250,
+                ),
+                const Text('No quizzfly found. Create one now!'),
+              ],
+            ),
+          );
+        }
         return ListView.separated(
           padding: EdgeInsets.zero,
           physics: const BouncingScrollPhysics(),
@@ -94,11 +109,10 @@ class LibraryScreen extends StatelessWidget {
               height: 15.h,
             );
           },
-          itemCount: libraryModelObj?.libraryListItemList.length ?? 0,
+          itemCount: libraryModelObj.libraryListItemList.length,
           itemBuilder: (context, index) {
             LibraryListItemModel model =
-                libraryModelObj?.libraryListItemList[index] ??
-                    const LibraryListItemModel();
+                libraryModelObj.libraryListItemList[index];
             return LibraryListItemWidget(
               model,
               callDetail: () {
@@ -107,6 +121,7 @@ class LibraryScreen extends StatelessWidget {
               onDelete: (String id) {
                 callAPIDelete(context, id);
               },
+              check: true,
             );
           },
         );

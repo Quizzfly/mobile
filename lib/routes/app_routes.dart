@@ -179,7 +179,7 @@ class AppRoutes {
     return navigateWithSlide(
       context,
       LoginScreen.builder,
-      replace: false, // Will replace current screen
+      replace: true, // Will replace current screen
     );
   }
 
