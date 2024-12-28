@@ -94,6 +94,18 @@ class PrefUtils {
     }
   }
 
+  Future<void> setUserId(String value) {
+    return _sharedPreferences!.setString('userId', value);
+  }
+
+  String getUserId() {
+    try {
+      return _sharedPreferences!.getString('userId') ?? '';
+    } catch (e) {
+      return '';
+    }
+  }
+
   Future<void> setAvatar(String value) {
     return _sharedPreferences!.setString('avatar', value);
   }
@@ -129,4 +141,20 @@ class PrefUtils {
       return '';
     }
   }
+
+  Future<void> setParticipantId(String value) {
+    return _sharedPreferences!.setString('participantId', value);
+  }
+
+  String getParticipantId() {
+    try {
+      return _sharedPreferences!.getString('participantId') ?? '';
+    } catch (e) {
+      return '';
+    }
+  }
+
+  getUserName() {}
+
+  getUserAvatar() {}
 }
