@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../../../core/app_export.dart';
 import '../room_quiz_screen/room_quiz_screen.dart';
 import 'bloc/waiting_room_bloc.dart';
@@ -35,6 +37,16 @@ class _WaitingRoomScreenState extends State<WaitingRoomScreen> {
               builder: (context) => RoomQuizScreen.builder(context),
             ),
           );
+        } else if (state.connectionStatus == ConnectionStatus.error) {
+          showTopSnackBar(
+            Overlay.of(context),
+            CustomSnackBar.error(
+              message: state.error ?? 'An error occurred',
+            ),
+          );
+          NavigatorService.pushNamedAndRemoveUntil(
+            AppRoutes.homeScreen,
+          );
         }
       },
       child: SafeArea(
@@ -61,7 +73,10 @@ class _WaitingRoomScreenState extends State<WaitingRoomScreen> {
                     margin: EdgeInsets.only(left: 15.h, top: 12.h),
                     alignment: Alignment.centerLeft,
                     child: GestureDetector(
-                      onTap: () => NavigatorService.goBack(),
+                      onTap: () {
+                        context.read<WaitingRoomBloc>().add(LeaveRoomEvent());
+                        NavigatorService.goBack();
+                      },
                       child: Container(
                         padding: EdgeInsets.all(10.h),
                         child: Image.asset(

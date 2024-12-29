@@ -100,3 +100,12 @@ class QuizFinishedEvent extends RoomQuizEvent {
   @override
   List<Object?> get props => [];
 }
+
+class PlayerKickedEvent extends RoomQuizEvent {
+  final String reason;
+
+  PlayerKickedEvent(this.reason);
+
+  @override
+  List<Object?> get props => [reason];
+}

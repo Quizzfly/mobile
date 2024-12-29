@@ -40,3 +40,8 @@ class PlayerKickedEvent extends WaitingRoomEvent {
   @override
   List<Object?> get props => [reason];
 }
+
+class LeaveRoomEvent extends WaitingRoomEvent {
+  @override
+  List<Object?> get props => [];
+}

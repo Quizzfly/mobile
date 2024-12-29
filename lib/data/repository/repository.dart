@@ -7,6 +7,7 @@ import '../../data/models/my_group/get_my_group_resp.dart';
 import '../../data/models/change_password/post_change_password_resp.dart';
 import '../../data/models/detail_quizzfly/get_detail_quizzfly_resp.dart';
 import '../../data/models/list_question/get_list_question_resp.dart';
+import '../models/refresh_token/post_refresh_token_resp.dart';
 import '../models/upload_file/post_upload_file_resp.dart';
 import '../apiClient/api_client.dart';
 import '../models/create_group/post_create_group_resp.dart';
@@ -295,5 +296,15 @@ class Repository {
       Map requestData = const {}}) async {
     return await _apiClient.postNewPost(
         headers: headers, id: id, requestData: requestData);
+  }
+
+  Future<PostRefreshTokenResp> refreshToken({
+    Map<String, String> headers = const {},
+    Map requestData = const {},
+  }) async {
+    return await _apiClient.refreshToken(
+      headers: headers,
+      requestData: requestData,
+    );
   }
 }

@@ -1,12 +1,12 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
-import 'package:quizzfly_application_flutter/data/models/create_group/post_create_group_resp.dart';
-import 'package:quizzfly_application_flutter/data/models/detail_post/get_detail_post_resp.dart';
-import 'package:quizzfly_application_flutter/data/models/detail_quizzfly/get_detail_quizzfly_resp.dart';
-import 'package:quizzfly_application_flutter/data/models/list_comment/get_list_comment_resp.dart';
-import 'package:quizzfly_application_flutter/data/models/list_comment/post_comment_resp.dart';
-import 'package:quizzfly_application_flutter/data/models/list_post/get_list_post_group_resp.dart';
-import 'package:quizzfly_application_flutter/data/models/list_question/get_list_question_resp.dart';
+import '../models/create_group/post_create_group_resp.dart';
+import '../models/detail_post/get_detail_post_resp.dart';
+import '../models/detail_quizzfly/get_detail_quizzfly_resp.dart';
+import '../models/list_comment/get_list_comment_resp.dart';
+import '../models/list_comment/post_comment_resp.dart';
+import '../models/list_post/get_list_post_group_resp.dart';
+import '../models/list_question/get_list_question_resp.dart';
 import '../../core/app_export.dart';
 import '../models/change_password/post_change_password_resp.dart';
 import '../models/delete_user/post_request_delete_user_req.dart';
@@ -14,6 +14,7 @@ import '../models/library_quizzfly/get_library_quizzfly_resp.dart';
 import '../models/list_comment/post_react_post_resp.dart';
 import '../models/login/post_login_resp.dart';
 import '../models/my_group/get_my_group_resp.dart';
+import '../models/refresh_token/post_refresh_token_resp.dart';
 import '../models/register/post_register_resp.dart';
 import '../models/my_user/get_my_user_resp.dart';
 import '../models/update_profile/patch_update_profile_req.dart';
@@ -111,6 +112,36 @@ class ApiClient {
       } else {
         throw response.data != null
             ? PostRegisterResp.fromJson(response.data)
+            : 'Something Went Wrong!';
+      }
+    } catch (error, stackTrace) {
+      ProgressDialogUtils.hideProgressDialog();
+      Logger.log(
+        error,
+        stackTrace: stackTrace,
+      );
+      rethrow;
+    }
+  }
+
+  Future<PostRefreshTokenResp> refreshToken({
+    Map<String, String> headers = const {},
+    Map requestData = const {},
+  }) async {
+    ProgressDialogUtils.showProgressDialog();
+    try {
+      await isNetworkConnected();
+      var response = await _dio.post(
+        '$url/api/v1/auth/refresh',
+        data: requestData,
+        options: Options(headers: headers),
+      );
+      ProgressDialogUtils.hideProgressDialog();
+      if (isSuccessCall(response)) {
+        return PostRefreshTokenResp.fromJson(response.data);
+      } else {
+        throw response.data != null
+            ? PostRefreshTokenResp.fromJson(response.data)
             : 'Something Went Wrong!';
       }
     } catch (error, stackTrace) {
