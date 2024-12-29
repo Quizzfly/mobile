@@ -65,7 +65,7 @@ class _CountdownTimerState extends State<CountdownTimer> {
   }
 
   String get timeDisplay {
-    int seconds = _remainingSeconds % 60;
+    int seconds = _remainingSeconds % 60 - 2;
     return seconds.toString().padLeft(2, '0');
   }
 

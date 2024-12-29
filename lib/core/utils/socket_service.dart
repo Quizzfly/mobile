@@ -7,13 +7,13 @@ class QuizStartedData {
   final String quizType;
   final int timeLimit;
   // final int numberQuestion;
-  QuizStartedData(
-      {required this.questionId,
-      required this.answers,
-      required this.quizType,
-      required this.timeLimit,
-      // required this.numberQuestion
-      });
+  QuizStartedData({
+    required this.questionId,
+    required this.answers,
+    required this.quizType,
+    required this.timeLimit,
+    // required this.numberQuestion
+  });
 
   factory QuizStartedData.fromJson(Map<String, dynamic> json) {
     final question = json['question'] as Map<String, dynamic>;
@@ -46,6 +46,10 @@ class SocketService {
   final _quizStartedController = StreamController<QuizStartedData>.broadcast();
   Stream<QuizStartedData> get onQuizStarted => _quizStartedController.stream;
 
+  // New stream controller for room canceled events
+  final _roomCanceledController = StreamController<String>.broadcast();
+  Stream<String> get onRoomCanceled => _roomCanceledController.stream;
+
   factory SocketService() {
     return _instance;
   }
@@ -59,11 +63,9 @@ class SocketService {
         'autoConnect': true,
       });
 
-      socket.onConnect((_) {
-      });
+      socket.onConnect((_) {});
 
-      socket.onDisconnect((_) {
-      });
+      socket.onDisconnect((_) {});
 
       // Listen for quizStarted events
       socket.on('quizStarted', (data) {
@@ -71,19 +73,24 @@ class SocketService {
           try {
             final quizData = QuizStartedData.fromJson(data);
             _lastQuizData = quizData;
-            _quizStartedController.add(quizData);
-          // ignore: empty_catches
-          } catch (e) {
-          }
+            if (!_quizStartedController.isClosed) {
+              _quizStartedController.add(quizData);
+            }
+            // ignore: empty_catches
+          } catch (e) {}
         }
       });
-      _isInitialized = true;
-    }
-  }
 
-  void reEmitLastQuizData() {
-    if (_lastQuizData != null) {
-      _quizStartedController.add(_lastQuizData!);
+      // Listen for roomCanceled events
+      socket.on('roomCanceled', (data) {
+        if (data != null &&
+            data['message'] != null &&
+            !_roomCanceledController.isClosed) {
+          _roomCanceledController.add(data['message'].toString());
+        }
+      });
+
+      _isInitialized = true;
     }
   }
 
@@ -91,7 +98,8 @@ class SocketService {
     if (_isInitialized) {
       socket.disconnect();
       _isInitialized = false;
-      _quizStartedController.close();
+      if (!_quizStartedController.isClosed) _quizStartedController.close();
+      if (!_roomCanceledController.isClosed) _roomCanceledController.close();
       _lastQuizData = null;
     }
   }
