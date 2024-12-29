@@ -10,18 +10,21 @@ class RoomQuizState extends Equatable {
   final bool isTimeUp;
   final bool isTimerPaused;
   final bool showLeaderboard;
+  final ConnectionStatus? connectionStatus;
+  final String? error;
 
-  const RoomQuizState({
-    this.roomQuizModelObj,
-    this.isLoading = false,
-    this.isWaiting = false,
-    this.showResult = false,
-    this.isCorrect,
-    this.totalScore = 0,
-    this.isTimeUp = false,
-    this.isTimerPaused = false,
-    this.showLeaderboard = false,
-  });
+  const RoomQuizState(
+      {this.roomQuizModelObj,
+      this.isLoading = false,
+      this.isWaiting = false,
+      this.showResult = false,
+      this.isCorrect,
+      this.totalScore = 0,
+      this.isTimeUp = false,
+      this.isTimerPaused = false,
+      this.showLeaderboard = false,
+      this.connectionStatus = ConnectionStatus.disconnected,
+      this.error});
 
   @override
   List<Object?> get props => [
@@ -34,6 +37,8 @@ class RoomQuizState extends Equatable {
         isTimeUp,
         isTimerPaused,
         showLeaderboard,
+        connectionStatus,
+        error,
       ];
 
   RoomQuizState copyWith({
@@ -46,6 +51,8 @@ class RoomQuizState extends Equatable {
     bool? isTimeUp,
     bool? isTimerPaused,
     bool? showLeaderboard,
+    ConnectionStatus? connectionStatus,
+    String? error,
   }) {
     return RoomQuizState(
       roomQuizModelObj: roomQuizModelObj ?? this.roomQuizModelObj,
@@ -57,6 +64,16 @@ class RoomQuizState extends Equatable {
       isTimeUp: isTimeUp ?? this.isTimeUp,
       isTimerPaused: isTimerPaused ?? this.isTimerPaused,
       showLeaderboard: showLeaderboard ?? this.showLeaderboard,
+      connectionStatus: connectionStatus ?? this.connectionStatus,
+      error: error ?? this.error,
     );
   }
+}
+
+enum ConnectionStatus {
+  disconnected,
+  connecting,
+  connected,
+  quizStarted,
+  error,
 }

@@ -304,7 +304,6 @@ class LoginScreen extends StatelessWidget {
         children: [
           InkWell(
             onTap: () {
-              // _showEnterPinBottomSheet(context);
               AppRoutes.navigateToRegisterScreen(context);
             },
             child: RichText(
@@ -368,7 +367,7 @@ class LoginScreen extends StatelessWidget {
         message: 'Login succeed',
       ),
     );
-    NavigatorService.pushNamed(
+    NavigatorService.pushNamedAndRemoveUntil(
       AppRoutes.homeScreen,
     );
   }
@@ -410,5 +409,4 @@ class LoginScreen extends StatelessWidget {
           .showSnackBar(SnackBar(content: Text(onError.toString())));
     });
   }
-
 }

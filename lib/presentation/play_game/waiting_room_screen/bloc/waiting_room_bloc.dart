@@ -14,12 +14,13 @@ class WaitingRoomBloc extends Bloc<WaitingRoomEvent, WaitingRoomState> {
     on<QuizStartedWaitingEvent>(_onQuizStarted);
     on<SocketErrorEvent>(_onSocketError);
     on<PlayerKickedEvent>(_onPlayerKicked);
-
+    on<LeaveRoomEvent>(_onLeaveRoom);
     _quizStartedSubscription = _socketService.onQuizStarted.listen(
       (_) => add(QuizStartedWaitingEvent()),
       onError: (error) => add(SocketErrorEvent(error.toString())),
     );
     _initializeKickPlayerSubscription();
+    _initializeRoomCancelSubscription();
   }
 
   _onInitialize(
@@ -52,8 +53,14 @@ class WaitingRoomBloc extends Bloc<WaitingRoomEvent, WaitingRoomState> {
   }
 
   void _initializeKickPlayerSubscription() {
-    _socketService.socket.on('playerKicked', (data) {
+    _socketService.socket.on('participantKicked', (data) {
       add(PlayerKickedEvent(data['reason'].toString()));
+    });
+  }
+
+  void _initializeRoomCancelSubscription() {
+    _socketService.socket.on('roomCanceled', (data) {
+      add(PlayerKickedEvent(data['message'].toString()));
     });
   }
 
@@ -65,10 +72,29 @@ class WaitingRoomBloc extends Bloc<WaitingRoomEvent, WaitingRoomState> {
       error: event.reason,
       connectionStatus: ConnectionStatus.error,
     ));
-    NavigatorService.pushNamedAndRemoveUntil(
-      AppRoutes.loginScreen,
-      routePredicate: false,
-    );
+  }
+
+  void _onLeaveRoom(
+    LeaveRoomEvent event,
+    Emitter<WaitingRoomState> emit,
+  ) {
+    try {
+      _socketService.socket.emit(
+        'leaveRoom',
+        {
+          'room_pin': PrefUtils().getRoomPin(),
+          'participant_id': PrefUtils().getParticipantId(),
+        },
+      );
+      emit(state.copyWith(
+        connectionStatus: ConnectionStatus.disconnected,
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+        error: e.toString(),
+        connectionStatus: ConnectionStatus.error,
+      ));
+    }
   }
 
   @override

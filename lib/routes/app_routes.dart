@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:quizzfly_application_flutter/presentation/group/detail_post_screen/detail_post_screen.dart';
 import '../core/app_export.dart';
+import '../data/models/refresh_token/post_refresh_token_req.dart';
+import '../data/repository/repository.dart';
 import '../presentation/authentication/delete_account_screen/delete_account_screen.dart';
 import '../presentation/authentication/login_screen/login_screen.dart';
 import '../presentation/authentication/register_screen/register_screen.dart';
@@ -66,20 +68,11 @@ class AppRoutes {
         detailPostScreen: DetailPostScreen.builder
       };
 
+  static final _repository = Repository();
+
   static Route<dynamic>? generateRoute(RouteSettings settings) {
     if (settings.name == '/') {
-      final int tokenExpires = PrefUtils().getTokenExpires();
-      final int currentTime = DateTime.now().millisecondsSinceEpoch;
-
-      if (tokenExpires > currentTime) {
-        return MaterialPageRoute(
-            builder: routes[homeScreen]!,
-            settings: const RouteSettings(name: homeScreen));
-      }
-
-      return MaterialPageRoute(
-          builder: routes[loginScreen]!,
-          settings: const RouteSettings(name: loginScreen));
+      return _handleInitialRoute();
     }
 
     // Get the route builder
@@ -88,18 +81,68 @@ class AppRoutes {
 
     // Check token expiry for protected routes
     if (_isProtectedRoute(settings.name!)) {
-      final tokenExpires = PrefUtils().getTokenExpires();
-      final currentTime = DateTime.now().millisecondsSinceEpoch;
-
-      if (tokenExpires <= currentTime) {
-        return MaterialPageRoute(
-            builder: routes[loginScreen]!,
-            settings: const RouteSettings(name: loginScreen));
-      }
+      return _handleProtectedRoute(settings, routeBuilder);
     }
 
     // Return the original route
     return MaterialPageRoute(builder: routeBuilder, settings: settings);
+  }
+
+  static Route<dynamic> _handleInitialRoute() {
+    final int tokenExpires = PrefUtils().getTokenExpires();
+    final int currentTime = DateTime.now().millisecondsSinceEpoch;
+
+    if (tokenExpires > currentTime) {
+      // Token still valid, try to refresh in background
+      _refreshTokenIfNeeded();
+
+      return MaterialPageRoute(
+          builder: routes[homeScreen]!,
+          settings: const RouteSettings(name: homeScreen));
+    }
+
+    return MaterialPageRoute(
+        builder: routes[loginScreen]!,
+        settings: const RouteSettings(name: loginScreen));
+  }
+
+  static Route<dynamic> _handleProtectedRoute(
+      RouteSettings settings, WidgetBuilder routeBuilder) {
+    final tokenExpires = PrefUtils().getTokenExpires();
+    final currentTime = DateTime.now().millisecondsSinceEpoch;
+
+    if (tokenExpires <= currentTime) {
+      return MaterialPageRoute(
+          builder: routes[loginScreen]!,
+          settings: const RouteSettings(name: loginScreen));
+    }
+
+    // Token still valid, try to refresh in background
+    _refreshTokenIfNeeded();
+
+    return MaterialPageRoute(builder: routeBuilder, settings: settings);
+  }
+
+  static Future<void> _refreshTokenIfNeeded() async {
+    try {
+      final refreshToken = PrefUtils().getRefreshToken();
+      if (refreshToken.isEmpty) return;
+
+      final refreshTokenReq = PostRefreshTokenReq(refreshToken: refreshToken);
+      final response = await _repository.refreshToken(
+        headers: {},
+        requestData: refreshTokenReq.toJson(),
+      );
+
+      if (response.data != null) {
+        // Save new tokens
+        PrefUtils().setAccessToken(response.data?.accessToken ?? '');
+        PrefUtils().setRefreshToken(response.data?.refreshToken ?? '');
+        PrefUtils().setTokenExpires(response.data?.tokenExpires ?? 0);
+      }
+    } catch (e) {
+      // Handle error silently
+    }
   }
 
   static bool _isProtectedRoute(String routeName) {
