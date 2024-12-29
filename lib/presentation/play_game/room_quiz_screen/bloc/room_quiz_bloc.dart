@@ -21,6 +21,7 @@ class RoomQuizBloc extends Bloc<RoomQuizEvent, RoomQuizState> {
     on<QuizTimeoutEvent>(_onQuizTimeout);
     on<LeaderboardUpdateEvent>(_onLeaderboardUpdate);
     on<QuizFinishedEvent>(_onQuizFinished);
+    on<PlayerKickedEvent>(_onPlayerKicked);
     _socketService.initializeSocket();
     _initializeQuizSubscription();
     _initializeAnswerResponseSubscription();
@@ -28,6 +29,7 @@ class RoomQuizBloc extends Bloc<RoomQuizEvent, RoomQuizState> {
     _initializeNextQuestionSubscription();
     _initializeLeaderboardSubscription();
     _initializeQuizFinishedSubscription();
+    _initializeRoomCancelSubscription();
   }
 
   void _initializeQuizSubscription() {
@@ -221,6 +223,22 @@ class RoomQuizBloc extends Bloc<RoomQuizEvent, RoomQuizState> {
       roomQuizModelObj: state.roomQuizModelObj?.copyWith(
         currentQuestionNumber: updatedQuestionNumber,
       ),
+    ));
+  }
+
+  void _initializeRoomCancelSubscription() {
+    _socketService.onRoomCanceled.listen(
+      (message) => add(PlayerKickedEvent(message)),
+    );
+  }
+
+  void _onPlayerKicked(
+    PlayerKickedEvent event,
+    Emitter<RoomQuizState> emit,
+  ) {
+    emit(state.copyWith(
+      error: event.reason,
+      connectionStatus: ConnectionStatus.error,
     ));
   }
 

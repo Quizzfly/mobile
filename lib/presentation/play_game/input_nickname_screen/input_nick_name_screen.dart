@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:quizzfly_application_flutter/routes/navigation_args.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../../../core/app_export.dart';
 import '../../../core/utils/validation_functions.dart';
 import '../../../theme/custom_button_style.dart';
@@ -81,28 +83,22 @@ class InputNicknameScreen extends StatelessWidget {
 
   /// Section Widget
   Widget _buildNicknameInputSection(BuildContext context) {
-    void showSnackBar(String message, bool isError) {
-      ScaffoldMessenger.of(context).hideCurrentSnackBar();
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(message),
-          backgroundColor: isError ? appTheme.red900 : Colors.green,
-          duration: Duration(seconds: isError ? 3 : 2),
-          behavior: SnackBarBehavior.floating,
-          margin: const EdgeInsets.all(16),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ),
-      );
-    }
-
     return BlocConsumer<InputNicknameBloc, InputNicknameState>(
       listener: (context, state) {
         if (state.connectionStatus == ConnectionStatus.error) {
-          showSnackBar(state.error ?? 'An error occurred', true);
+          showTopSnackBar(
+            Overlay.of(context),
+            CustomSnackBar.error(
+              message: state.error ?? 'An error occurred',
+            ),
+          );
         } else if (state.connectionStatus == ConnectionStatus.joined) {
-          showSnackBar("Joined room successfully", false);
+          showTopSnackBar(
+            Overlay.of(context),
+            const CustomSnackBar.success(
+              message: "Join room succeed",
+            ),
+          );
           AppRoutes.navigateToWaitingRoomScreen(context);
         }
       },

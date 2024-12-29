@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:responsive_grid_list/responsive_grid_list.dart';
 import 'package:rive/rive.dart';
+import 'package:top_snackbar_flutter/custom_snack_bar.dart';
+import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../../../../core/app_export.dart';
 import '../../../../theme/custom_button_style.dart';
 import '../../../../widgets/app_bar/appbar_leading_image.dart';
@@ -29,10 +31,24 @@ class RoomQuizScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<RoomQuizBloc, RoomQuizState>(builder: (context, state) {
+    return BlocConsumer<RoomQuizBloc, RoomQuizState>(
+        listener: (context, state) {
+      if (state.connectionStatus == ConnectionStatus.error) {
+        showTopSnackBar(
+          Overlay.of(context),
+          CustomSnackBar.error(
+            message: state.error ?? 'An error occurred',
+          ),
+        );
+        NavigatorService.pushNamedAndRemoveUntil(
+          AppRoutes.homeScreen,
+        );
+      }
+    }, builder: (context, state) {
       if (state.showLeaderboard) {
         return _leaderBoard(context);
       }
+
       return SafeArea(
         child: Scaffold(
           extendBody: true,
@@ -502,6 +518,7 @@ class RoomQuizScreen extends StatelessWidget {
                 decoration: IconButtonStyleHelper.fillTeal,
                 child: CustomImageView(
                   imagePath: player.imageAvatar,
+                  radius: BorderRadius.circular(30.h),
                 ),
               ),
               Align(
