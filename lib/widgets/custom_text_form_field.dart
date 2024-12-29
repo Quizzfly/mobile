@@ -26,8 +26,8 @@ extension TextFormFieldStyleHelper on CustomTextFormField {
 }
 
 class CustomTextFormField extends StatelessWidget {
-  CustomTextFormField({
-    Key? key,
+  const CustomTextFormField({
+    super.key,
     this.alignment,
     this.width,
     this.boxDecoration,
@@ -35,7 +35,7 @@ class CustomTextFormField extends StatelessWidget {
     this.controller,
     this.focusNode,
     this.autofocus = false,
-    this.textstyle,
+    this.textStyle,
     this.obscureText = false,
     this.readonly = false,
     this.onTap,
@@ -54,7 +54,7 @@ class CustomTextFormField extends StatelessWidget {
     this.fillcolor,
     this.filled = true,
     this.validator,
-  }) : super(key: key);
+  });
 
   final Alignment? alignment;
   final double? width;
@@ -63,7 +63,7 @@ class CustomTextFormField extends StatelessWidget {
   final TextEditingController? controller;
   final FocusNode? focusNode;
   final bool? autofocus;
-  final TextStyle? textstyle;
+  final TextStyle? textStyle;
   final bool? obscureText;
   final bool? readonly;
   final VoidCallback? onTap;
@@ -109,7 +109,7 @@ class CustomTextFormField extends StatelessWidget {
             }
           },
           autofocus: autofocus!,
-          style: textstyle ?? CustomTextStyles.bodyMediumRobotoBluegray30001,
+          style: textStyle ?? CustomTextStyles.bodyMediumRobotoBlueGray30001,
           obscureText: obscureText!,
           readOnly: readonly!,
           onTap: () {
@@ -126,7 +126,7 @@ class CustomTextFormField extends StatelessWidget {
 
   InputDecoration get decoration => InputDecoration(
         hintText: hintText ?? "",
-        hintStyle: hintStyle ?? CustomTextStyles.bodyMediumRobotoBluegray30001,
+        hintStyle: hintStyle ?? CustomTextStyles.bodyMediumRobotoBlueGray30001,
         prefixIcon: prefix,
         prefixIconConstraints: prefixConstraints,
         suffixIcon: suffix,

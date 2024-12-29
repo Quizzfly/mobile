@@ -1,6 +1,4 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import '../core/app_export.dart';
 
 LightCodeColors get appTheme => ThemeHelper().themeColor();
@@ -10,13 +8,13 @@ ThemeData get theme => ThemeHelper().themeData();
 // ignore_for_file: must_be_immutable
 class ThemeHelper {
 // The current app theme
-  var _appTheme = PrefUtils().getThemeData();
+  final _appTheme = PrefUtils().getThemeData();
 // A map of custom Color themes supported by the app
-  Map<String, LightCodeColors> _supportedCustomColor = {
+  final Map<String, LightCodeColors> _supportedCustomColor = {
     'lightCode': LightCodeColors()
   };
 // A map of Color schemes supported by the app
-  Map<String, ColorScheme> _supportedColorScheme = {
+  final Map<String, ColorScheme> _supportedColorScheme = {
     'lightCode': ColorSchemes.lightCodeColorScheme
   };
 
@@ -151,7 +149,7 @@ class TextThemes {
 
 /// class containing the supported Color schemes.
 class ColorSchemes {
-  static final lightCodeColorScheme = ColorScheme.light(
+  static const lightCodeColorScheme = ColorScheme.light(
     primary: Color(0XFF6A5AE0),
     primaryContainer: Color(0X7F181254),
     secondaryContainer: Color(0XFFEA4335),
@@ -166,87 +164,88 @@ class ColorSchemes {
 /// Class containing custom Colors for a lightCode theme.
 class LightCodeColors {
 //Black
-  Color get black900 => Color(0XFF000000);
+  Color get black900 => const Color(0XFF000000);
 // Amber
-  Color get amber300 => Color(0XFFFFD54B);
-  Color get amberA200 => Color(0XFFFFC83D);
+  Color get amber300 => const Color(0XFFFFD54B);
+  Color get amberA200 => const Color(0XFFFFC83D);
 // Blue
-  Color get blue100 => Color(0XFFC4D0FB);
-  Color get blue200 => Color(0XFF8FC9FF);
-  Color get blue300 => Color(0XFF6BB8FF);
-  Color get blue900 => Color(0XFF013399);
+  Color get blue100 => const Color(0XFFC4D0FB);
+  Color get blue200 => const Color(0XFF8FC9FF);
+  Color get blue300 => const Color(0XFF6BB8FF);
+  Color get blue900 => const Color(0XFF013399);
 //BlueGray
-  Color get blueGray100 => Color(0XFFCFDFE2);
-  Color get blueGray10001 => Color(0XFFCCCCCC);
-  Color get blueGray10002 => Color(0XFFD4D7E3);
-  Color get blueGray300 => Color(0XFF959CB5);
-  Color get blueGray30001 => Color(0XFF8796AD);
-  Color get blueGray400 => Color(0XFF858494);
-  Color get blueGray500 => Color(0XFF726E96);
-  Color get blueGray800 => Color(0XFF294956);
-  Color get blueGray50 => Color(0XFFE9EEF4);
-  Color get blueGray900 => Color(0XFF112830);
+  Color get blueGray100 => const Color(0XFFCFDFE2);
+  Color get blueGray10001 => const Color(0XFFCCCCCC);
+  Color get blueGray10002 => const Color(0XFFD4D7E3);
+  Color get blueGray300 => const Color(0XFF959CB5);
+  Color get blueGray30001 => const Color(0XFF8796AD);
+  Color get blueGray400 => const Color(0XFF858494);
+  Color get blueGray500 => const Color(0XFF726E96);
+  Color get blueGray800 => const Color(0XFF294956);
+  Color get blueGray50 => const Color(0XFFE9EEF4);
+  Color get blueGray900 => const Color(0XFF112830);
 // Cyan
-  Color get cyan200 => Color(0XFF83E6D0);
+  Color get cyan200 => const Color(0XFF83E6D0);
 // DeepOrange
-  Color get deepOrange200 => Color(0XFFFFB37F);
-  Color get deepOrange20001 => Color(0XFFF6B191);
-  Color get deepOrange300 => Color(0XFFFF9A56);
+  Color get deepOrange200 => const Color(0XFFFFB37F);
+  Color get deepOrange20001 => const Color(0XFFF6B191);
+  Color get deepOrange300 => const Color(0XFFFF9A56);
 //DeepPurple
-  Color get deepPurple100 => Color(0XFFCDC9F3);
-  Color get deepPurple10001 => Color(0XFFD9D4F6);
-  Color get deepPurple200 => Color(0XFFB9B4E4);
-  Color get deepPurple300 => Color(0XFF9087E5);
-  Color get deepPurple50 => Color(0XFFEFEDFB);
-  Color get deepPurple600 => Color(0XFF5144B6);
-  Color get deppPurplePrimary => Color(0XFF6A5AE0);
+  Color get deepPurple100 => const Color(0XFF6C5CE0);
+  Color get deepPurple10001 => const Color(0XFFD9D4F6);
+  Color get deepPurple200 => const Color(0XFFB9B4E4);
+  Color get deepPurple300 => const Color(0XFF9087E5);
+  Color get deepPurple50 => const Color(0XFF9087E5);
+  Color get deepPurple600 => const Color(0XFF5144B6);
+  Color get deppPurplePrimary => const Color(0XFF6A5AE0);
 // Gray
-  Color get gray100 => Color(0XFFFCF2F2);
-  Color get gray10001 => Color(0XFFF2F6FA);
-  Color get gray10002 => Color(0XFD4D3D7);
-  Color get gray200 => Color(0XFFECEBE7);
-  Color get gray300 => Color(0XFFE6E6E6);
-  Color get gray30001 => Color(0XFFE1E1E2);
-  Color get gray400 => Color(0XFFB5B5B5);
-  Color get gray50 => Color(0XFFF8FAFC);
-  Color get gray500 => Color(0XFF9E9E9E);
-  Color get gray5001 => Color(0XFFFCFBF2);
-  Color get gray5002 => Color(0XFFF7FBFF);
-  Color get gray5003 => Color(0XFFF2FCFB);
-  Color get gray900 => Color(0XFF001833);
-  Color get gray90001 => Color(0XFF101113);
-  Color get gray90002 => Color(0XFF24272D);
-  Color get gray90003 => Color(0XFF0B1420);
+  Color get gray100 => const Color(0XFFFCF2F2);
+  Color get gray10001 => const Color(0XFFF2F6FA);
+  Color get gray10002 => const Color(0XFFD4D3D7);
+  Color get gray200 => const Color(0XFFECEBE7);
+  Color get gray300 => const Color(0XFFE6E6E6);
+  Color get gray30001 => const Color(0XFFE1E1E2);
+  Color get gray400 => const Color(0XFFB5B5B5);
+  Color get gray50 => const Color(0XFFF8FAFC);
+  Color get gray500 => const Color(0XFF9E9E9E);
+  Color get gray5001 => const Color(0XFFFCFBF2);
+  Color get gray5002 => const Color(0XFFF7FBFF);
+  Color get gray5003 => const Color(0XFFF2FCFB);
+  Color get gray900 => const Color(0XFF001833);
+  Color get gray90001 => const Color(0XFF101113);
+  Color get gray90002 => const Color(0XFF24272D);
+  Color get gray90003 => const Color(0XFF0B1420);
 // Green
-  Color get greenA200 => Color(0XFF5DDEC2);
+  Color get greenA200 => const Color(0XFF5DDEC2);
 // Indigo
-  Color get indigo200 => Color(0XFFA9ADF3);
-  Color get indigo50 => Color(0XFFE7E5FA);
-  Color get indigo700 => Color(0XFF2E42A4);
+  Color get indigo200 => const Color(0XFFA9ADF3);
+  Color get indigo50 => const Color(0XFFE7E5FA);
+  Color get indigo700 => const Color(0XFF3789FF);
 // LightGreen
-  Color get lightGreen700 => Color(0XFF5DA922);
-  Color get lightGreen900 => Color(0XFF2E8D00);
+  Color get lightGreen700 => const Color(0XFF0FD18D);
+  Color get lightGreen900 => const Color(0XFF2E8D00);
 //Orange
-  Color get orangeA100 => Color(0XFFFFD56B);
+  Color get orangeA100 => const Color(0XFFFFD56B);
 //Pink
-  Color get pink100 => Color(0XFFFFC2CC);
-  Color get pink10001 => Color(0XFFFFB2BF);
-  Color get pink10002 => Color(0XFFFFCCC);
-  Color get pink300 => Color(0XFFFF6B84);
-  Color get pink900 => Color(0XFF660011);
-  Color get pinkA100 => Color(0XFFFF8FA2);
+  Color get pink100 => const Color(0XFFFFC2CC);
+  Color get pink10001 => const Color(0XFFFFB2BF);
+  Color get pink10002 => const Color(0XFFFFCCCC);
+  Color get pink300 => const Color(0XFFFF6B84);
+  Color get pink900 => const Color(0XFF660011);
+  Color get pinkA100 => const Color(0XFFFF8FA2);
 // Red
-  Color get red100 => Color(0XFFFFD6DD);
-  Color get red10001 => Color(0XFFFFCBD6);
-  Color get red10002 => Color(0XFFFFCBD4);
-  Color get red700 => Color(0XFFE31D1C);
-  Color get red900 => Color(0XFFC41918);
-  Color get redA700 => Color(0XFFEF0000);
-  Color get redA70001 => Color(0XFFF50100);
+  Color get red100 => const Color(0XFFFFD6DD);
+  Color get red10001 => const Color(0XFFFFCBD6);
+  Color get red10002 => const Color(0XFFFFCBD4);
+  Color get red600 => const Color(0XFFF65655);
+  Color get red700 => const Color(0XFFE31D1C);
+  Color get red900 => const Color(0XFFC41918);
+  Color get redA700 => const Color(0XFFEF0000);
+  Color get redA70001 => const Color(0XFFF50100);
 // Teal
-  Color get tea150 => Color(0XFFC9F2E9);
+  Color get tea150 => const Color(0XFFC9F2E9);
 // White
-  Color get whiteA700 => Color(0XFFFFFFFF);
+  Color get whiteA700 => const Color(0XFFFFFFFF);
 // Yellow
-  Color get yellowA400 => Color(0XFFF9E813);
+  Color get yellowA400 => const Color(0XFFFE8920);
 }

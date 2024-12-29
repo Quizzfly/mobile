@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class BaseButton extends StatelessWidget {
-  BaseButton(
-      {Key? key,
+  const BaseButton(
+      {super.key,
       required this.text,
       this.onPressed,
       this.buttonStyle,
@@ -11,10 +11,9 @@ class BaseButton extends StatelessWidget {
       this.height,
       this.width,
       this.margin,
-      this.alignment})
-      : super(
-          key: key,
-        );
+      this.alignment,
+      this.radius,
+      this.backgroundColor});
   final String text;
   final VoidCallback? onPressed;
   final ButtonStyle? buttonStyle;
@@ -24,9 +23,10 @@ class BaseButton extends StatelessWidget {
   final double? width;
   final EdgeInsets? margin;
   final Alignment? alignment;
+  final double? radius;
+  final Color? backgroundColor;
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return const SizedBox.shrink();
   }
 }

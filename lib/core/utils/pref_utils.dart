@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 // ignore_for_file: must_be_immutable
@@ -13,7 +14,7 @@ class PrefUtils {
   static SharedPreferences? _sharedPreferences;
   Future<void> init() async {
     _sharedPreferences ??= await SharedPreferences.getInstance();
-    print('SharedPreference Initialized');
+    debugPrint('SharedPreference Initialized');
   }
 
   ///will clear all the data stored in preference
@@ -93,14 +94,67 @@ class PrefUtils {
     }
   }
 
+  Future<void> setUserId(String value) {
+    return _sharedPreferences!.setString('userId', value);
+  }
+
+  String getUserId() {
+    try {
+      return _sharedPreferences!.getString('userId') ?? '';
+    } catch (e) {
+      return '';
+    }
+  }
+
   Future<void> setAvatar(String value) {
     return _sharedPreferences!.setString('avatar', value);
   }
-   String getAvatar(){
+
+  String getAvatar() {
     try {
       return _sharedPreferences!.getString('avatar') ?? '';
     } catch (e) {
       return '';
     }
-   }
+  }
+
+  Future<void> setNickname(String value) {
+    return _sharedPreferences!.setString('nickname', value);
+  }
+
+  String getNickname() {
+    try {
+      return _sharedPreferences!.getString('nickname') ?? '';
+    } catch (e) {
+      return '';
+    }
+  }
+
+  Future<void> setRoomPin(String value) {
+    return _sharedPreferences!.setString('roomPin', value);
+  }
+
+  String getRoomPin() {
+    try {
+      return _sharedPreferences!.getString('roomPin') ?? '';
+    } catch (e) {
+      return '';
+    }
+  }
+
+  Future<void> setParticipantId(String value) {
+    return _sharedPreferences!.setString('participantId', value);
+  }
+
+  String getParticipantId() {
+    try {
+      return _sharedPreferences!.getString('participantId') ?? '';
+    } catch (e) {
+      return '';
+    }
+  }
+
+  getUserName() {}
+
+  getUserAvatar() {}
 }

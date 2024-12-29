@@ -68,5 +68,7 @@
         "widgets",
         "write",
         "your"
-    ]
+    ],
+    "cmake.sourceDirectory": "D:/PBL6/Mobile/quizzfly-mobile/linux",
+    "java.configuration.updateBuildConfiguration": "interactive"
 }

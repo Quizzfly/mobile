@@ -20,12 +20,6 @@ extension on TextStyle {
     );
   }
 
-  TextStyle get plusJakartaSans {
-    return copyWith(
-      fontFamily: 'Plus Jakarta Sans',
-    );
-  }
-
   TextStyle get sFProDisplay {
     return copyWith(
       fontFamily: 'SF Pro Display',
@@ -50,7 +44,7 @@ extension on TextStyle {
 /// Additionally, this class includes extensions on [TextStyle] to easily apply specific
 class CustomTextStyles {
   // Body text style
-  static get bodyLargeBluegray900 => theme.textTheme.bodyLarge!.copyWith(
+  static get bodyLargeBlueGray900 => theme.textTheme.bodyLarge!.copyWith(
         color: appTheme.blueGray900,
       );
   static get bodyLargeErrorContainer => theme.textTheme.bodyLarge!.copyWith(
@@ -68,7 +62,7 @@ class CustomTextStyles {
   static get bodyLargePrimary => theme.textTheme.bodyLarge!.copyWith(
         color: appTheme.deppPurplePrimary,
       );
-  static get bodyLargeRubikDeeppurple200 =>
+  static get bodyLargeRubikDeepPurple200 =>
       theme.textTheme.bodyLarge!.rubik.copyWith(
         color: appTheme.deepPurple200,
       );
@@ -86,15 +80,15 @@ class CustomTextStyles {
   static get bodyMediumOnPrimary_1 => theme.textTheme.bodyMedium!.copyWith(
         color: theme.colorScheme.onPrimary,
       );
-  static get bodyMediumRobotoBluegray300 =>
+  static get bodyMediumRobotoBlueGray300 =>
       theme.textTheme.bodyMedium!.roboto.copyWith(
         color: appTheme.blueGray300,
       );
-  static get bodyMediumRobotoBluegray30001 =>
+  static get bodyMediumRobotoBlueGray30001 =>
       theme.textTheme.bodyMedium!.roboto.copyWith(
         color: appTheme.blueGray30001,
       );
-  static get bodyMediumRobotoBluegray800 =>
+  static get bodyMediumRobotoBlueGray800 =>
       theme.textTheme.bodyMedium!.roboto.copyWith(
         color: appTheme.blueGray800,
       );
@@ -126,14 +120,14 @@ class CustomTextStyles {
         color: appTheme.whiteA700.withOpacity(0.7),
       );
 // Graphik text style
-  static get graphikwhiteA700 => TextStyle(
+  static get graphikWhiteA700 => TextStyle(
         color: appTheme.whiteA700,
-        fontSize: 100.fSize,
+        fontSize: 50.fSize,
         fontWeight: FontWeight.w600,
       ).graphik;
-  static get graphikwhiteA700SemiBold => TextStyle(
+  static get graphikWhiteA700SemiBold => TextStyle(
         color: appTheme.whiteA700,
-        fontSize: 80.fSize,
+        fontSize: 30.fSize,
         fontWeight: FontWeight.w600,
       ).graphik;
 // Headline text style
@@ -149,8 +143,6 @@ class CustomTextStyles {
         color: appTheme.gray90003,
         fontWeight: FontWeight.w400,
       );
-
-
 
   static get headlineSmallRobotoBlueGray10001 =>
       theme.textTheme.headlineSmall!.roboto.copyWith(
@@ -187,11 +179,14 @@ class CustomTextStyles {
         color: appTheme.red100,
       );
   static get labelLargeWhiteA700 => theme.textTheme.labelLarge!.copyWith(
-        color: appTheme.whiteA700.withOpacity(0.5),
-      );
-  static get labelLargeWhiteA700_1 => theme.textTheme.labelLarge!.copyWith(
         color: appTheme.whiteA700,
       );
+  static get labelLargeWhiteA700Bold => theme.textTheme.labelLarge!
+      .copyWith(color: appTheme.whiteA700, fontWeight: FontWeight.w900);
+  static get labelLargeGray500 => theme.textTheme.labelLarge!.copyWith(
+        color: appTheme.gray500,
+      );
+
   static get labelSmallRoboto => theme.textTheme.labelSmall!.roboto.copyWith(
         color: appTheme.whiteA700,
       );
@@ -202,6 +197,7 @@ class CustomTextStyles {
   static get labelSmallRed700 => theme.textTheme.labelLarge!.copyWith(
         color: appTheme.red700.withOpacity(0.5),
       );
+
 // Title text style
   static get titleLargePrimary => theme.textTheme.titleLarge!.copyWith(
         color: appTheme.deppPurplePrimary,
@@ -229,7 +225,7 @@ class CustomTextStyles {
         color: appTheme.whiteA700,
         fontWeight: FontWeight.w700,
       );
-  static get bodyMediumInterBluegray800 => theme.textTheme.bodyMedium!.inter
+  static get bodyMediumInterBlueGray800 => theme.textTheme.bodyMedium!.inter
       .copyWith(color: appTheme.blueGray800, fontSize: 15.fSize);
   static get titleSmallPink900 => theme.textTheme.titleSmall!.copyWith(
         color: appTheme.pink900.withOpacity(0.5),
@@ -245,11 +241,10 @@ class CustomTextStyles {
         color: appTheme.whiteA700.withOpacity(0.8),
         fontSize: 9.h,
       );
-  static get titleMediumGray500 => theme.textTheme.titleMedium!.copyWith(
-        color: appTheme.gray500,
-        fontSize: 9.h,
+  static get titleMediumPurple100 => theme.textTheme.titleMedium!.copyWith(
+        color: appTheme.deepPurple100,
       );
-      static get titleSmallGray500 => theme.textTheme.titleMedium!.copyWith(
+  static get titleSmallGray500 => theme.textTheme.titleMedium!.copyWith(
         color: appTheme.gray500,
       );
   //Title text
@@ -257,11 +252,8 @@ class CustomTextStyles {
       theme.textTheme.titleSmall!.roboto.copyWith(
         color: appTheme.whiteA700,
       );
-  static get titleSmallRobotoSansBlack900 =>
-      theme.textTheme.titleSmall!.roboto.copyWith(
-        color: appTheme.black900.withOpacity(0.5),
-        fontSize: 12.h
-      );
+  static get titleSmallRobotoSansBlack900 => theme.textTheme.titleSmall!.roboto
+      .copyWith(color: appTheme.black900.withOpacity(0.5), fontSize: 12.h);
   static get titleMediumRobotoBlack900 =>
       theme.textTheme.titleMedium!.roboto.copyWith(
         color: appTheme.black900,
