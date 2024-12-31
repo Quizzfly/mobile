@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import '../bloc/my_group_bloc.dart';
 import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import 'dart:io';
@@ -7,13 +8,12 @@ import '../../../../../core/app_export.dart';
 import '../../../../../theme/custom_button_style.dart';
 import '../../../../../widgets/custom_text_form_field.dart';
 import '../../../../../widgets/custom_elevated_button.dart';
-import '../bloc/home_bloc.dart';
 
 class ShowDialogWidget extends StatefulWidget {
   const ShowDialogWidget({super.key});
   static Widget builder(BuildContext context) {
     return BlocProvider.value(
-      value: context.read<HomeBloc>(),
+      value: context.read<MyGroupBloc>(),
       child: const ShowDialogWidget(),
     );
   }
@@ -179,7 +179,7 @@ class _ShowDialogState extends State<ShowDialogWidget> {
                       borderRadius: BorderRadius.circular(20.h)))),
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  context.read<HomeBloc>().add(
+                  context.read<MyGroupBloc>().add(
                         CreateGroupEvent(
                           onCreateGroupSuccess: () {
                             _onCreateGroupSuccess(context);
@@ -202,17 +202,19 @@ class _ShowDialogState extends State<ShowDialogWidget> {
   }
 
   void _onCreateGroupSuccess(BuildContext context) {
-    showTopSnackBar(
-      Overlay.of(context),
-      const CustomSnackBar.success(
-        message: 'Create group succeed',
+    context.read<MyGroupBloc>().add(
+      CreateGetMyGroupEvent(
+        onGetMyGroupSuccess: () {
+          showTopSnackBar(
+            Overlay.of(context),
+            const CustomSnackBar.success(
+              message: 'Create group succeed',
+            ),
+          );
+          Navigator.pop(context);
+        },
       ),
     );
-    Navigator.pop(context);
-
-    context.read<HomeBloc>().add(
-          HomeInitialEvent(),
-        );
   }
 
   void _onCreateGroupError(BuildContext context) {

@@ -64,3 +64,23 @@ class JoinGroupEvent extends MyGroupEvent {
         onJoinError,
       ];
 }
+
+class CreateGroupEvent extends MyGroupEvent {
+  final Function? onCreateGroupSuccess;
+  final Function? onCreateGroupError;
+  final String? name;
+  final String? description;
+  final dynamic background;
+
+  CreateGroupEvent({
+    this.onCreateGroupSuccess,
+    this.onCreateGroupError,
+    this.name,
+    this.description,
+    this.background,
+  });
+
+  @override
+  List<Object?> get props =>
+      [onCreateGroupSuccess, onCreateGroupError, name, description, background];
+}
