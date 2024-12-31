@@ -1,28 +1,37 @@
 import 'package:google_sign_in/google_sign_in.dart';
 
 class GoogleAuthHelper {
+  final GoogleSignIn _googleSignIn = GoogleSignIn(
+    signInOption: SignInOption.standard,
+    forceCodeForRefreshToken: true,
+  );
+
   /// Handle Google Signin to authenticate user
   Future<GoogleSignInAccount?> googleSignInProcess() async {
-    GoogleSignIn googleSignIn = GoogleSignIn();
-    GoogleSignInAccount? googleUser = await googleSignIn.signIn();
-    if (googleUser != null) {
+    await _googleSignIn.signOut();
+
+    try {
+      GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
       return googleUser;
+    } catch (error) {
+      print('Error signing in with Google: $error');
+      return null;
     }
-    return null;
   }
 
   /// To Check if the user is already signedin through google
-  alreadySignIn() async {
-    GoogleSignIn googleSignIn = GoogleSignIn();
-    bool alreadySignIn = await googleSignIn.isSignedIn();
-    return alreadySignIn;
+  Future<bool> alreadySignIn() async {
+    bool alreadySignIn = await _googleSignIn.isSignedIn();
+    if (alreadySignIn) {
+      await _googleSignIn.signOut();
+      return false;
+    }
+    return false;
   }
 
   /// To signout from the application if the user is signed in through google
-  Future<GoogleSignInAccount?> googleSignOutProcess() async {
-    GoogleSignIn googleSignIn = GoogleSignIn();
-    GoogleSignInAccount? googleUser = await googleSignIn.signOut();
-
-    return googleUser;
+  Future<void> googleSignOutProcess() async {
+    await _googleSignIn.signOut();
+    await _googleSignIn.disconnect();
   }
 }
