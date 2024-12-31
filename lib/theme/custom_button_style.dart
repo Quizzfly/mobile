@@ -60,6 +60,14 @@ class CustomButtonStyles {
         elevation: 0,
         padding: EdgeInsets.zero,
       );
+  static ButtonStyle get fillErrorRadius20 => ElevatedButton.styleFrom(
+        backgroundColor: appTheme.red600,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.h),
+        ),
+        elevation: 0,
+        padding: EdgeInsets.zero,
+      );
   static ButtonStyle get fillPrimaryRadius20 => ElevatedButton.styleFrom(
         backgroundColor: theme.colorScheme.primary,
         shape: RoundedRectangleBorder(
@@ -74,7 +82,6 @@ class CustomButtonStyles {
           borderRadius: BorderRadius.circular(30.h),
         ),
         elevation: 4.h,
-        shadowColor: appTheme.whiteA700,
         padding: EdgeInsets.zero,
       );
   static ButtonStyle get fillRedRadius20 => ElevatedButton.styleFrom(
@@ -85,12 +92,20 @@ class CustomButtonStyles {
         elevation: 0,
         padding: EdgeInsets.zero,
       );
+  static ButtonStyle get outlineDeepPurple20 => ElevatedButton.styleFrom(
+        backgroundColor: Colors.transparent,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20.h),
+        ),
+        elevation: 0,
+        padding: EdgeInsets.zero,
+      );
 // text button style
   static ButtonStyle get none => ButtonStyle(
-      backgroundColor: MaterialStateProperty.all<Color>(Colors.transparent),
-      elevation: MaterialStateProperty.all<double>(0),
-      padding: MaterialStateProperty.all<EdgeInsetsGeometry>(EdgeInsets.zero),
-      side: MaterialStateProperty.all<BorderSide>(
-        BorderSide(color: Colors.transparent),
+      backgroundColor: WidgetStateProperty.all<Color>(Colors.transparent),
+      elevation: WidgetStateProperty.all<double>(0),
+      padding: WidgetStateProperty.all<EdgeInsetsGeometry>(EdgeInsets.zero),
+      side: WidgetStateProperty.all<BorderSide>(
+        const BorderSide(color: Colors.transparent),
       ));
 }

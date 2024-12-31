@@ -1,19 +1,27 @@
 import 'package:flutter/material.dart';
-import '../presentation/enter_pin_screen/enter_pin_screen.dart';
-import '../presentation/input_nickname_screen/input_nick_name_screen.dart';
-import '../presentation/quizzfly_setting_screen/quizzfly_setting_screen.dart';
-import '../presentation/room_quiz_screen/room_quiz_screen.dart';
-import '../presentation/waiting_room_screen/waiting_room_screen.dart';
-import '../presentation/delete_account_screen/delete_account_screen.dart';
-import '../presentation/edit_profile_screen/edit_profile_screen.dart';
-import '../presentation/quizzfly_detail_screen/quizzfly_detail_screen.dart';
-import '../presentation/library_screen/library_screen.dart';
-import '../presentation/reset_password_screen/reset_password_screen.dart';
-import '../presentation/change_password_screen/change_password_screen.dart';
-import '../presentation/profile_setting_screen/profile_setting_screen.dart';
-import '../presentation/forgot_password_screen/forgot_password_screen.dart';
-import '../presentation/login_screen/login_screen.dart';
-import '../presentation/register_screen/register_screen.dart';
+import 'package:quizzfly_application_flutter/presentation/group/detail_post_screen/detail_post_screen.dart';
+import '../core/app_export.dart';
+import '../data/models/refresh_token/post_refresh_token_req.dart';
+import '../data/repository/repository.dart';
+import '../presentation/authentication/delete_account_screen/delete_account_screen.dart';
+import '../presentation/authentication/login_screen/login_screen.dart';
+import '../presentation/authentication/register_screen/register_screen.dart';
+import '../presentation/group/community_screen/community_screen.dart';
+import '../presentation/group/my_group_screen/my_group_screen.dart';
+import '../presentation/personalization/home_screen/home_initial_page.dart';
+import '../presentation/personalization/home_screen/home_screen.dart';
+import '../presentation/personalization/profile_setting_screen/profile_setting_screen.dart';
+import '../presentation/play_game/enter_pin_screen/enter_pin_screen.dart';
+import '../presentation/play_game/input_nickname_screen/input_nick_name_screen.dart';
+import '../presentation/personalization/quizzfly_setting_screen/quizzfly_setting_screen.dart';
+import '../presentation/play_game/room_quiz_screen/room_quiz_screen.dart';
+import '../presentation/play_game/waiting_room_screen/waiting_room_screen.dart';
+import '../presentation/personalization/edit_profile_screen/edit_profile_screen.dart';
+import '../presentation/personalization/quizzfly_detail_screen/quizzfly_detail_screen.dart';
+import '../presentation/personalization/library_screen/library_screen.dart';
+import '../presentation/authentication/reset_password_screen/reset_password_screen.dart';
+import '../presentation/authentication/change_password_screen/change_password_screen.dart';
+import '../presentation/authentication/forgot_password_screen/forgot_password_screen.dart';
 
 class AppRoutes {
   static const String loginScreen = '/login_screen';
@@ -33,6 +41,12 @@ class AppRoutes {
   static const String inputNickname = "/input_nickname_screen";
   static const String waitingRoom = "/waiting_room_screen";
   static const String leaderBoardScreen = "/leader_board_screen";
+  static const String homeInitialPage = "/home_initial_page";
+  static const String communityScreen = "/community_screen";
+  static const String homeScreen = "/home_screen";
+  static const String myGroupScreen = "/my_group_screen";
+  static const String detailPostScreen = "/detail_post_screen";
+
   static Map<String, WidgetBuilder> get routes => {
         loginScreen: LoginScreen.builder,
         registerScreen: RegisterScreen.builder,
@@ -45,40 +59,101 @@ class AppRoutes {
         deleteAccountScreen: DeleteAccountScreen.builder,
         quizzflySetting: QuizzflySettingScreen.builder,
         enterPinScreen: EnterPinScreen.builder,
-        initialRoute: LoginScreen.builder,
         inputNickname: InputNicknameScreen.builder,
         waitingRoom: WaitingRoomScreen.builder,
+        communityScreen: CommunityScreen.builder,
+        homeInitialPage: HomeInitialPage.builder,
+        homeScreen: HomeScreen.builder,
+        myGroupScreen: MyGroupScreen.builder,
+        detailPostScreen: DetailPostScreen.builder
       };
-  // static Route<dynamic> generateRoute(RouteSettings settings) {
-  //   switch (settings.name) {
-  //     case initialRoute:
-  //       return MaterialPageRoute(
-  //         builder: (context) => initialRouteWidget(context),
-  //       );
-  //     // Add cases for other routes if needed
-  //     default:
-  //       return MaterialPageRoute(
-  //         builder: (_) => const Scaffold(
-  //           body: Center(child: Text('Route not found!')),
-  //         ),
-  //       );
-  //   }
-  // }
-  // static Route<dynamic> generateRoute(RouteSettings settings) {
-  //   switch (settings.name) {
-  //     case initialRoute:
-  //       return MaterialPageRoute(
-  //         builder: (context) => initialRouteWidget(context),
-  //       );
-  //     // Add cases for other routes if needed
-  //     default:
-  //       return MaterialPageRoute(
-  //         builder: (_) => const Scaffold(
-  //           body: Center(child: Text('Route not found!')),
-  //         ),
-  //       );
-  //   }
-  // }
+
+  static final _repository = Repository();
+
+  static Route<dynamic>? generateRoute(RouteSettings settings) {
+    if (settings.name == '/') {
+      return _handleInitialRoute();
+    }
+
+    // Get the route builder
+    final routeBuilder = routes[settings.name];
+    if (routeBuilder == null) return null;
+
+    // Check token expiry for protected routes
+    if (_isProtectedRoute(settings.name!)) {
+      return _handleProtectedRoute(settings, routeBuilder);
+    }
+
+    // Return the original route
+    return MaterialPageRoute(builder: routeBuilder, settings: settings);
+  }
+
+  static Route<dynamic> _handleInitialRoute() {
+    final int tokenExpires = PrefUtils().getTokenExpires();
+    final int currentTime = DateTime.now().millisecondsSinceEpoch;
+
+    if (tokenExpires > currentTime) {
+      // Token still valid, try to refresh in background
+      _refreshTokenIfNeeded();
+
+      return MaterialPageRoute(
+          builder: routes[homeScreen]!,
+          settings: const RouteSettings(name: homeScreen));
+    }
+
+    return MaterialPageRoute(
+        builder: routes[loginScreen]!,
+        settings: const RouteSettings(name: loginScreen));
+  }
+
+  static Route<dynamic> _handleProtectedRoute(
+      RouteSettings settings, WidgetBuilder routeBuilder) {
+    final tokenExpires = PrefUtils().getTokenExpires();
+    final currentTime = DateTime.now().millisecondsSinceEpoch;
+
+    if (tokenExpires <= currentTime) {
+      return MaterialPageRoute(
+          builder: routes[loginScreen]!,
+          settings: const RouteSettings(name: loginScreen));
+    }
+
+    // Token still valid, try to refresh in background
+    _refreshTokenIfNeeded();
+
+    return MaterialPageRoute(builder: routeBuilder, settings: settings);
+  }
+
+  static Future<void> _refreshTokenIfNeeded() async {
+    try {
+      final refreshToken = PrefUtils().getRefreshToken();
+      if (refreshToken.isEmpty) return;
+
+      final refreshTokenReq = PostRefreshTokenReq(refreshToken: refreshToken);
+      final response = await _repository.refreshToken(
+        headers: {},
+        requestData: refreshTokenReq.toJson(),
+      );
+
+      if (response.data != null) {
+        // Save new tokens
+        PrefUtils().setAccessToken(response.data?.accessToken ?? '');
+        PrefUtils().setRefreshToken(response.data?.refreshToken ?? '');
+        PrefUtils().setTokenExpires(response.data?.tokenExpires ?? 0);
+      }
+    } catch (e) {
+      // Handle error silently
+    }
+  }
+
+  static bool _isProtectedRoute(String routeName) {
+    final publicRoutes = [
+      loginScreen,
+      registerScreen,
+      forgotPasswordScreen,
+      resetPassWordScreen,
+    ];
+    return !publicRoutes.contains(routeName);
+  }
 
   // Custom method to handle slide transition navigation for specific routes
   static Future<T?> navigateWithSlide<T>(
@@ -93,7 +168,7 @@ class AppRoutes {
       transitionDuration: duration,
       pageBuilder: (context, animation, secondaryAnimation) => builder(context),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        final end = Offset.zero;
+        const end = Offset.zero;
         final tween =
             Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
         final offsetAnimation = animation.drive(tween);
@@ -147,7 +222,7 @@ class AppRoutes {
     return navigateWithSlide(
       context,
       LoginScreen.builder,
-      replace: false, // Will replace current screen
+      replace: true, // Will replace current screen
     );
   }
 
@@ -209,6 +284,20 @@ class AppRoutes {
     return navigateWithSlide(
       context,
       RoomQuizScreen.builder, replace: false, // Will replace current screen
+    );
+  }
+
+  static Future<void> navigateToCommunityScreen(BuildContext context) {
+    return navigateWithSlide(
+      context,
+      CommunityScreen.builder, replace: false, // Will replace current screen
+    );
+  }
+
+  static Future<void> navigateToHomeScreen(BuildContext context) {
+    return navigateWithSlide(
+      context,
+      HomeScreen.builder, replace: false, // Will replace current screen
     );
   }
 }

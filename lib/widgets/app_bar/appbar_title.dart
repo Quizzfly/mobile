@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 import '../../core/app_export.dart';
 
 class AppBarTitle extends StatelessWidget {
-  AppBarTitle({
+  const AppBarTitle({
     super.key,
     required this.text,
     this.onTap,
     this.padding,
-    this.textColor, 
-    this.textStyle, 
+    this.textColor,
+    this.textStyle,
   });
 
   final String text;
   final Function? onTap;
   final EdgeInsetsGeometry? padding;
-  final Color? textColor; 
-  final TextStyle? textStyle; 
+  final Color? textColor;
+  final TextStyle? textStyle;
 
   @override
   Widget build(BuildContext context) {

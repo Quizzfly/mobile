@@ -19,7 +19,7 @@ class ImageConstant {
 
   static String imageUserGroup = "$imagePath/users-people-svgrepo-com.svg";
 
-  static String imageAvatar = "$imagePath/avatar.png";
+  static String imageAvatar = "$imagePath/avatar.jpg";
 
   static String imgClose = "$imagePath/image_close.png";
 
@@ -68,4 +68,14 @@ class ImageConstant {
   static String imgLoadingPlay = "$imagePath/loadingPlay.svg";
 
   static String riveLoadingPlay = "$imagePath/loadingPlay.riv";
+
+  static String imgNotFound = "$imagePath/image_not_found.png";
+
+  static String imgCreate = "$imagePath/imageCreate.png";
+
+  static String imgGroup = "$imagePath/imageGroup.png";
+
+  static String imgLogo = "$imagePath/imageLogo.jpg";
+
+  static String imgEmpty = "$imagePath/empty.png";
 }

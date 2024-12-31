@@ -6,16 +6,13 @@ import '../core/app_export.dart';
 // ignore_for_file: must_be_immutable
 class CustomSwitch extends StatelessWidget {
   CustomSwitch(
-      {Key? key,
+      {super.key,
       required this.onChange,
       this.alignment,
       this.value,
       this.width,
       this.height,
-      this.margin})
-      : super(
-          key: key,
-        );
+      this.margin});
   final Alignment? alignment;
   bool? value;
   final Function(bool) onChange;

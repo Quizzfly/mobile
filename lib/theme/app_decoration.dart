@@ -16,7 +16,7 @@ class AppDecoration {
   static BoxDecoration get fillDeepOrange => BoxDecoration(
         color: appTheme.deepOrange200,
       );
-  static BoxDecoration get fillDeeporange20001 => BoxDecoration(
+  static BoxDecoration get fillDeepOrange20001 => BoxDecoration(
         color: appTheme.deepOrange20001,
       );
   static BoxDecoration get fillGray => BoxDecoration(
@@ -25,7 +25,7 @@ class AppDecoration {
   static BoxDecoration get fillIndigo => BoxDecoration(
         color: appTheme.indigo50,
       );
-  static BoxDecoration get fillonPrimaryContainer => BoxDecoration(
+  static BoxDecoration get fillOnPrimaryContainer => BoxDecoration(
         color: theme.colorScheme.onPrimaryContainer,
       );
   static BoxDecoration get fillPink => BoxDecoration(
@@ -34,14 +34,14 @@ class AppDecoration {
   static BoxDecoration get fillRed => BoxDecoration(
         color: appTheme.red10002,
       );
-  static BoxDecoration get fillwhiteA => BoxDecoration(
+  static BoxDecoration get fillWhiteA => BoxDecoration(
         color: appTheme.whiteA700,
       );
   // Neutral decorations
   static BoxDecoration get neutralBlack => BoxDecoration(
         color: theme.colorScheme.onPrimary,
       );
-  static BoxDecoration get neutralwhite => BoxDecoration(
+  static BoxDecoration get neutralWhite => BoxDecoration(
         color: appTheme.whiteA700,
         border: Border.all(
           color: appTheme.deepPurple50,
@@ -80,9 +80,9 @@ class BorderRadiusStyle {
         4.h,
       );
   static BorderRadius get roundedBorder5 => BorderRadius.circular(
-    5.h,
-  );
+        5.h,
+      );
   static BorderRadius get roundedBorder8 => BorderRadius.circular(
-    8.h,
-  );
+        8.h,
+      );
 }
