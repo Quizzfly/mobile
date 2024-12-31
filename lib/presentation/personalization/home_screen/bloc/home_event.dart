@@ -49,3 +49,45 @@ class CreateGroupEvent extends HomeEvent {
   List<Object?> get props =>
       [onCreateGroupSuccess, onCreateGroupError, name, description, background];
 }
+
+class CreateGetListNotificationEvent extends HomeEvent {
+  final Function? onGetListNotificationSuccess;
+  final Function? onGetListNotificationError;
+  CreateGetListNotificationEvent({
+    this.onGetListNotificationSuccess,
+    this.onGetListNotificationError,
+  });
+
+  @override
+  List<Object?> get props =>
+      [onGetListNotificationSuccess, onGetListNotificationError];
+}
+
+class CreateUnreadNotificationEvent extends HomeEvent {
+  final int? unReadCount;
+  CreateUnreadNotificationEvent({this.unReadCount});
+
+  @override
+  List<Object?> get props => [unReadCount];
+}
+
+class MarkReadNotificationEvent extends HomeEvent {
+  final Function? onMarkNotificationSuccess;
+  final Function? onMarkNotificationError;
+  final String? id;
+  MarkReadNotificationEvent(
+      {this.onMarkNotificationSuccess, this.onMarkNotificationError, this.id});
+  @override
+  List<Object?> get props =>
+      [onMarkNotificationSuccess, onMarkNotificationError, id];
+}
+
+class MarkAllReadNotificationEvent extends HomeEvent {
+  final Function? onMarkAllNotificationSuccess;
+  final Function? onMarkAllNotificationError;
+  MarkAllReadNotificationEvent(
+      {this.onMarkAllNotificationSuccess, this.onMarkAllNotificationError});
+  @override
+  List<Object?> get props =>
+      [onMarkAllNotificationSuccess, onMarkAllNotificationError];
+}

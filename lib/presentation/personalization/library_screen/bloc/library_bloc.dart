@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import '../../../../data/models/library_quizzfly/get_library_quizzfly_resp.dart';
 import '../../../../core/app_export.dart';
 import '../../../../data/repository/repository.dart';
@@ -35,7 +36,7 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
         ),
       ));
     } catch (e) {
-      print('Error initializing library data: $e');
+      debugPrint('Error initializing library data: $e');
     }
   }
 
@@ -59,7 +60,7 @@ class LibraryBloc extends Bloc<LibraryEvent, LibraryState> {
         event.onGetLibraryError?.call();
       });
     } catch (e) {
-      print('Error loading library: $e');
+      debugPrint('Error loading library: $e');
       _onGetLibraryError();
       event.onGetLibraryError?.call();
     }

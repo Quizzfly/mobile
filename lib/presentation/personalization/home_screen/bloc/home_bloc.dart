@@ -1,6 +1,10 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
+import 'package:quizzfly_application_flutter/data/models/notification/get_unread_notification_resp.dart';
+import 'package:quizzfly_application_flutter/presentation/personalization/home_screen/models/notification_model.dart';
+import '../../../../data/models/notification/get_list_notification_resp.dart';
 import '../../../../data/models/create_group/post_create_group_req.dart';
 import '../../../../core/app_export.dart';
 import '../../../../data/models/library_quizzfly/get_library_quizzfly_resp.dart';
@@ -18,11 +22,16 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final _repository = Repository();
   var getRecentActivitiesResp = GetLibraryQuizzflyResp();
   final String? accessToken = PrefUtils().getAccessToken();
-
+  var getListNotificationResp = GetListNotificationResp();
+  var getUnreadNotificationResp = GetUnreadNotificationResp();
   HomeBloc(super.initialState) {
     on<HomeInitialEvent>(_onInitialize);
     on<CreateGetRecentActivitiesEvent>(_callGetRecentActivities);
     on<CreateGroupEvent>(_callCreateGroup);
+    on<CreateGetListNotificationEvent>(_callGetListNotification);
+    on<CreateUnreadNotificationEvent>(_callGetUnreadNotification);
+    on<MarkAllReadNotificationEvent>(_callMarkAllNotification);
+    on<MarkReadNotificationEvent>(_callMarkNotification);
   }
   _onInitialize(
     HomeInitialEvent event,
@@ -31,11 +40,17 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     add(CreateGetRecentActivitiesEvent(
       onGetRecentActivitiesSuccess: () {},
     ));
+    add(CreateGetListNotificationEvent(
+      onGetListNotificationSuccess: () {},
+    ));
+
+    add(CreateUnreadNotificationEvent());
     emit(
       state.copyWith(
         homeInitialModelObj: state.homeInitialModelObj?.copyWith(
           gridLabelItemList: fillGridLabelItemList(),
           recentActivitiesGridItemList: [],
+          notificationItemList: [],
         ),
       ),
     );
@@ -68,7 +83,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         event.onGetRecentActivitiesError?.call();
       });
     } catch (e) {
-      print('Error loading recent activities: $e');
+      debugPrint('Error loading recent activities: $e');
       _onGetRecentActivitiesError();
       event.onGetRecentActivitiesError?.call();
     }
@@ -151,8 +166,156 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         event.onCreateGroupError?.call();
       });
     } catch (e) {
-      print('Error loading recent activities: $e');
+      debugPrint('Error loading create group: $e');
       event.onCreateGroupError?.call();
+    }
+  }
+
+  FutureOr<void> _callGetListNotification(
+    CreateGetListNotificationEvent event,
+    Emitter<HomeState> emit,
+  ) async {
+    try {
+      await _repository.getListNotifications(
+        headers: {
+          'Authorization': 'Bearer $accessToken',
+        },
+      ).then((value) async {
+        getListNotificationResp = value;
+        _onGetListNotificationSuccess(value, emit);
+        event.onGetListNotificationSuccess?.call();
+      }).onError((error, stackTrace) {
+        _onGetListNotificationError();
+        event.onGetListNotificationError?.call();
+      });
+    } catch (e) {
+      debugPrint('Error loading recent activities: $e');
+      _onGetListNotificationError();
+      event.onGetListNotificationError?.call();
+    }
+  }
+
+  void _onGetListNotificationSuccess(
+    GetListNotificationResp resp,
+    Emitter<HomeState> emit,
+  ) {
+    final notificationItemList = resp.data?.map((item) {
+          final formattedDate = _formatDate(item.createdAt ?? "");
+          return NotificationModel(
+            name: item.agent?.name ?? "Unnamed",
+            date: formattedDate,
+            avatar: item.agent?.avatar ?? ImageConstant.imageAvatar,
+            id: item.object?.id ?? "",
+            notificationType: item.notificationType ?? "",
+            isRead: item.isRead ?? false,
+            description: item.description ?? "",
+            postId: item.object?.postId ?? "",
+            targetId: item.targetId ?? "",
+            notificationId: item.id ?? "",
+          );
+        }).toList() ??
+        [];
+
+    emit(state.copyWith(
+      homeInitialModelObj: state.homeInitialModelObj?.copyWith(
+        notificationItemList: notificationItemList,
+      ),
+    ));
+  }
+
+  void _onGetListNotificationError() {
+    // Handle error state here
+  }
+  FutureOr<void> _callGetUnreadNotification(
+    CreateUnreadNotificationEvent event,
+    Emitter<HomeState> emit,
+  ) async {
+    try {
+      await _repository.getUnreadCount(
+        headers: {
+          'Authorization': 'Bearer $accessToken',
+        },
+      ).then((value) async {
+        getUnreadNotificationResp = value;
+        _onGetUnreadNotificationSuccess(value, emit);
+      }).onError((error, stackTrace) {
+        _onGetUnreadNotificationError();
+      });
+    } catch (e) {
+      debugPrint('Error loading recent activities: $e');
+      _onGetUnreadNotificationError();
+    }
+  }
+
+  void _onGetUnreadNotificationSuccess(
+    GetUnreadNotificationResp resp,
+    Emitter<HomeState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        homeInitialModelObj:
+            state.homeInitialModelObj?.copyWith(unReadCount: resp.dataCount),
+      ),
+    );
+  }
+
+  void _onGetUnreadNotificationError() {}
+
+  FutureOr<void> _callMarkAllNotification(
+    MarkAllReadNotificationEvent event,
+    Emitter<HomeState> emit,
+  ) async {
+    String? accessToken = PrefUtils().getAccessToken();
+
+    try {
+      bool success = await _repository.markRead(
+        headers: {'Authorization': 'Bearer $accessToken'},
+      );
+      if (success) {
+        add(CreateGetListNotificationEvent(
+          onGetListNotificationSuccess: () {
+            add(CreateUnreadNotificationEvent());
+            event.onMarkAllNotificationSuccess?.call();
+          },
+          onGetListNotificationError: () {
+            event.onMarkAllNotificationError?.call();
+          },
+        ));
+      } else {
+        event.onMarkAllNotificationError?.call();
+      }
+    } catch (error) {
+      debugPrint('Error marking all notifications as read: $error');
+      event.onMarkAllNotificationError?.call();
+    }
+  }
+
+  FutureOr<void> _callMarkNotification(
+    MarkReadNotificationEvent event,
+    Emitter<HomeState> emit,
+  ) async {
+    String? accessToken = PrefUtils().getAccessToken();
+
+    try {
+      bool success = await _repository.markRead(
+          headers: {'Authorization': 'Bearer $accessToken '}, id: event.id);
+      if (success) {
+        add(
+          CreateGetListNotificationEvent(
+            onGetListNotificationSuccess: () {
+              add(CreateUnreadNotificationEvent());
+              event.onMarkNotificationSuccess?.call();
+            },
+            onGetListNotificationError: () {
+              event.onMarkNotificationError?.call();
+            },
+          ),
+        );
+      } else {
+        event.onMarkNotificationError?.call();
+      }
+    } catch (error) {
+      event.onMarkNotificationError?.call();
     }
   }
 }

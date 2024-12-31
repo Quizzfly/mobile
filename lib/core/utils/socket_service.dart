@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'dart:async';
 
@@ -38,17 +39,9 @@ class QuizStartedData {
 class SocketService {
   static final SocketService _instance = SocketService._internal();
   late IO.Socket socket;
-  bool _isInitialized = false;
-  QuizStartedData? _lastQuizData;
-  QuizStartedData? get lastQuizData => _lastQuizData;
-
-  // Stream controller for quizStarted events
-  final _quizStartedController = StreamController<QuizStartedData>.broadcast();
-  Stream<QuizStartedData> get onQuizStarted => _quizStartedController.stream;
-
-  // New stream controller for room canceled events
-  final _roomCanceledController = StreamController<String>.broadcast();
-  Stream<String> get onRoomCanceled => _roomCanceledController.stream;
+  late IO.Socket notificationSocket;
+  bool _isRoomInitialized = false;
+  bool _isNotificationInitialized = false;
 
   factory SocketService() {
     return _instance;
@@ -56,18 +49,22 @@ class SocketService {
 
   SocketService._internal();
 
-  void initializeSocket() {
-    if (!_isInitialized) {
+  void initializeRoomSocket() {
+    if (!_isRoomInitialized) {
       socket = IO.io('https://api.quizzfly.site/rooms', <String, dynamic>{
         'transports': ['websocket'],
         'autoConnect': true,
       });
 
-      socket.onConnect((_) {});
+      socket.onConnect((_) {
+        debugPrint('Room Socket Connected');
+      });
 
-      socket.onDisconnect((_) {});
+      socket.onDisconnect((_) {
+        debugPrint('Room Socket Disconnected');
+      });
 
-      // Listen for quizStarted events
+      // Original room socket events
       socket.on('quizStarted', (data) {
         if (data != null && data['question'] != null) {
           try {
@@ -76,12 +73,11 @@ class SocketService {
             if (!_quizStartedController.isClosed) {
               _quizStartedController.add(quizData);
             }
-            // ignore: empty_catches
-          } catch (e) {}
+          } catch (e) {
+            debugPrint('Error handling quizStarted: $e');
+          }
         }
       });
-
-      // Listen for roomCanceled events
       socket.on('roomCanceled', (data) {
         if (data != null &&
             data['message'] != null &&
@@ -89,20 +85,92 @@ class SocketService {
           _roomCanceledController.add(data['message'].toString());
         }
       });
-
-      _isInitialized = true;
+      _isRoomInitialized = true;
     }
+  }
+
+  void initializeNotificationSocket() {
+    if (!_isNotificationInitialized) {
+      notificationSocket =
+          IO.io('https://api.quizzfly.site/notifications', <String, dynamic>{
+        'transports': ['websocket'],
+        'autoConnect': true,
+      });
+
+      notificationSocket.onConnect((_) {
+        debugPrint('Notification Socket Connected');
+      });
+
+      notificationSocket.onDisconnect((_) {
+        debugPrint('Notification Socket Disconnected');
+      });
+
+      notificationSocket.on('notification', (data) {
+        if (data != null) {
+          try {
+            // Parse notification data
+            if (data is Map<String, dynamic>) {
+              final notification = data['notification'];
+              if (notification != null &&
+                  notification is Map<String, dynamic>) {
+                final content = notification['content'] as String?;
+                final agent = notification['agent'] as Map<String, dynamic>?;
+                final type = notification['type'] as String?;
+
+                if (content != null) {
+                  _notificationController.add({
+                    'content': content,
+                    'agent': agent,
+                    'type': type,
+                  }.toString());
+                }
+              }
+            }
+          } catch (e) {
+            debugPrint('Error handling notification: $e');
+          }
+        }
+      });
+
+      _isNotificationInitialized = true;
+    }
+  }
+
+  void initializeSocket() {
+    initializeRoomSocket();
+    initializeNotificationSocket();
   }
 
   void disconnect() {
-    if (_isInitialized) {
+    if (_isRoomInitialized) {
       socket.disconnect();
-      _isInitialized = false;
-      if (!_quizStartedController.isClosed) _quizStartedController.close();
-      if (!_roomCanceledController.isClosed) _roomCanceledController.close();
-      _lastQuizData = null;
+      _isRoomInitialized = false;
     }
+    if (_isNotificationInitialized) {
+      notificationSocket.disconnect();
+      _isNotificationInitialized = false;
+    }
+
+    if (!_quizStartedController.isClosed) _quizStartedController.close();
+    if (!_roomCanceledController.isClosed) _roomCanceledController.close();
+    if (!_notificationController.isClosed) _notificationController.close();
+    _lastQuizData = null;
   }
 
-  bool get isConnected => _isInitialized && socket.connected;
+  bool get isRoomConnected => _isRoomInitialized && socket.connected;
+  bool get isNotificationConnected =>
+      _isNotificationInitialized && notificationSocket.connected;
+
+  // Existing properties
+  QuizStartedData? _lastQuizData;
+  QuizStartedData? get lastQuizData => _lastQuizData;
+
+  final _quizStartedController = StreamController<QuizStartedData>.broadcast();
+  Stream<QuizStartedData> get onQuizStarted => _quizStartedController.stream;
+
+  final _roomCanceledController = StreamController<String>.broadcast();
+  Stream<String> get onRoomCanceled => _roomCanceledController.stream;
+
+  final _notificationController = StreamController<String>.broadcast();
+  Stream<String> get onNotification => _notificationController.stream;
 }

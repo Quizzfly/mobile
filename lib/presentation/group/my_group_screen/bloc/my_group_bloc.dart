@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import '../../../../../data/models/my_group/get_my_group_resp.dart';
 import '../../../../../core/app_export.dart';
 import '../../../../../data/repository/repository.dart';
@@ -35,7 +36,7 @@ class MyGroupBloc extends Bloc<MyGroupEvent, MyGroupState> {
         ),
       ));
     } catch (e) {
-      print('Error initializing myGroup data: $e');
+      debugPrint('Error initializing myGroup data: $e');
     }
   }
 
@@ -59,7 +60,7 @@ class MyGroupBloc extends Bloc<MyGroupEvent, MyGroupState> {
         event.onGetMyGroupError?.call();
       });
     } catch (e) {
-      print('Error loading myGroup: $e');
+      debugPrint('Error loading myGroup: $e');
       _onGetMyGroupError();
       event.onGetMyGroupError?.call();
     }

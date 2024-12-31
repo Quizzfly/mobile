@@ -61,7 +61,7 @@ class CommunityBloc extends Bloc<CommunityEvent, CommunityState> {
         ),
       );
     } catch (e) {
-      print('Error initializing community data: $e');
+      debugPrint('Error initializing community data: $e');
     }
   }
 
@@ -88,7 +88,7 @@ class CommunityBloc extends Bloc<CommunityEvent, CommunityState> {
       _onGetCommunityPostsSuccess(value, emit);
       event.onGetCommunityPostsSuccess?.call();
     } catch (e) {
-      print('Error loading community posts: $e');
+      debugPrint('Error loading community posts: $e');
       _onGetCommunityPostsError(emit);
       event.onGetCommunityPostsError?.call();
     }
@@ -116,7 +116,7 @@ class CommunityBloc extends Bloc<CommunityEvent, CommunityState> {
 
   void _onGetCommunityPostsError(Emitter<CommunityState> emit) {
     emit(state.copyWith(isLoading: false));
-    print('Error fetching community posts');
+    debugPrint('Error fetching community posts');
   }
 
   FutureOr<void> _callReactPost(
@@ -140,7 +140,7 @@ class CommunityBloc extends Bloc<CommunityEvent, CommunityState> {
         event.onReactPostError?.call();
       });
     } catch (e) {
-      print('Error reacting to post: $e');
+      debugPrint('Error reacting to post: $e');
       _onReactPostError();
       event.onReactPostError?.call();
     }
@@ -169,7 +169,7 @@ class CommunityBloc extends Bloc<CommunityEvent, CommunityState> {
   }
 
   void _onReactPostError() {
-    print('Error reacting to post');
+    debugPrint('Error reacting to post');
   }
 
   FutureOr<void> _callInviteMember(
@@ -262,7 +262,7 @@ class CommunityBloc extends Bloc<CommunityEvent, CommunityState> {
         event.onPostNewPostError?.call();
       }
     } catch (error) {
-      print('Error creating post: $error');
+      debugPrint('Error creating post: $error');
       event.onPostNewPostError?.call();
     }
   }
@@ -287,7 +287,7 @@ class CommunityBloc extends Bloc<CommunityEvent, CommunityState> {
         event.onGetLibraryError?.call();
       });
     } catch (e) {
-      print('Error loading library: $e');
+      debugPrint('Error loading library: $e');
       _onGetLibraryError();
       event.onGetLibraryError?.call();
     }
@@ -361,7 +361,7 @@ class CommunityBloc extends Bloc<CommunityEvent, CommunityState> {
         event.onDeletePostEventError?.call();
       }
     } catch (error) {
-      print('Error deleting post: $error');
+      debugPrint('Error deleting post: $error');
       event.onDeletePostEventError?.call();
     }
   }
