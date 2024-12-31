@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:quizzfly_application_flutter/data/models/notification/get_list_notification_resp.dart';
+import 'package:quizzfly_application_flutter/data/models/notification/get_unread_notification_resp.dart';
 import '../models/create_group/post_create_group_resp.dart';
 import '../models/detail_post/get_detail_post_resp.dart';
 import '../models/detail_quizzfly/get_detail_quizzfly_resp.dart';
@@ -938,6 +940,101 @@ class ApiClient {
       );
       ProgressDialogUtils.hideProgressDialog();
       return response.statusCode == 201;
+    } catch (error, stackTrace) {
+      ProgressDialogUtils.hideProgressDialog();
+      Logger.log(
+        error,
+        stackTrace: stackTrace,
+      );
+      rethrow;
+    }
+  }
+
+  Future<GetListNotificationResp> getListNotifications(
+      {Map<String, String> headers = const {}}) async {
+    ProgressDialogUtils.showProgressDialog();
+    try {
+      await isNetworkConnected();
+      Response response = await _dio.get(
+        '$url/api/v1/notifications',
+        options: Options(headers: headers),
+      );
+      ProgressDialogUtils.hideProgressDialog();
+      if (isSuccessCall(response)) {
+        return GetListNotificationResp.fromJson(response.data);
+      } else {
+        throw response.data != null
+            ? GetListNotificationResp.fromJson(response.data)
+            : 'Something Went Wrong!';
+      }
+    } catch (error, stackTrace) {
+      ProgressDialogUtils.hideProgressDialog();
+      Logger.log(
+        error,
+        stackTrace: stackTrace,
+      );
+      rethrow;
+    }
+  }
+
+  Future<GetUnreadNotificationResp> getUnreadCount(
+      {Map<String, String> headers = const {}}) async {
+    ProgressDialogUtils.showProgressDialog();
+    try {
+      await isNetworkConnected();
+      Response response = await _dio.get(
+        '$url/api/v1/notifications/unread-count',
+        options: Options(headers: headers),
+      );
+      ProgressDialogUtils.hideProgressDialog();
+      if (isSuccessCall(response)) {
+        return GetUnreadNotificationResp.fromJson(response.data);
+      } else {
+        throw response.data != null
+            ? GetUnreadNotificationResp.fromJson(response.data)
+            : 'Something Went Wrong!';
+      }
+    } catch (error, stackTrace) {
+      ProgressDialogUtils.hideProgressDialog();
+      Logger.log(
+        error,
+        stackTrace: stackTrace,
+      );
+      rethrow;
+    }
+  }
+
+  Future<bool> markRead(
+      {Map<String, String> headers = const {}, String? id}) async {
+    ProgressDialogUtils.showProgressDialog();
+    try {
+      await isNetworkConnected();
+      Response response = await _dio.patch(
+        '$url/api/v1/notifications/$id/read',
+        options: Options(headers: headers),
+      );
+      ProgressDialogUtils.hideProgressDialog();
+      return response.statusCode == 200;
+    } catch (error, stackTrace) {
+      ProgressDialogUtils.hideProgressDialog();
+      Logger.log(
+        error,
+        stackTrace: stackTrace,
+      );
+      rethrow;
+    }
+  }
+
+  Future<bool> markReadAll({Map<String, String> headers = const {}}) async {
+    ProgressDialogUtils.showProgressDialog();
+    try {
+      await isNetworkConnected();
+      Response response = await _dio.patch(
+        '$url/api/v1/notifications/read-all',
+        options: Options(headers: headers),
+      );
+      ProgressDialogUtils.hideProgressDialog();
+      return response.statusCode == 200;
     } catch (error, stackTrace) {
       ProgressDialogUtils.hideProgressDialog();
       Logger.log(

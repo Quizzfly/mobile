@@ -7,6 +7,8 @@ import '../../data/models/my_group/get_my_group_resp.dart';
 import '../../data/models/change_password/post_change_password_resp.dart';
 import '../../data/models/detail_quizzfly/get_detail_quizzfly_resp.dart';
 import '../../data/models/list_question/get_list_question_resp.dart';
+import '../models/notification/get_list_notification_resp.dart';
+import '../models/notification/get_unread_notification_resp.dart';
 import '../models/refresh_token/post_refresh_token_resp.dart';
 import '../models/upload_file/post_upload_file_resp.dart';
 import '../apiClient/api_client.dart';
@@ -306,5 +308,28 @@ class Repository {
       headers: headers,
       requestData: requestData,
     );
+  }
+
+  Future<GetListNotificationResp> getListNotifications(
+      {Map<String, String> headers = const {}, String? id}) async {
+    return await _apiClient.getListNotifications(
+      headers: headers,
+    );
+  }
+
+  Future<GetUnreadNotificationResp> getUnreadCount(
+      {Map<String, String> headers = const {}, String? id}) async {
+    return await _apiClient.getUnreadCount(
+      headers: headers,
+    );
+  }
+
+  Future<bool> markRead(
+      {Map<String, String> headers = const {}, String? id}) async {
+    return await _apiClient.markRead(headers: headers, id: id);
+  }
+
+  Future<bool> markReadAll({Map<String, String> headers = const {}}) async {
+    return await _apiClient.markReadAll(headers: headers);
   }
 }

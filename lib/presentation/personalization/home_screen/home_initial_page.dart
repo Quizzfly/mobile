@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'widgets/notification_popup.dart';
+import 'widgets/notification_popup_route.dart';
 import 'widgets/show_dialog_widget.dart';
 import 'package:responsive_grid_list/responsive_grid_list.dart';
 import '../../../../core/app_export.dart';
@@ -54,6 +56,7 @@ class HomeInitialPageState extends State<HomeInitialPage> {
                     ),
                     SizedBox(height: 12.h),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         CustomElevatedButton(
                           width: 130.h,
@@ -74,8 +77,121 @@ class HomeInitialPageState extends State<HomeInitialPage> {
                             );
                           },
                         ),
-                        const SizedBox(
-                          width: 10,
+                        BlocBuilder<HomeBloc, HomeState>(
+                          builder: (context, state) {
+                            return Stack(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(right: 10.h),
+                                  child: IconButton(
+                                    icon: const Icon(
+                                      Icons.notifications_none_rounded,
+                                      size: 30,
+                                    ),
+                                    onPressed: () {
+                                      final button = context.findRenderObject()
+                                          as RenderBox;
+                                      final overlay = Overlay.of(context)
+                                          .context
+                                          .findRenderObject() as RenderBox;
+                                      final position = RelativeRect.fromRect(
+                                        Rect.fromPoints(
+                                          button.localToGlobal(Offset.zero,
+                                              ancestor: overlay),
+                                          button.localToGlobal(
+                                              button.size
+                                                  .bottomRight(Offset.zero),
+                                              ancestor: overlay),
+                                        ),
+                                        Offset.zero & overlay.size,
+                                      );
+
+                                      // Show notification popup
+                                      Navigator.of(context).push(
+                                        NotificationPopupRoute(
+                                          position: position,
+                                          child: BlocProvider.value(
+                                            value: context.read<HomeBloc>(),
+                                            child: NotificationPopup(
+                                              onReadAll: () {
+                                                context.read<HomeBloc>().add(
+                                                      MarkAllReadNotificationEvent(
+                                                        onMarkAllNotificationSuccess:
+                                                            () {},
+                                                      ),
+                                                    );
+                                              },
+                                              onSeeMore: () {
+                                                Navigator.pop(context);
+                                              },
+                                              onNotificationTap:
+                                                  (notification) {
+                                                context.read<HomeBloc>().add(
+                                                      MarkReadNotificationEvent(
+                                                        id: notification
+                                                            .notificationId,
+                                                        onMarkNotificationSuccess:
+                                                            () {
+                                                          NavigatorService
+                                                              .pushNamed(
+                                                            AppRoutes
+                                                                .detailPostScreen,
+                                                            arguments: {
+                                                              NavigationArgs
+                                                                  .id: notification
+                                                                          .notificationType ==
+                                                                      "COMMENT"
+                                                                  ? notification
+                                                                      .postId
+                                                                  : notification
+                                                                      .id,
+                                                              NavigationArgs
+                                                                      .groupId:
+                                                                  notification
+                                                                      .targetId,
+                                                            },
+                                                          );
+                                                        },
+                                                      ),
+                                                    );
+                                              },
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ),
+                                // Unread count badge
+                                if ((state.homeInitialModelObj?.unReadCount ??
+                                        0) >
+                                    0)
+                                  Positioned(
+                                    right: 15.h,
+                                    top: 5.h,
+                                    child: Container(
+                                      padding: const EdgeInsets.all(4),
+                                      decoration: const BoxDecoration(
+                                        color: Colors.red,
+                                        shape: BoxShape.circle,
+                                      ),
+                                      constraints: const BoxConstraints(
+                                        minWidth: 16,
+                                        minHeight: 16,
+                                      ),
+                                      child: Text(
+                                        '${state.homeInitialModelObj?.unReadCount}',
+                                        style: const TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 10,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    ),
+                                  ),
+                              ],
+                            );
+                          },
                         ),
                       ],
                     ),

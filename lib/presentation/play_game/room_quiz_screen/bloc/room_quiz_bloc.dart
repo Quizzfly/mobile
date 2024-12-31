@@ -1,6 +1,6 @@
 import 'dart:async';
-import 'dart:ui';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import '../../../../../core/app_export.dart';
 import '../models/quiz_grid_item_model.dart';
 import '../models/room_quiz_model.dart';
@@ -40,7 +40,7 @@ class RoomQuizBloc extends Bloc<RoomQuizEvent, RoomQuizState> {
         // quizData.numberQuestion
       )),
       onError: (error) {
-        print('Error in RoomQuizBloc: $error');
+        debugPrint('Error in RoomQuizBloc: $error');
       },
     );
     final lastQuizData = _socketService.lastQuizData;
@@ -269,7 +269,7 @@ class RoomQuizBloc extends Bloc<RoomQuizEvent, RoomQuizState> {
             leaderboard,
           ));
         } catch (e) {
-          print('Error parsing leaderboard data: $e');
+          debugPrint('Error parsing leaderboard data: $e');
         }
       }
     });

@@ -171,7 +171,7 @@ class DetailPostBloc extends Bloc<DetailPostEvent, DetailPostState> {
         onGetDetailPostSuccess: () {},
       ));
     } catch (e) {
-      print('Error initializing detail post: $e');
+      debugPrint('Error initializing detail post: $e');
     }
   }
 
@@ -197,7 +197,7 @@ class DetailPostBloc extends Bloc<DetailPostEvent, DetailPostState> {
         event.onGetDetailPostError?.call();
       });
     } catch (e) {
-      print('Error loading detail post: $e');
+      debugPrint('Error loading detail post: $e');
       _onGetDetailPostError();
       event.onGetDetailPostError?.call();
     }
@@ -223,7 +223,7 @@ class DetailPostBloc extends Bloc<DetailPostEvent, DetailPostState> {
   }
 
   void _onGetDetailPostError() {
-    print('Error fetching detail post');
+    debugPrint('Error fetching detail post');
   }
 
   FutureOr<void> _callGetListCommentPost(
@@ -250,7 +250,7 @@ class DetailPostBloc extends Bloc<DetailPostEvent, DetailPostState> {
         event.onListPostCommentError?.call();
       });
     } catch (e) {
-      print('Error loading detail post: $e');
+      debugPrint('Error loading detail post: $e');
       _onGetDetailPostError();
       event.onListPostCommentError?.call();
     }
@@ -278,7 +278,7 @@ class DetailPostBloc extends Bloc<DetailPostEvent, DetailPostState> {
   }
 
   void _onGetListCommentPostError() {
-    print('Error fetching detail post');
+    debugPrint('Error fetching detail post');
   }
 
   FutureOr<void> _callGetListCommentRepliesPost(
@@ -302,7 +302,7 @@ class DetailPostBloc extends Bloc<DetailPostEvent, DetailPostState> {
         event.onListPostCommentRepliesError?.call();
       });
     } catch (e) {
-      print('Error loading detail post: $e');
+      debugPrint('Error loading detail post: $e');
       _onGetDetailPostError();
       event.onListPostCommentRepliesError?.call();
     }
@@ -338,7 +338,7 @@ class DetailPostBloc extends Bloc<DetailPostEvent, DetailPostState> {
   }
 
   void _onGetListCommentPostRepliesError() {
-    print('Error fetching detail post');
+    debugPrint('Error fetching detail post');
   }
 
   FutureOr<void> _callPostComment(
@@ -379,7 +379,7 @@ class DetailPostBloc extends Bloc<DetailPostEvent, DetailPostState> {
         event.onPostCommentError?.call();
       });
     } catch (e) {
-      print('Error posting comment: $e');
+      debugPrint('Error posting comment: $e');
       _onPostCommentError();
       event.onPostCommentError?.call();
     }
@@ -395,7 +395,7 @@ class DetailPostBloc extends Bloc<DetailPostEvent, DetailPostState> {
   }
 
   void _onPostCommentError() {
-    print('Error posting comment');
+    debugPrint('Error posting comment');
   }
 
   FutureOr<void> _callReactPost(
@@ -419,7 +419,7 @@ class DetailPostBloc extends Bloc<DetailPostEvent, DetailPostState> {
         event.onReactPostError?.call();
       });
     } catch (e) {
-      print('Error reacting to post: $e');
+      debugPrint('Error reacting to post: $e');
       _onReactPostError();
       event.onReactPostError?.call();
     }
@@ -441,7 +441,7 @@ class DetailPostBloc extends Bloc<DetailPostEvent, DetailPostState> {
   }
 
   void _onReactPostError() {
-    print('Error reacting to post');
+    debugPrint('Error reacting to post');
   }
 
   FutureOr<void> _callDeleteComment(
