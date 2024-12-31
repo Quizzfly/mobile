@@ -3,16 +3,17 @@ import 'dart:io';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:quizzfly_application_flutter/data/models/notification/get_unread_notification_resp.dart';
-import 'package:quizzfly_application_flutter/presentation/personalization/home_screen/models/notification_model.dart';
+import '../../../../data/models/my_group/get_my_group_resp.dart';
 import '../../../../data/models/notification/get_list_notification_resp.dart';
 import '../../../../data/models/create_group/post_create_group_req.dart';
 import '../../../../core/app_export.dart';
 import '../../../../data/models/library_quizzfly/get_library_quizzfly_resp.dart';
 import '../../../../data/models/upload_file/post_upload_file_resp.dart';
 import '../../../../data/repository/repository.dart';
-import '../models/grid_label_item_model.dart';
+import '../models/list_group_item_model.dart';
 import '../models/home_initial_model.dart';
 import '../models/home_model.dart';
+import '../models/notification_model.dart';
 import '../models/recent_activities_grid_item_model.dart';
 part 'home_event.dart';
 part 'home_state.dart';
@@ -24,6 +25,8 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final String? accessToken = PrefUtils().getAccessToken();
   var getListNotificationResp = GetListNotificationResp();
   var getUnreadNotificationResp = GetUnreadNotificationResp();
+  var getMyGroupResp = GetMyGroupsResp();
+
   HomeBloc(super.initialState) {
     on<HomeInitialEvent>(_onInitialize);
     on<CreateGetRecentActivitiesEvent>(_callGetRecentActivities);
@@ -32,37 +35,25 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<CreateUnreadNotificationEvent>(_callGetUnreadNotification);
     on<MarkAllReadNotificationEvent>(_callMarkAllNotification);
     on<MarkReadNotificationEvent>(_callMarkNotification);
+    on<CreateGetMyGroupEvent>(_callGetMyGroup);
   }
   _onInitialize(
     HomeInitialEvent event,
     Emitter<HomeState> emit,
   ) async {
-    add(CreateGetRecentActivitiesEvent(
-      onGetRecentActivitiesSuccess: () {},
-    ));
-    add(CreateGetListNotificationEvent(
-      onGetListNotificationSuccess: () {},
-    ));
-
+    add(CreateGetRecentActivitiesEvent());
+    add(CreateGetListNotificationEvent());
+    add(CreateGetMyGroupEvent());
     add(CreateUnreadNotificationEvent());
     emit(
       state.copyWith(
         homeInitialModelObj: state.homeInitialModelObj?.copyWith(
-          gridLabelItemList: fillGridLabelItemList(),
+          listGroupItemList: [],
           recentActivitiesGridItemList: [],
           notificationItemList: [],
         ),
       ),
     );
-  }
-
-  List<GridLabelItemModel> fillGridLabelItemList() {
-    return [
-      GridLabelItemModel(image: ImageConstant.imgCreate, label: "Your group"),
-      GridLabelItemModel(image: ImageConstant.imgCreate, label: "Your group"),
-      GridLabelItemModel(image: ImageConstant.imgGroup, label: "Your group"),
-      GridLabelItemModel()
-    ];
   }
 
   FutureOr<void> _callGetRecentActivities(
@@ -317,5 +308,55 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     } catch (error) {
       event.onMarkNotificationError?.call();
     }
+  }
+
+  FutureOr<void> _callGetMyGroup(
+    CreateGetMyGroupEvent event,
+    Emitter<HomeState> emit,
+  ) async {
+    try {
+      String? accessToken = PrefUtils().getAccessToken();
+
+      await _repository.getMyGroup(
+        headers: {
+          'Authorization': 'Bearer $accessToken',
+        },
+      ).then((value) async {
+        getMyGroupResp = value;
+        _onGetMyGroupSuccess(value, emit);
+        event.onGetMyGroupSuccess?.call();
+      }).onError((error, stackTrace) {
+        _onGetMyGroupError();
+        event.onGetMyGroupError?.call();
+      });
+    } catch (e) {
+      debugPrint('Error loading myGroup: $e');
+      _onGetMyGroupError();
+      event.onGetMyGroupError?.call();
+    }
+  }
+
+  void _onGetMyGroupSuccess(
+    GetMyGroupsResp resp,
+    Emitter<HomeState> emit,
+  ) {
+    final listGroupItemList = resp.data?.map((item) {
+          return ListGroupItemModel(
+              id: item.group?.id ?? '',
+              image: item.group?.background ?? ImageConstant.imgNotFound,
+              title: item.group?.name ?? 'Unnamed',
+              role: item.role ?? '');
+        }).toList() ??
+        [];
+
+    emit(state.copyWith(
+      homeInitialModelObj: state.homeInitialModelObj?.copyWith(
+        listGroupItemList: listGroupItemList,
+      ),
+    ));
+  }
+
+  void _onGetMyGroupError() {
+    // Handle error state here
   }
 }

@@ -4,10 +4,13 @@ import 'package:top_snackbar_flutter/custom_snack_bar.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
 import '../../../../core/app_export.dart';
 import '../../../../routes/navigation_args.dart';
+import '../../../theme/custom_button_style.dart';
+import '../../../widgets/custom_elevated_button.dart';
 import 'bloc/my_group_bloc.dart';
 import 'models/my_group_model.dart';
 import 'models/my_group_list_item_model.dart';
 import 'widgets/my_group_list_item_widget.dart';
+import 'widgets/show_dialog_widget.dart';
 
 class MyGroupScreen extends StatefulWidget {
   const MyGroupScreen({super.key});
@@ -74,6 +77,25 @@ class _MyGroupScreenState extends State<MyGroupScreen> {
                   fontWeight: FontWeight.w600,
                 ),
               ),
+              actions: [
+                Padding(
+                  padding: EdgeInsets.only(right: 16.h, left: 8.h),
+                  child: CustomElevatedButton(
+                    height: 32.h,
+                    width: 120.h,
+                    text: "Create group",
+                    buttonStyle: CustomButtonStyles.fillPrimaryRadius20,
+                    buttonTextStyle:
+                        CustomTextStyles.titleSmallOnErrorContainer,
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (_) => ShowDialogWidget.builder(context),
+                      );
+                    },
+                  ),
+                ),
+              ],
             ),
           ),
         ),

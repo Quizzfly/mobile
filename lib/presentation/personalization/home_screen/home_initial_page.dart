@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'widgets/list_group_item_widget.dart';
 import 'widgets/notification_popup.dart';
 import 'widgets/notification_popup_route.dart';
 import 'widgets/show_dialog_widget.dart';
@@ -7,10 +8,9 @@ import '../../../../core/app_export.dart';
 import '../../../../routes/navigation_args.dart';
 import '../../../../widgets/custom_elevated_button.dart';
 import 'bloc/home_bloc.dart';
-import 'models/grid_label_item_model.dart';
+import 'models/list_group_item_model.dart';
 import 'models/home_initial_model.dart';
 import 'models/recent_activities_grid_item_model.dart';
-import 'widgets/grid_label_item_widget.dart';
 import 'widgets/recent_activities_grid_item_widget.dart';
 
 class HomeInitialPage extends StatefulWidget {
@@ -303,10 +303,7 @@ class HomeInitialPageState extends State<HomeInitialPage> {
             color: appTheme.black900.withOpacity(0.05),
             spreadRadius: 2.h,
             blurRadius: 10.h,
-            offset: const Offset(
-              0,
-              4,
-            ),
+            offset: const Offset(0, 4),
           )
         ],
       ),
@@ -315,48 +312,53 @@ class HomeInitialPageState extends State<HomeInitialPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "lbl_project".tr,
+            "Quick access".tr,
             style: CustomTextStyles.bodyMediumRobotoFontGray90003,
           ),
-          SizedBox(height: 30.h),
-          Padding(
-            padding: EdgeInsets.only(
-              left: 28.h,
-              right: 32.h,
-            ),
-            child: BlocSelector<HomeBloc, HomeState, HomeInitialModel?>(
-              selector: (state) => state.homeInitialModelObj,
-              builder: (context, homeInitialModelObj) {
-                return ResponsiveGridListBuilder(
-                  minItemWidth: 1,
-                  minItemsPerRow: 2,
-                  maxItemsPerRow: 2,
-                  horizontalGridSpacing: 70.h,
-                  verticalGridSpacing: 70.h,
-                  builder: (context, items) => ListView(
-                    shrinkWrap: true,
-                    padding: EdgeInsets.zero,
-                    physics: const NeverScrollableScrollPhysics(),
-                    children: items,
-                  ),
-                  gridItems: List.generate(
-                    homeInitialModelObj?.gridLabelItemList.length ?? 0,
-                    (index) {
-                      GridLabelItemModel model =
-                          homeInitialModelObj?.gridLabelItemList[index] ??
-                              GridLabelItemModel();
-                      return GridLabelItemWidget(
-                        model,
-                      );
-                    },
+          SizedBox(height: 20.h),
+          BlocSelector<HomeBloc, HomeState, HomeInitialModel?>(
+            selector: (state) => state.homeInitialModelObj,
+            builder: (context, homeInitialModelObj) {
+              if (homeInitialModelObj?.listGroupItemList.isEmpty ?? true) {
+                return Padding(
+                  padding:
+                      EdgeInsets.only(top: 50.h, bottom: 100.h, left: 30.h),
+                  child: Column(
+                    children: [
+                      Image.asset(
+                        ImageConstant.imgEmpty,
+                        width: 100,
+                        height: 100,
+                      ),
+                      const Text('No group found. Create one now!'),
+                    ],
                   ),
                 );
-              },
-            ),
+              }
+              final topGroups =
+                  homeInitialModelObj!.listGroupItemList.take(4).toList();
+
+              return ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: topGroups.length,
+                itemBuilder: (context, index) {
+                  ListGroupItemModel model = topGroups[index];
+                  return ListGroupItemWidget(
+                    model: model,
+                    onDetailTap: () {
+                      NavigatorService.pushNamed(
+                        AppRoutes.communityScreen,
+                        arguments: {
+                          NavigationArgs.id: model.id,
+                        },
+                      );
+                    },
+                  );
+                },
+              );
+            },
           ),
-          SizedBox(
-            height: 34.h,
-          )
         ],
       ),
     );
@@ -384,6 +386,9 @@ class HomeInitialPageState extends State<HomeInitialPage> {
               ),
             );
           }
+          ;
+          final recentActivitiesGridItemLists =
+              homeInitialModelObj.recentActivitiesGridItemList.take(6).toList();
           return ResponsiveGridListBuilder(
             minItemWidth: 1,
             minItemsPerRow: 2,
@@ -397,10 +402,10 @@ class HomeInitialPageState extends State<HomeInitialPage> {
               children: items,
             ),
             gridItems: List.generate(
-              homeInitialModelObj.recentActivitiesGridItemList.length,
+              recentActivitiesGridItemLists.length,
               (index) {
                 RecentActivitiesGridItemModel model =
-                    homeInitialModelObj.recentActivitiesGridItemList[index];
+                    recentActivitiesGridItemLists[index];
                 return RecentActivitiesGridItemWidget(model, callDetail: () {
                   callDetail(context, index);
                 });

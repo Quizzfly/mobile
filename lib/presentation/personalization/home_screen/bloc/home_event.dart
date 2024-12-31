@@ -91,3 +91,17 @@ class MarkAllReadNotificationEvent extends HomeEvent {
   List<Object?> get props =>
       [onMarkAllNotificationSuccess, onMarkAllNotificationError];
 }
+
+class CreateGetMyGroupEvent extends HomeEvent {
+  CreateGetMyGroupEvent({
+    this.id,
+    this.onGetMyGroupSuccess,
+    this.onGetMyGroupError,
+  });
+
+  final Function? onGetMyGroupSuccess;
+  final Function? onGetMyGroupError;
+  final String? id;
+  @override
+  List<Object?> get props => [onGetMyGroupSuccess, onGetMyGroupError, id];
+}
